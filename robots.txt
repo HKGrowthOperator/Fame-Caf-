@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# sitemap.xml is intentionally added only after the final production domain is confirmed.
