@@ -204,22 +204,42 @@
 
 /* ---------- FOOTER LEGAL META ---------- */
 footer{
-  gap:20px;
+  display:grid;
+  grid-template-columns:minmax(170px,.8fr) auto minmax(280px,1fr);
+  grid-template-areas:
+    "brand nav meta"
+    "brand legal meta";
+  column-gap:clamp(22px,4vw,52px);
+  row-gap:12px;
+  min-height:132px;
+}
+.footer-brand{grid-area:brand;align-self:center}
+.footer-links{
+  grid-area:nav;
+  display:flex!important;
   flex-wrap:wrap;
+  justify-content:center;
+  align-self:end;
 }
 .footer-meta{
+  grid-area:meta;
   display:flex;
   flex-direction:column;
   gap:5px;
   max-width:420px;
+  justify-self:end;
+  align-self:center;
+  text-align:right;
   font-size:.48rem;
   line-height:1.55;
   letter-spacing:.06em;
   opacity:.62;
 }
-.footer-links{flex-wrap:wrap;justify-content:center}
 .footer-legal{
+  grid-area:legal;
   display:flex;
+  justify-content:center;
+  align-self:start;
   gap:14px;
   font-size:.5rem;
   letter-spacing:.08em;
@@ -296,6 +316,14 @@ button:focus-visible{
   .gallery-tile:nth-child(3){grid-column:2;grid-row:2}
   .gallery-tile:nth-child(4){grid-column:1;grid-row:3}
   .gallery-tile:nth-child(5){grid-column:2;grid-row:3}
+  footer{
+    grid-template-columns:1fr 1fr;
+    grid-template-areas:
+      "brand meta"
+      "nav legal";
+  }
+  .footer-links{justify-content:flex-start;align-self:start}
+  .footer-legal{justify-content:flex-end}
 }
 
 @media (max-width:760px){
@@ -314,9 +342,19 @@ button:focus-visible{
   .catering{grid-template-columns:1fr;min-height:auto}
   .catering-copy{padding-top:76px;padding-bottom:76px}
   .catering-visual{min-height:56svh}
-  footer{align-items:flex-start}
-  .footer-meta{order:4;width:100%;max-width:none}
-  .footer-legal{order:5;width:100%}
+  footer{
+    grid-template-columns:1fr;
+    grid-template-areas:
+      "brand"
+      "nav"
+      "legal"
+      "meta";
+    align-items:start;
+    row-gap:18px;
+  }
+  .footer-links{justify-content:flex-start;gap:16px}
+  .footer-legal{justify-content:flex-start}
+  .footer-meta{justify-self:start;text-align:left;width:100%;max-width:none}
 }
 
 @media (max-width:520px){
