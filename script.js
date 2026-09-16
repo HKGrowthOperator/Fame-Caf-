@@ -1,7 +1,6 @@
 const header = document.getElementById('siteHeader');
 const heroImages = [...document.querySelectorAll('.hero-image')];
 const ritual = document.getElementById('ritual');
-const ritualSticky = document.querySelector('.ritual-sticky');
 const axisProgress = document.getElementById('axisProgress');
 const axisDisc = document.getElementById('axisDisc');
 const ritualPhotos = [...document.querySelectorAll('.ritual-photo')];
@@ -27,6 +26,7 @@ const matchaSteps = [
   ['04','STRAW.','Deckel drauf, Strohhalm rein. Der letzte Schritt, bevor der Drink an die Bar geht.']
 ];
 
+const phases = ['START','BUILD','BUILD','FINISH'];
 let currentStep = -1;
 let ticking = false;
 
@@ -44,45 +44,49 @@ function setStep(index){
   matchaTitle.textContent = m[1];
   matchaText.textContent = m[2];
 
-  if(ritualSticky){
-    ritualSticky.dataset.stage = `${String(index + 1).padStart(2,'0')} / ${index === 0 ? 'START' : index === 3 ? 'FINISH' : 'BUILD'}`;
+  if(axisDisc){
+    axisDisc.dataset.step = String(index + 1).padStart(2,'0');
+    axisDisc.dataset.phase = phases[index];
   }
 
-  document.documentElement.style.setProperty('--ritual-step', index);
+  if(ritual){
+    ritual.dataset.step = String(index + 1);
+  }
 }
 
 function update(){
   ticking = false;
   const y = window.scrollY;
-  header.classList.toggle('scrolled', y > 44);
+  header.classList.toggle('scrolled', y > 36);
 
+  // V3 hero motion: keep the photography full-bleed at all times.
   const heroProgress = Math.min(1, y / Math.max(1, window.innerHeight));
   heroImages.forEach((img, i) => {
-    const dir = i === 0 ? -1 : 1;
-    img.style.transform = `scale(${1.04 + heroProgress * .025}) translate3d(0, ${heroProgress * dir * 12}px, 0)`;
+    const scale = 1.035 + heroProgress * (i === 0 ? .018 : .022);
+    img.style.transform = `scale(${scale})`;
   });
 
   if(ritual){
     const rect = ritual.getBoundingClientRect();
-    const total = ritual.offsetHeight - window.innerHeight;
-    const passed = Math.min(Math.max(-rect.top,0), Math.max(total,1));
-    const p = passed / Math.max(total,1);
+    const total = Math.max(ritual.offsetHeight - window.innerHeight, 1);
+    const passed = Math.min(Math.max(-rect.top, 0), total);
+    const p = passed / total;
 
-    if(rect.top <= 0 && rect.bottom >= window.innerHeight){
+    if(rect.top <= window.innerHeight && rect.bottom >= 0){
       if(axisProgress) axisProgress.style.height = `${p * 100}%`;
       if(axisDisc) axisDisc.style.top = `${8 + p * 84}%`;
 
-      const idx = Math.min(3, Math.floor(p * 4));
+      const idx = Math.min(3, Math.floor(Math.min(p, .999999) * 4));
       setStep(idx);
 
       if(ritualPhotos[0]){
-        ritualPhotos[0].style.transform = `scale(${1.07 - p * .025}) translate3d(0, ${p * -16}px,0)`;
-        ritualPhotos[0].style.filter = `brightness(${.86 + idx * .03})`;
+        ritualPhotos[0].style.transform = `scale(${1.055 + p * .012})`;
+        ritualPhotos[0].style.filter = `brightness(${.88 + idx * .018})`;
       }
 
       if(ritualPhotos[1]){
-        ritualPhotos[1].style.transform = `scale(${1.07 - p * .02}) translate3d(0, ${p * 16}px,0)`;
-        ritualPhotos[1].style.filter = `saturate(${1 + idx * .08}) brightness(${.9 + idx * .02})`;
+        ritualPhotos[1].style.transform = `scale(${1.055 + p * .014})`;
+        ritualPhotos[1].style.filter = `saturate(${1 + idx * .045}) brightness(${.92 + idx * .012})`;
       }
     }
   }
@@ -95,7 +99,7 @@ function requestTick(){
   }
 }
 
-window.addEventListener('scroll', requestTick, { passive:true });
+window.addEventListener('scroll', requestTick, {passive:true});
 window.addEventListener('resize', requestTick);
 window.addEventListener('load', () => {
   setStep(0);
@@ -106,6 +110,6 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(entry.isIntersecting) entry.target.classList.add('in-view');
   });
-}, { threshold:.14, rootMargin:'0px 0px -5% 0px' });
+}, {threshold:.12, rootMargin:'0px 0px -4% 0px'});
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
