@@ -1,99 +1,82 @@
 const header = document.getElementById('siteHeader');
-const hero = document.querySelector('.hero');
-const cursor = document.querySelector('.cursor-orb');
-const journey = document.getElementById('journey');
-const progressBar = document.getElementById('journeyProgress');
-const journeyDot = document.querySelector('.journey-dot');
+const heroImages = [...document.querySelectorAll('.hero-image')];
+const ritual = document.getElementById('ritual');
+const axisProgress = document.getElementById('axisProgress');
+const axisDisc = document.getElementById('axisDisc');
+const stageToast = document.getElementById('stageToast');
+const ritualPhotos = [...document.querySelectorAll('.ritual-photo')];
 
-const coffeeStepNo = document.getElementById('coffeeStepNo');
-const coffeeStepTitle = document.getElementById('coffeeStepTitle');
-const coffeeStepText = document.getElementById('coffeeStepText');
-const matchaStepNo = document.getElementById('matchaStepNo');
-const matchaStepTitle = document.getElementById('matchaStepTitle');
-const matchaStepText = document.getElementById('matchaStepText');
-
-const coffeeLiquid = document.querySelector('.coffee-liquid');
-const milkStream = document.querySelector('.milk-stream');
-const ice = document.querySelector('.glass-ice');
-const coconut = document.querySelector('.glass-coconut');
-const matcha = document.querySelector('.glass-matcha');
-const lid = document.querySelector('.glass-lid');
-const straw = document.querySelector('.glass-straw');
+const coffeeNo = document.getElementById('coffeeNo');
+const coffeeTitle = document.getElementById('coffeeTitle');
+const coffeeText = document.getElementById('coffeeText');
+const matchaNo = document.getElementById('matchaNo');
+const matchaTitle = document.getElementById('matchaTitle');
+const matchaText = document.getElementById('matchaText');
 
 const coffeeSteps = [
-  ['01','EXTRACT.','Der Shot setzt den Ton. Klar, konzentriert und auf den Punkt.'],
-  ['02','FOAM.','Milch wird Textur. Fein, glossy und genau so ruhig wie sie sein soll.'],
-  ['03','POUR.','Alles kommt zusammen. Espresso, Milch, Bewegung und Handwerk.'],
-  ['04','ENJOY.','Keine Show mehr. Nur ein richtig guter Kaffee.']
+  ['01','GRIND.','Good coffee starts before the first drop. Fresh grind. Exact dose. No shortcuts.'],
+  ['02','EXTRACT.','Pressure, temperature and time. The espresso lands clean and concentrated.'],
+  ['03','TEXTURE.','Milk turns glossy and soft. No giant bubbles. No heavy foam. Just texture.'],
+  ['04','POUR.','The final movement brings it together. Espresso, milk and control.']
 ];
-
 const matchaSteps = [
-  ['01','ICE.','Kalt starten. Große Eiswürfel. Klare Basis.'],
-  ['02','COCONUT WATER.','Leicht, frisch und bewusst als zweite Ebene aufgebaut.'],
-  ['03','MATCHA.','Das Grün kommt oben drauf und zieht langsam durch das Glas.'],
-  ['04','LID + STRAW.','Deckel drauf. Strohhalm rein. Ready to go.']
+  ['01','ICE.','Big cubes first. Cold, clear and ready for layers.'],
+  ['02','COCONUT.','A bright base. Light, fresh and clean enough to let the matcha lead.'],
+  ['03','MATCHA.','Vibrant green poured slowly so the layers stay visible for a moment.'],
+  ['04','STRAW.','Lid on. Straw in. One final detail and it is ready to leave the bar.']
 ];
 
-function setJourneyStep(index) {
+let currentStep = -1;
+let ticking = false;
+
+function setStep(index){
+  if(index === currentStep) return;
+  currentStep = index;
   const c = coffeeSteps[index];
   const m = matchaSteps[index];
-  coffeeStepNo.textContent = c[0];
-  coffeeStepTitle.textContent = c[1];
-  coffeeStepText.textContent = c[2];
-  matchaStepNo.textContent = m[0];
-  matchaStepTitle.textContent = m[1];
-  matchaStepText.textContent = m[2];
-
-  // Coffee visual build
-  coffeeLiquid.style.height = index === 0 ? '48%' : index === 1 ? '58%' : index >= 2 ? '72%' : '48%';
-  milkStream.style.opacity = index >= 1 && index <= 2 ? '1' : '0';
-  milkStream.style.height = index >= 1 && index <= 2 ? '150px' : '0';
-
-  // Matcha visual build
-  ice.style.opacity = index >= 0 ? '1' : '0';
-  coconut.style.height = index >= 1 ? '62%' : '0%';
-  matcha.style.height = index >= 2 ? '82%' : '0%';
-  lid.style.opacity = index >= 3 ? '1' : '0';
-  straw.style.opacity = index >= 3 ? '1' : '0';
-  straw.style.transform = index >= 3 ? 'rotate(7deg) translateY(0)' : 'rotate(7deg) translateY(-40px)';
+  coffeeNo.textContent = c[0]; coffeeTitle.textContent = c[1]; coffeeText.textContent = c[2];
+  matchaNo.textContent = m[0]; matchaTitle.textContent = m[1]; matchaText.textContent = m[2];
+  stageToast.textContent = `${String(index+1).padStart(2,'0')} / ${index === 0 ? 'START' : index === 3 ? 'FINISH' : 'BUILD'}`;
+  document.documentElement.style.setProperty('--ritual-step', index);
 }
 
-function updateScroll() {
+function update(){
+  ticking = false;
   const y = window.scrollY;
-  header.classList.toggle('scrolled', y > 40);
+  header.classList.toggle('scrolled', y > 44);
 
-  if (!journey) return;
-  const rect = journey.getBoundingClientRect();
-  const scrollable = journey.offsetHeight - window.innerHeight;
-  const passed = Math.min(Math.max(-rect.top, 0), scrollable);
-  const progress = scrollable > 0 ? passed / scrollable : 0;
+  const heroProgress = Math.min(1, y / Math.max(1, window.innerHeight));
+  heroImages.forEach((img, i) => {
+    const dir = i === 0 ? -1 : 1;
+    img.style.transform = `scale(${1.04 + heroProgress * .025}) translate3d(0, ${heroProgress * dir * 12}px, 0)`;
+  });
 
-  if (rect.top <= 0 && rect.bottom >= window.innerHeight) {
-    progressBar.style.height = `${progress * 100}%`;
-    journeyDot.style.top = `${progress * 100}%`;
-    const index = Math.min(3, Math.floor(progress * 4));
-    setJourneyStep(index);
+  if(ritual){
+    const rect = ritual.getBoundingClientRect();
+    const total = ritual.offsetHeight - window.innerHeight;
+    const passed = Math.min(Math.max(-rect.top,0), Math.max(total,1));
+    const p = passed / Math.max(total,1);
+    if(rect.top <= 0 && rect.bottom >= window.innerHeight){
+      axisProgress.style.height = `${p*100}%`;
+      axisDisc.style.top = `${8 + p*84}%`;
+      const idx = Math.min(3, Math.floor(p*4));
+      setStep(idx);
+      ritualPhotos[0].style.transform = `scale(${1.07 - p*.025}) translate3d(0, ${p*-16}px,0)`;
+      ritualPhotos[1].style.transform = `scale(${1.07 - p*.02}) translate3d(0, ${p*16}px,0)`;
+      const coffeeBrightness = .86 + idx*.03;
+      const matchaSat = 1 + idx*.08;
+      ritualPhotos[0].style.filter = `brightness(${coffeeBrightness})`;
+      ritualPhotos[1].style.filter = `saturate(${matchaSat}) brightness(${.9 + idx*.02})`;
+    }
   }
 }
 
-window.addEventListener('scroll', updateScroll, { passive: true });
-window.addEventListener('resize', updateScroll);
-window.addEventListener('load', () => {
-  hero.classList.add('loaded');
-  setJourneyStep(0);
-  updateScroll();
-});
+function requestTick(){ if(!ticking){ ticking = true; requestAnimationFrame(update); } }
+window.addEventListener('scroll', requestTick, {passive:true});
+window.addEventListener('resize', requestTick);
+window.addEventListener('load', () => { setStep(0); update(); });
 
-document.addEventListener('mousemove', (event) => {
-  if (!cursor) return;
-  cursor.style.left = `${event.clientX}px`;
-  cursor.style.top = `${event.clientY}px`;
-});
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    if (entry.isIntersecting) entry.target.classList.add('in-view');
-  });
-}, { threshold: .16 });
-
-document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => { if(entry.isIntersecting) entry.target.classList.add('in-view'); });
+}, {threshold:.14, rootMargin:'0px 0px -5% 0px'});
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
