@@ -58,6 +58,8 @@ Verifiziert und deshalb verwendbar:
 - Geschäftsführer: Harisch Sivasoruban
 - Cafébetrieb, Matcha-Getränke, Açaí-Bowls, Kaffee, Teespezialitäten,
   Kuchen und Backwaren, Cateringdienstleistungen
+- Offizieller Instagram-Account: `@fame.cafe.gm`
+  (https://www.instagram.com/fame.cafe.gm/)
 
 Vor Veröffentlichung noch zu bestätigen — nicht erfinden:
 
@@ -65,7 +67,6 @@ Vor Veröffentlichung noch zu bestätigen — nicht erfinden:
 - Telefonnummer
 - öffentliche Café-E-Mail-Adresse
 - finale Domain
-- finale Social-Media-Accounts
 - vollständige Speisekarte, Preise, Zutaten, Rezepturen
 - Rösterei bzw. Bohnenherkunft
 - finale FAME-Produktfotos

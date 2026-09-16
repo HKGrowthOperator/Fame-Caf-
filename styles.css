@@ -62,6 +62,13 @@
   --img-acai-s:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=80&w=1000');
   --img-space:url('https://images.unsplash.com/photo-1769184613600-1a309a70196b?auto=format&fit=crop&fm=jpg&q=86&w=2200');
   --img-space-s:url('https://images.unsplash.com/photo-1769184613600-1a309a70196b?auto=format&fit=crop&fm=jpg&q=80&w=1000');
+  /* ACHTUNG, offener Punkt: Dieses Motiv zeigt die Leuchtschrift eines
+     anderen Cafés und eine Tafel mit fremden Preisen. Auf einer Seite, die
+     bewusst keine Preise nennt, kann ein Besucher diese Zahlen als
+     FAME-Preise lesen. Es bleibt vorerst stehen, weil ein Austausch gegen
+     ein bereits verwendetes Motiv die Wiederholung verstärken würde — und
+     zu wenig Abwechslung war ausdrücklich ein Kritikpunkt. Ersetzen, sobald
+     ein eigenes Craft-Motiv aus dem FAME-Shooting vorliegt. */
   --img-craft:url('https://images.unsplash.com/photo-1770012117402-853655541b9b?auto=format&fit=crop&fm=jpg&q=86&w=2000');
 
   /* Markenfarbige Flächen hinter jedem Foto. Fällt eine Bildquelle aus,
@@ -74,6 +81,11 @@
   --gutter:clamp(22px,4vw,68px);
   --header-gutter:clamp(26px,4vw,64px);
   --radius:18px;
+
+  /* Der Header liegt fest über dem Inhalt. Ohne diesen Versatz verschwindet
+     der Anfang jedes Abschnitts beim Ankersprung darunter — gemessen waren
+     es 58 bis 60px, der Abschnitts-Kicker war halb abgeschnitten. */
+  --anchor-offset:86px;
 
   --ease:cubic-bezier(.2,.7,.2,1);
 }
@@ -114,6 +126,9 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
+
+main[id],
+section[id]{scroll-margin-top:var(--anchor-offset)}
 
 body{
   margin:0;
@@ -502,16 +517,14 @@ body.nav-open{overflow:hidden}
   background:rgba(255,255,255,.88);
 }
 
-/* Kreis-Sprache: Coffee × Matcha Marker auf der Mittelachse.
-   Vorher als CSS-content erzeugt — jetzt echtes Markup, damit der Text
-   im DOM steht und übersetzbar bleibt. */
+/* Kreis-Sprache: Coffee × Matcha Marker unter der Wortmarke.
+   Zweimal geändert: früher über CSS-content erzeugt (nicht übersetzbar),
+   dann absolut bei 66% der Heroheighe positioniert — dort lag er ab 1024px
+   Breite auf "GUMMERSBACH". Als Flusselement der Mittelspalte sitzt er
+   bei jeder Größe sauber darunter. */
 .hero-orbit{
-  position:absolute;
-  z-index:8;
-  left:50%;
-  top:66%;
-  transform:translate(-50%,-50%);
-  margin:0;
+  margin:clamp(22px,3.4vh,44px) 0 0;
+  flex:0 0 auto;
   width:76px;
   height:76px;
   border:1px solid rgba(255,255,255,.27);
@@ -980,7 +993,9 @@ body.nav-open{overflow:hidden}
   text-align:right;
   font-size:.47rem;
   letter-spacing:.17em;
-  opacity:.72;
+  /* Stand auf opacity .72 auf einem hellen Foto und war kaum zu lesen. */
+  opacity:.9;
+  text-shadow:0 1px 10px rgba(14,13,10,.75);
 }
 
 /* == 12 Menü ============================================================== */
@@ -1034,18 +1049,35 @@ body.nav-open{overflow:hidden}
 }
 .menu-image-matcha{background-image:var(--img-matcha),var(--fallback-matcha)}
 .menu-image-acai{background-image:var(--img-acai),var(--fallback-acai)}
+/* Für Tea und Cake & Bakery liegt noch kein Foto vor. Die Flächen standen
+   bisher mit hart abgeschnittenen Kreisen neben drei echten Fotos und lasen
+   sich wie ein Ladefehler. Jetzt ruhige Markenflächen mit demselben
+   Kreisumriss, den die Seite ohnehin führt — erkennbar als Gestaltung,
+   nicht als fehlendes Bild. */
+.menu-image-tea,
+.menu-image-bakery{position:relative}
+.menu-image-tea::before,
+.menu-image-bakery::before{
+  content:"";
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:44%;
+  aspect-ratio:1;
+  border:1px solid rgba(246,243,236,.5);
+  border-radius:50%;
+}
 .menu-image-tea{
   background:
-    radial-gradient(circle at 62% 35%,rgba(246,243,236,.52) 0 13%,transparent 13.5%),
-    radial-gradient(circle at 50% 48%,rgba(137,168,107,.72) 0 24%,transparent 24.5%),
-    linear-gradient(145deg,#263829 0%,#89A86B 58%,#EDE6DA 100%);
+    radial-gradient(circle at 64% 30%,rgba(246,243,236,.20),transparent 56%),
+    linear-gradient(150deg,#1B2A1D 0%,#3C5540 48%,#89A86B 100%);
 }
 .menu-image-bakery{
   background:
-    radial-gradient(circle at 42% 45%,rgba(246,243,236,.72) 0 19%,transparent 19.5%),
-    radial-gradient(circle at 58% 58%,rgba(122,80,55,.52) 0 27%,transparent 27.5%),
-    linear-gradient(145deg,#EDE6DA 0%,#C9A98D 50%,#7A5037 100%);
+    radial-gradient(circle at 36% 32%,rgba(246,243,236,.26),transparent 58%),
+    linear-gradient(150deg,#EDE6DA 0%,#C9A98D 46%,#7A5037 100%);
 }
+.menu-image-bakery::before{border-color:rgba(23,20,18,.28)}
 .menu-meta{padding:15px 2px 0}
 .menu-meta span{font-size:.48rem;letter-spacing:.15em;font-weight:500}
 .menu-meta h3{
@@ -1240,22 +1272,34 @@ body.nav-open{overflow:hidden}
   position:relative;
   overflow:hidden;
   min-height:68vh;
+  /* Vorher drei hart abgeschnittene Kreise übereinander — das las sich als
+     Zielscheibe, und die Wortmarke verschwand darin. Jetzt zwei weiche
+     Flächen als Hintergrund, die Wortmarke liegt frei darüber. */
   background:
-    radial-gradient(circle at 47% 44%,rgba(246,243,236,.93) 0 15%,transparent 15.4%),
-    radial-gradient(circle at 53% 48%,rgba(137,168,107,.86) 0 27%,transparent 27.4%),
-    radial-gradient(circle at 58% 55%,rgba(104,46,84,.58) 0 39%,transparent 39.4%),
-    linear-gradient(145deg,#171412 0%,#263829 62%,#89A86B 100%);
+    radial-gradient(circle at 62% 38%,rgba(137,168,107,.34),transparent 58%),
+    radial-gradient(circle at 34% 74%,rgba(104,46,84,.30),transparent 62%),
+    linear-gradient(145deg,#171412 0%,#263829 64%,#3C5540 100%);
 }
 .catering-visual::before{
+  content:"";
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:min(62%,320px);
+  aspect-ratio:1;
+  border:1px solid rgba(246,243,236,.22);
+  border-radius:50%;
+}
+.catering-visual::after{
   content:"FAME";
   position:absolute;
   left:50%;top:50%;
   transform:translate(-50%,-50%);
   font-family:var(--serif);
-  font-size:clamp(4rem,9vw,10rem);
+  font-size:clamp(3.4rem,7.5vw,8rem);
   letter-spacing:-.03em;
-  color:#fff;
-  mix-blend-mode:soft-light;
+  line-height:1;
+  color:rgba(246,243,236,.92);
 }
 
 /* == 16 Visit ============================================================= */
@@ -1319,6 +1363,46 @@ body.nav-open{overflow:hidden}
   transform:rotate(-4deg);
 }
 .visit-mark b{font-style:italic;font-weight:400;color:var(--matcha)}
+
+/* Instagram und Route.
+   Bewusst keine Karten mit Verlauf und kein Icon bei jedem Link — beides
+   ist im Design Lock ausgeschlossen. Stattdessen Haarlinien, gesperrtes
+   Label, Serif-Wert und der Matcha-Punkt, der auch sonst als Marker dient. */
+.visit-links{
+  list-style:none;
+  margin:28px 0 0;
+  padding:0;
+  width:min(440px,100%);
+}
+.visit-links li{border-top:1px solid var(--hairline)}
+.visit-links li:last-child{border-bottom:1px solid var(--hairline)}
+.visit-links a{
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:baseline;
+  column-gap:clamp(14px,2.4vw,26px);
+  padding:14px 0;
+}
+.visit-link-label{
+  font-size:.46rem;
+  letter-spacing:.2em;
+  font-weight:500;
+  opacity:.55;
+}
+.visit-link-value{
+  font-family:var(--serif);
+  font-size:clamp(1.05rem,1.6vw,1.4rem);
+  line-height:1.1;
+}
+.visit-link-dot{
+  align-self:center;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--matcha);
+  transition:transform .28s var(--ease);
+}
+.visit-links a:hover .visit-link-dot,
+.visit-links a:focus-visible .visit-link-dot{transform:scale(1.9)}
 
 /* == 17 Footer ============================================================ */
 

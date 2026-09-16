@@ -8,6 +8,12 @@
 (function () {
   'use strict';
 
+  /* Ohne das hier stellt der Browser beim Neuladen die alte Scrollposition
+     wieder her. Bei einem Ritual-Abschnitt über vier Bildschirmhöhen landet
+     man dann mitten in der Sequenz statt oben — gemessen 3490px nach einem
+     Reload. Für diese Seite ist der Start oben die richtige Erwartung. */
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   /* ---- Sicherheitsnetz -------------------------------------------------
@@ -248,6 +254,9 @@
   } else {
     revealEverything();
   }
+
+  // Beim Laden ohne Sprungziel immer oben beginnen.
+  if (!location.hash) window.scrollTo(0, 0);
 
   setStep(0);
   update();
