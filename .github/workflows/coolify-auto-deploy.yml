@@ -1,0 +1,44 @@
+name: Coolify Auto Deploy
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: fame-cafe-production
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    name: Deploy Fame Café to Coolify
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate Coolify deployment secrets
+        env:
+          COOLIFY_DEPLOY_WEBHOOK: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+        run: |
+          if [ -z "$COOLIFY_DEPLOY_WEBHOOK" ]; then
+            echo "::error::Missing repository secret COOLIFY_DEPLOY_WEBHOOK"
+            exit 1
+          fi
+          if [ -z "$COOLIFY_TOKEN" ]; then
+            echo "::error::Missing repository secret COOLIFY_TOKEN"
+            exit 1
+          fi
+
+      - name: Trigger current main deployment in Coolify
+        env:
+          COOLIFY_DEPLOY_WEBHOOK: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}
+          COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
+        run: |
+          curl --fail --show-error --silent --location \
+            --request GET "$COOLIFY_DEPLOY_WEBHOOK" \
+            --header "Authorization: Bearer $COOLIFY_TOKEN"
+          echo
+          echo "Coolify deployment request accepted for ${GITHUB_SHA}."
