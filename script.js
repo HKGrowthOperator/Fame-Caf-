@@ -1,6 +1,7 @@
 const header = document.getElementById('siteHeader');
 const heroImages = [...document.querySelectorAll('.hero-image')];
 const ritual = document.getElementById('ritual');
+const ritualSticky = document.querySelector('.ritual-sticky');
 const axisProgress = document.getElementById('axisProgress');
 const axisDisc = document.getElementById('axisDisc');
 const ritualPhotos = [...document.querySelectorAll('.ritual-photo')];
@@ -18,6 +19,7 @@ const coffeeSteps = [
   ['03','TEXTURE.','Milch wird fein, glossy und weich. Nicht zu viel Schaum, sondern genau die richtige Textur.'],
   ['04','POUR.','Espresso und Milch treffen zusammen. Ruhige Bewegung, saubere Balance, fertig.']
 ];
+
 const matchaSteps = [
   ['01','ICE.','Große Eiswürfel zuerst. Kalt, klar und bereit für die nächsten Schichten.'],
   ['02','COCONUT.','Eine leichte, frische Basis, damit der Matcha im Mittelpunkt bleibt.'],
@@ -31,14 +33,21 @@ let ticking = false;
 function setStep(index){
   if(index === currentStep) return;
   currentStep = index;
+
   const c = coffeeSteps[index];
   const m = matchaSteps[index];
+
   coffeeNo.textContent = c[0];
   coffeeTitle.textContent = c[1];
   coffeeText.textContent = c[2];
   matchaNo.textContent = m[0];
   matchaTitle.textContent = m[1];
   matchaText.textContent = m[2];
+
+  if(ritualSticky){
+    ritualSticky.dataset.stage = `${String(index + 1).padStart(2,'0')} / ${index === 0 ? 'START' : index === 3 ? 'FINISH' : 'BUILD'}`;
+  }
+
   document.documentElement.style.setProperty('--ritual-step', index);
 }
 
@@ -50,7 +59,7 @@ function update(){
   const heroProgress = Math.min(1, y / Math.max(1, window.innerHeight));
   heroImages.forEach((img, i) => {
     const dir = i === 0 ? -1 : 1;
-    img.style.transform = `scale(${1.04 + heroProgress * .018}) translate3d(0, ${heroProgress * dir * 8}px, 0)`;
+    img.style.transform = `scale(${1.04 + heroProgress * .025}) translate3d(0, ${heroProgress * dir * 12}px, 0)`;
   });
 
   if(ritual){
@@ -60,19 +69,20 @@ function update(){
     const p = passed / Math.max(total,1);
 
     if(rect.top <= 0 && rect.bottom >= window.innerHeight){
-      if(axisProgress) axisProgress.style.height = `${p*100}%`;
-      if(axisDisc) axisDisc.style.top = `${8 + p*84}%`;
+      if(axisProgress) axisProgress.style.height = `${p * 100}%`;
+      if(axisDisc) axisDisc.style.top = `${8 + p * 84}%`;
 
-      const idx = Math.min(3, Math.floor(p*4));
+      const idx = Math.min(3, Math.floor(p * 4));
       setStep(idx);
 
       if(ritualPhotos[0]){
-        ritualPhotos[0].style.transform = `scale(${1.065 - p*.018}) translate3d(0, ${p*-10}px,0)`;
-        ritualPhotos[0].style.filter = `brightness(${.88 + idx*.02})`;
+        ritualPhotos[0].style.transform = `scale(${1.07 - p * .025}) translate3d(0, ${p * -16}px,0)`;
+        ritualPhotos[0].style.filter = `brightness(${.86 + idx * .03})`;
       }
+
       if(ritualPhotos[1]){
-        ritualPhotos[1].style.transform = `scale(${1.065 - p*.016}) translate3d(0, ${p*10}px,0)`;
-        ritualPhotos[1].style.filter = `saturate(${1 + idx*.05}) brightness(${.92 + idx*.015})`;
+        ritualPhotos[1].style.transform = `scale(${1.07 - p * .02}) translate3d(0, ${p * 16}px,0)`;
+        ritualPhotos[1].style.filter = `saturate(${1 + idx * .08}) brightness(${.9 + idx * .02})`;
       }
     }
   }
@@ -85,7 +95,7 @@ function requestTick(){
   }
 }
 
-window.addEventListener('scroll', requestTick, {passive:true});
+window.addEventListener('scroll', requestTick, { passive:true });
 window.addEventListener('resize', requestTick);
 window.addEventListener('load', () => {
   setStep(0);
@@ -96,6 +106,6 @@ const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if(entry.isIntersecting) entry.target.classList.add('in-view');
   });
-}, {threshold:.14, rootMargin:'0px 0px -5% 0px'});
+}, { threshold:.14, rootMargin:'0px 0px -5% 0px' });
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
