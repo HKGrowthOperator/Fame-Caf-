@@ -128,3 +128,147 @@ const observer = new IntersectionObserver(entries => {
 }, {threshold:.12, rootMargin:'0px 0px -4% 0px'});
 
 document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// FAME social + location connections
+const fameInstagramUrl = 'https://www.instagram.com/fame.cafe.gm/';
+const fameMapsUrl = 'https://www.google.com/maps/search/?api=1&query=Gummersbacher+Stra%C3%9Fe+12%2C+51645+Gummersbach';
+
+function connectFameProfiles(){
+  const visitCopy = document.querySelector('#visit .visit-copy');
+
+  if(visitCopy && !visitCopy.querySelector('.visit-connections')){
+    const connections = document.createElement('div');
+    connections.className = 'visit-connections reveal';
+    connections.setAttribute('aria-label', 'FAME CAFÉ online und vor Ort');
+    connections.innerHTML = `
+      <a class="visit-connection visit-connection-instagram" href="${fameInstagramUrl}" target="_blank" rel="noopener noreferrer" aria-label="FAME CAFÉ auf Instagram öffnen">
+        <span class="visit-connection-label">INSTAGRAM</span>
+        <strong>@fame.cafe.gm</strong>
+        <span class="visit-connection-detail">FAME online</span>
+      </a>
+      <a class="visit-connection visit-connection-maps" href="${fameMapsUrl}" target="_blank" rel="noopener noreferrer" aria-label="FAME CAFÉ Adresse in Google Maps öffnen">
+        <span class="visit-connection-label">GOOGLE MAPS</span>
+        <strong>Gummersbacher Straße 12</strong>
+        <span class="visit-connection-detail">Route öffnen</span>
+      </a>
+    `;
+
+    const visitNote = visitCopy.querySelector('.visit-note');
+    if(visitNote){
+      visitNote.insertAdjacentElement('beforebegin', connections);
+    } else {
+      visitCopy.appendChild(connections);
+    }
+
+    connections.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  }
+
+  const footerLinks = document.querySelector('.footer-links');
+  if(footerLinks && !footerLinks.querySelector('[data-fame-instagram]')){
+    const instagramLink = document.createElement('a');
+    instagramLink.href = fameInstagramUrl;
+    instagramLink.target = '_blank';
+    instagramLink.rel = 'noopener noreferrer';
+    instagramLink.dataset.fameInstagram = 'true';
+    instagramLink.textContent = 'Instagram';
+    instagramLink.setAttribute('aria-label', 'FAME CAFÉ auf Instagram');
+    footerLinks.appendChild(instagramLink);
+  }
+
+  const structuredData = document.querySelector('script[type="application/ld+json"]');
+  if(structuredData){
+    try {
+      const data = JSON.parse(structuredData.textContent);
+      data.sameAs = [...new Set([...(Array.isArray(data.sameAs) ? data.sameAs : []), fameInstagramUrl])];
+      data.hasMap = fameMapsUrl;
+      structuredData.textContent = JSON.stringify(data, null, 2);
+    } catch (error) {
+      // Keep the existing page functional if structured data ever becomes malformed.
+    }
+  }
+
+  if(!document.getElementById('fameConnectionStyles')){
+    const style = document.createElement('style');
+    style.id = 'fameConnectionStyles';
+    style.textContent = `
+      .visit-connections{
+        display:grid;
+        grid-template-columns:repeat(2,minmax(0,1fr));
+        gap:12px;
+        width:min(680px,100%);
+        margin:30px 0 24px;
+      }
+      .visit-connection{
+        position:relative;
+        display:flex;
+        min-height:128px;
+        flex-direction:column;
+        justify-content:space-between;
+        gap:16px;
+        padding:20px 22px;
+        border:1px solid rgba(22,22,20,.16);
+        border-radius:22px;
+        background:rgba(255,255,255,.34);
+        color:inherit;
+        text-decoration:none;
+        transition:transform .25s ease,border-color .25s ease,background .25s ease;
+        overflow:hidden;
+      }
+      .visit-connection::after{
+        content:'';
+        position:absolute;
+        width:8px;
+        height:8px;
+        right:20px;
+        top:20px;
+        border-radius:50%;
+        background:currentColor;
+        opacity:.72;
+      }
+      .visit-connection:hover,
+      .visit-connection:focus-visible{
+        transform:translateY(-3px);
+        border-color:rgba(22,22,20,.34);
+        background:rgba(255,255,255,.6);
+      }
+      .visit-connection:focus-visible{
+        outline:2px solid currentColor;
+        outline-offset:3px;
+      }
+      .visit-connection-label,
+      .visit-connection-detail{
+        font-family:Manrope,sans-serif;
+        font-size:10px;
+        font-weight:600;
+        line-height:1.2;
+        letter-spacing:.15em;
+        text-transform:uppercase;
+      }
+      .visit-connection strong{
+        max-width:90%;
+        font-family:Manrope,sans-serif;
+        font-size:clamp(16px,1.45vw,20px);
+        font-weight:500;
+        line-height:1.25;
+        letter-spacing:-.025em;
+      }
+      .visit-connection-detail{opacity:.58;}
+      .visit-connection-instagram{
+        background:linear-gradient(135deg,rgba(143,49,91,.09),rgba(255,255,255,.36));
+      }
+      .visit-connection-maps{
+        background:linear-gradient(135deg,rgba(73,105,73,.08),rgba(255,255,255,.36));
+      }
+      @media (max-width:700px){
+        .visit-connections{grid-template-columns:1fr;margin-top:24px;}
+        .visit-connection{min-height:112px;border-radius:18px;padding:18px;}
+      }
+      @media (prefers-reduced-motion:reduce){
+        .visit-connection{transition:none;}
+      }
+    `;
+    document.head.appendChild(style);
+  }
+}
+
+connectFameProfiles();
