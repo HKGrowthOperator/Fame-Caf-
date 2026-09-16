@@ -1,62 +1,116 @@
-/* FAME CAFÉ — targeted cleanup only.
-   Keep the original motion language. Remove the two disliked arrow CTAs and keep the grid aligned. */
+/* FAME CAFÉ V3 — premium visual system
+   Palette stays unchanged. This layer fixes hierarchy, tablet composition,
+   half/half scroll markers and overall weight without flattening the motion. */
 
 :root{
   --radius:18px;
+  --hairline:rgba(23,20,18,.12);
+  --soft-white:rgba(246,243,236,.90);
 }
 
-/* Header: no arrow icon, just a small brand dot */
+/* ---------- GLOBAL TYPE / RHYTHM ---------- */
+body{
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+.section-kicker,
+.intro-eyebrow,
+.ritual-label,
+.ritual-mini,
+.menu-meta span,
+.menu-dark-copy span,
+.brand-sub,
+.desktop-nav,
+.header-cta,
+.visit-note,
+.footer-links,
+footer>p{
+  font-weight:500!important;
+}
+
+/* ---------- HEADER ---------- */
 .site-header{
-  height:72px;
-  border-bottom:1px solid rgba(255,255,255,.16);
+  height:70px;
+  border-bottom:1px solid rgba(255,255,255,.14);
+  padding-left:clamp(26px,4vw,64px);
+  padding-right:clamp(26px,4vw,64px);
 }
 .site-header.scrolled{
-  height:62px;
+  height:60px;
+  background:rgba(246,243,236,.92);
+  border-color:var(--hairline);
+  box-shadow:0 10px 30px rgba(23,20,18,.035);
 }
+.brand-main{font-size:1.48rem;font-weight:400}
+.brand-sub{font-size:.40rem;letter-spacing:.38em}
+.desktop-nav{gap:32px;font-size:.69rem}
 .header-cta{
   display:inline-flex;
   align-items:center;
+  justify-content:center;
   gap:9px;
   border:0;
-  padding:10px 13px;
+  padding:10px 15px;
   border-radius:999px;
-  background:rgba(255,255,255,.10);
+  background:rgba(255,255,255,.11);
   backdrop-filter:blur(12px);
   -webkit-backdrop-filter:blur(12px);
-  letter-spacing:.07em;
+  font-size:.61rem;
+  letter-spacing:.08em;
 }
-.site-header.scrolled .header-cta{
-  background:rgba(38,56,41,.08);
-}
+.site-header.scrolled .header-cta{background:rgba(38,56,41,.07)}
 .header-cta .nav-dot{
-  width:6px;
-  height:6px;
-  margin:0;
-  border-radius:50%;
-  background:var(--matcha);
-  flex:0 0 auto;
+  width:6px;height:6px;margin:0;border-radius:50%;background:var(--matcha);flex:0 0 auto;
 }
 
-/* Restore visible hero cue without adding a diagonal CTA arrow */
+/* ---------- HERO ---------- */
+.hero{min-height:100svh;background:var(--ink)}
+.hero-half{min-height:100svh}
+.hero-image{
+  inset:0;
+  transform:scale(1.035);
+  will-change:transform;
+}
+.hero-centerline{background:rgba(255,255,255,.24)}
+.hero-kicker{
+  font-size:.54rem;
+  letter-spacing:.30em;
+  margin-bottom:16px;
+}
+.hero-center h1{
+  font-size:clamp(5rem,9vw,9.4rem);
+  line-height:.74;
+  letter-spacing:-.02em;
+  font-weight:400;
+  text-shadow:0 18px 44px rgba(0,0,0,.14);
+}
+.hero-city{font-size:.52rem;letter-spacing:.46em;margin-top:20px}
+.hero-meta{bottom:6.5vh;width:min(260px,31vw)}
+.hero-meta span{font-size:.49rem;letter-spacing:.20em}
+.hero-meta p{
+  margin-top:8px;
+  font-family:var(--sans);
+  font-size:.66rem;
+  line-height:1.55;
+  letter-spacing:.05em;
+  text-transform:none;
+  opacity:.78;
+}
 .hero-scroll{
-  bottom:26px;
-  width:auto;
-  height:auto;
+  bottom:24px;
   display:flex;
-  gap:12px;
+  gap:9px;
   align-items:center;
-  font-size:.55rem;
-  letter-spacing:.22em;
+  font-size:.50rem;
+  letter-spacing:.20em;
+  font-weight:500;
 }
-.hero-scroll::before{
-  content:"SCROLL TO TASTE";
-}
+.hero-scroll::before{content:"SCROLL TO TASTE"}
 .hero-scroll .scroll-dot{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:rgba(255,255,255,.9);
   display:block;
+  width:5px;height:5px;border-radius:50%;background:rgba(255,255,255,.88);
 }
 .hero::before{
   content:"COFFEE\A×\AMATCHA";
@@ -66,136 +120,281 @@
   left:50%;
   top:66%;
   transform:translate(-50%,-50%);
-  width:106px;
-  height:106px;
-  border:1px solid rgba(255,255,255,.46);
+  width:76px;
+  height:76px;
+  border:1px solid rgba(255,255,255,.27);
   border-radius:50%;
   display:grid;
   place-items:center;
   color:#fff;
-  font-size:.46rem;
-  letter-spacing:.16em;
-  line-height:1.55;
+  font-size:.37rem;
+  letter-spacing:.14em;
+  line-height:1.45;
   text-align:center;
   backdrop-filter:blur(8px);
   pointer-events:none;
+  opacity:.82;
 }
 
-/* Restore the half/half scroll badge and stage bubble */
+/* ---------- INTRO ---------- */
+.intro{
+  padding:clamp(76px,8vw,118px) var(--gutter) clamp(70px,8vw,110px);
+}
+.intro-line{height:44px;margin-bottom:28px;background:var(--hairline)}
+.intro-eyebrow{font-size:.53rem;letter-spacing:.22em}
+.intro-title{
+  font-size:clamp(3rem,5.5vw,6.2rem);
+  line-height:.92;
+  margin:20px auto 18px;
+  font-weight:400;
+}
+.intro-copy{font-size:clamp(.84rem,1.05vw,1rem);line-height:1.7}
+.intro-pills{margin-top:28px;gap:8px}
+.intro-pills span{
+  padding:8px 13px;
+  font-size:.58rem;
+  letter-spacing:.055em;
+  border-color:rgba(23,20,18,.13);
+  background:rgba(255,255,255,.12);
+}
+
+/* ---------- HALF / HALF RITUAL ---------- */
+.ritual{height:400vh;background:var(--ink)}
+.ritual-sticky{top:0;height:100svh}
+.ritual-photo{inset:0;transform:scale(1.055)}
+.ritual-vignette-coffee{background:linear-gradient(110deg,rgba(18,12,8,.78),rgba(18,12,8,.10) 72%)}
+.ritual-vignette-matcha{background:linear-gradient(250deg,rgba(18,35,22,.76),rgba(18,35,22,.08) 74%)}
+.ritual-copy{
+  bottom:clamp(38px,6.5vh,72px);
+  width:min(430px,68%);
+}
+.ritual-label{
+  gap:12px;
+  font-size:.47rem;
+  letter-spacing:.20em;
+  opacity:.82;
+}
+.ritual-number{
+  font-family:var(--sans);
+  font-size:.52rem;
+  font-weight:500;
+  letter-spacing:.12em;
+}
+.ritual-copy h2{
+  font-size:clamp(3.7rem,6.3vw,7rem);
+  line-height:.84;
+  letter-spacing:-.018em;
+  margin:13px 0 15px;
+  font-weight:400;
+}
+.ritual-copy p{
+  font-size:.72rem;
+  line-height:1.68;
+  max-width:340px;
+  opacity:.84;
+}
+.ritual-mini{
+  top:96px;
+  font-size:.43rem;
+  letter-spacing:.18em;
+  opacity:.58;
+}
+
+/* V3 center axis: one marker only. No stacked bubbles. */
 .ritual-axis{
-  width:90px;
+  width:44px;
+  left:50%;
+  transform:translateX(-50%);
 }
 .axis-track{
   width:1px;
-  background:rgba(255,255,255,.35);
+  background:rgba(255,255,255,.26);
 }
 .axis-progress{
-  width:3px;
+  width:2px;
   background:var(--matcha);
 }
 .axis-disc{
-  width:88px;
-  height:88px;
+  width:30px;
+  height:30px;
   border-radius:50%;
-  background:var(--paper);
+  background:rgba(246,243,236,.94);
   color:var(--ink);
-  border:0;
-  box-shadow:0 18px 50px rgba(0,0,0,.24);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+  border:1px solid rgba(255,255,255,.9);
+  box-shadow:0 8px 24px rgba(0,0,0,.16);
+  display:grid;
+  place-items:center;
+  font-family:var(--sans);
+  font-size:.46rem;
+  line-height:1;
+  letter-spacing:.03em;
+  font-weight:600;
 }
-.axis-disc::before{
-  content:"HALF\A/\AHALF";
-  white-space:pre;
-  font-size:.48rem;
-  letter-spacing:.2em;
-  line-height:1.35;
-}
-.ritual-sticky::after{
-  content:attr(data-stage);
+.axis-disc::before{content:attr(data-step)}
+.axis-disc::after{
+  content:attr(data-phase);
   position:absolute;
-  z-index:10;
-  top:84px;
+  top:38px;
   left:50%;
   transform:translateX(-50%);
-  background:rgba(246,243,236,.9);
-  color:var(--ink);
-  border-radius:999px;
-  padding:8px 12px;
-  font-size:.5rem;
-  letter-spacing:.2em;
-  font-weight:700;
-  backdrop-filter:blur(12px);
+  color:rgba(255,255,255,.76);
+  background:none;
+  border:0;
+  box-shadow:none;
+  white-space:nowrap;
+  font-size:.37rem;
+  line-height:1;
+  letter-spacing:.18em;
+  font-weight:500;
 }
+.ritual-sticky::after{display:none!important;content:none!important}
 
-/* Keep the cards on a common baseline */
-.signature-heading{align-items:start}
-.signature-grid{
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:16px;
-  align-items:stretch;
-}
+/* ---------- SIGNATURE CARDS ---------- */
+.signature{padding:clamp(76px,8vw,120px) var(--gutter)}
+.signature-heading{align-items:start;margin-bottom:34px}
+.signature-heading h2{font-size:clamp(2.9rem,4.7vw,5.5rem);margin-top:14px}
+.signature-heading p{font-size:.82rem;line-height:1.7}
+.signature-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;align-items:stretch}
 .signature-card,
 .signature-card:nth-child(2),
 .signature-card:nth-child(3){
   margin-top:0!important;
-  min-height:590px;
+  min-height:540px;
   border-radius:var(--radius);
 }
-.menu-row{
-  gap:14px;
-  align-items:stretch;
-}
-.menu-item{
-  display:flex;
-  flex-direction:column;
-  height:100%;
-}
-.menu-image{
-  height:420px;
-  border-radius:16px;
-}
-.menu-item-dark{
-  min-height:510px;
-  height:100%;
-  border-radius:16px;
-  padding:28px;
-}
+.signature-copy{left:24px;right:24px;bottom:22px}
+.signature-copy span{font-size:.48rem;letter-spacing:.16em}
+.signature-copy h3{font-size:clamp(2.8rem,4vw,4.7rem);margin:7px 0 8px}
+.signature-copy p{font-size:.60rem;letter-spacing:.06em}
 
-/* Bottom-left CTA is text-only: no diagonal arrow */
-.line-link{font-size:.6rem;letter-spacing:.13em}
-.visit-note{
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-  margin-top:30px;
-  font-size:.58rem;
-  letter-spacing:.16em;
-  font-weight:700;
+/* ---------- AÇAÍ ---------- */
+.acai-feature{min-height:72vh}
+.acai-copy{padding-top:clamp(56px,6vw,90px);padding-bottom:clamp(56px,6vw,90px)}
+.acai-copy h2{font-size:clamp(3.8rem,6vw,6.8rem);line-height:.82;margin:18px 0 22px}
+.acai-copy p{font-size:.82rem;line-height:1.7}
+.acai-stage{min-height:72vh}
+.acai-stamp{
+  width:68px;height:68px;right:22px;top:22px;
+  font-size:.38rem;letter-spacing:.12em;transform:none;box-shadow:none;
 }
-.visit-note>span{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:var(--matcha);
+.line-link{font-size:.56rem;letter-spacing:.12em;margin-top:20px}
+
+/* ---------- SPACE ---------- */
+.space{min-height:88vh}
+.space-copy{padding-bottom:7vh;max-width:690px}
+.space-copy h2{font-size:clamp(4.2rem,7.4vw,8rem);line-height:.80;margin:18px 0 22px}
+.space-copy p{font-size:.82rem;line-height:1.7}
+.space-index{gap:10px;font-size:.47rem;letter-spacing:.17em;opacity:.72}
+
+/* ---------- MENU ---------- */
+.menu{padding:clamp(76px,8vw,120px) var(--gutter)}
+.menu-head{gap:42px;margin-bottom:34px}
+.menu-head h2{font-size:clamp(3.2rem,5.4vw,6rem);margin-top:15px}
+.menu-head p{font-size:.80rem;line-height:1.7}
+.menu-row{gap:14px;align-items:stretch}
+.menu-item{display:flex;flex-direction:column;height:100%}
+.menu-image{height:390px;border-radius:16px}
+.menu-meta{padding-top:15px}
+.menu-meta span,.menu-dark-copy span{font-size:.48rem;letter-spacing:.15em}
+.menu-meta h3{font-size:1.45rem;margin:6px 0 4px}
+.menu-meta p{font-size:.62rem}
+.menu-item-dark{min-height:466px;height:100%;border-radius:16px;padding:24px}
+.menu-dark-copy h3{font-size:clamp(2.2rem,3vw,3.4rem)}
+.menu-dark-copy p{font-size:.68rem}
+
+/* ---------- CRAFT ---------- */
+.craft{min-height:78vh}
+.craft-media{min-height:78vh}
+.craft-copy{padding-top:clamp(56px,6vw,90px);padding-bottom:clamp(56px,6vw,90px)}
+.craft-copy h2{font-size:clamp(3.8rem,5.9vw,6.5rem);line-height:.82;margin:18px 0 22px}
+.craft-copy p{font-size:.80rem;line-height:1.7}
+
+/* ---------- VISIT / FOOTER ---------- */
+.visit{
+  min-height:64vh;
+  padding-top:clamp(70px,8vw,110px);
+  padding-bottom:clamp(70px,8vw,110px);
+  gap:52px;
+}
+.visit-copy h2{font-size:clamp(4rem,6.8vw,7.2rem);line-height:.82;margin:18px 0 22px}
+.visit-copy p{font-size:.82rem;line-height:1.7}
+.visit-note{margin-top:24px;font-size:.52rem;letter-spacing:.14em}
+.visit-note>span{width:6px;height:6px}
+.visit-mark{max-width:330px;font-size:clamp(1.9rem,3vw,3.5rem);border-color:var(--hairline)}
+footer{min-height:108px}
+
+/* ---------- TABLET ---------- */
+@media (max-width:1100px){
+  .site-header{grid-template-columns:1fr auto 1fr}
+  .desktop-nav{gap:26px}
+  .hero-center h1{font-size:clamp(5.2rem,11vw,8.2rem)}
+  .hero-meta{width:min(220px,31vw)}
+  .hero::before{width:68px;height:68px;top:68%}
+  .ritual-copy{width:64%}
+  .ritual-copy h2{font-size:clamp(3.5rem,7vw,5.6rem)}
+  .ritual-mini{top:90px}
+  .signature-card,.signature-card:nth-child(2),.signature-card:nth-child(3){min-height:500px}
+  .menu-image{height:340px}
 }
 
 @media (max-width:980px){
+  .site-header{grid-template-columns:1fr auto}.desktop-nav{display:none}
   .signature-grid{grid-template-columns:1fr 1fr}
-  .signature-card,.signature-card:nth-child(2){min-height:520px}
-  .signature-card:nth-child(3){grid-column:1/-1;min-height:500px}
+  .signature-card,.signature-card:nth-child(2){min-height:500px}
+  .signature-card:nth-child(3){grid-column:1/-1;min-height:460px}
+  .menu-row{grid-template-columns:1fr 1fr}
+  .craft{grid-template-columns:1fr}
+  .craft-media{min-height:62vh}
+  .visit{grid-template-columns:1fr .65fr}
 }
 
+/* ---------- MOBILE ---------- */
 @media (max-width:680px){
-  .header-cta{padding:8px 10px;font-size:.53rem}
-  .hero::before{width:82px;height:82px;top:70%}
-  .ritual-axis{right:10px;width:54px}
-  .axis-disc{width:52px;height:52px}
-  .axis-disc::before{font-size:.39rem}
-  .ritual-sticky::after{top:70px;font-size:.44rem}
+  :root{--gutter:20px}
+  .site-header{height:62px}.site-header.scrolled{height:58px}
+  .brand-main{font-size:1.2rem}.brand-sub{font-size:.35rem}
+  .header-cta{padding:8px 10px;font-size:.50rem}
+  .hero{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+  .hero-half{min-height:50svh}
+  .hero-centerline{left:0;right:0;top:50%;bottom:auto;width:auto;height:1px}
+  .hero-center h1{font-size:clamp(3.8rem,18vw,5.4rem);line-height:.78}
+  .hero-kicker{font-size:.43rem;letter-spacing:.22em}
+  .hero-city{font-size:.42rem}
+  .hero-meta{display:none}
+  .hero::before{width:58px;height:58px;top:69%;font-size:.31rem}
+  .hero-scroll{font-size:.43rem;bottom:15px}
+  .intro{padding-top:62px;padding-bottom:62px}
+  .intro-line{height:34px;margin-bottom:22px}
+  .intro-title{font-size:clamp(2.8rem,14vw,4.4rem)}
+  .intro-copy{font-size:.80rem;line-height:1.65}
+  .ritual{height:360vh}
+  .ritual-sticky{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
+  .ritual-axis{left:auto;right:6px;top:0;bottom:0;transform:none;width:30px}
+  .axis-disc{width:26px;height:26px;font-size:.42rem}
+  .axis-disc::after{font-size:.31rem;top:34px}
+  .ritual-mini{display:none}
+  .ritual-copy{bottom:4vh;width:73%}
+  .ritual-copy-left{left:20px}.ritual-copy-right{right:20px}
+  .ritual-copy h2{font-size:clamp(2.8rem,13vw,4rem);margin:9px 0 9px}
+  .ritual-copy p{font-size:.61rem;line-height:1.5}
+  .ritual-label{font-size:.39rem}
+  .signature{padding-left:20px;padding-right:20px}
+  .signature-heading{grid-template-columns:1fr;gap:14px}
   .signature-grid{grid-template-columns:1fr}
-  .signature-card,.signature-card:nth-child(2),.signature-card:nth-child(3){grid-column:auto;min-height:500px}
-  .menu-item-dark{min-height:360px}
+  .signature-card,.signature-card:nth-child(2),.signature-card:nth-child(3){grid-column:auto;min-height:460px}
+  .acai-feature{grid-template-columns:1fr}.acai-stage{min-height:52vh}
+  .space{min-height:78vh}.space-index{display:none}
+  .menu{padding-left:20px;padding-right:20px}
+  .menu-head{grid-template-columns:1fr;gap:14px}
+  .menu-row{grid-template-columns:1fr}
+  .menu-image{height:400px}.menu-item-dark{min-height:320px}
+  .craft-media{min-height:52vh}
+  .visit{grid-template-columns:1fr;padding-left:20px;padding-right:20px}
+  .visit-mark{max-width:230px}
+  footer{grid-template-columns:1fr;padding:22px 20px}
+  .footer-links{display:none}footer>p{justify-self:start;margin-top:14px}
+}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-image,.ritual-photo{transform:none!important}
 }
