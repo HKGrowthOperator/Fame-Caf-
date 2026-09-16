@@ -1,77 +1,92 @@
 # FAME CAFÉ — Website
 
-Premium-Website-Grundlage für FAME CAFÉ Gummersbach mit festem Design Lock.
+Produktionsnahe Website-Grundlage für FAME CAFÉ Gummersbach.
 
 ## Design Lock
 
-Bewusst beibehalten:
+Die bestehende FAME-Designrichtung bleibt geschützt: freigegebene Farbwelt, FAME-Wortmarke, Editorial-Serif/Sans-System, Coffee × Matcha Hero, Kreis-/Split-Sprache und Half/Half-Scrollmoment werden nicht ohne ausdrückliche Freigabe ersetzt.
 
-- freigegebene Farbwelt
-- FAME-Wortmarke
-- Editorial Serif + Clean Sans
-- Coffee × Matcha Half/Half Hero
-- Circle-/Build-Sprache
-- Sticky Ritual / Scroll Story
-- ruhige Premium-Komposition ohne Pfeil-/UI-Kit-Look
+## Inhaltlicher Stand
 
-## Aktueller Umsetzungsstand
+Verifiziert und deshalb verwendbar:
 
-- Hero und bestehende visuelle DNA geschützt
-- 6-stufige Coffee-/Matcha-Ritualsequenz
-- Matcha Build ohne unbestätigte Zutat als Fakt (`LAYER` statt `COCONUT WATER` bis Bestätigung)
-- bestätigte Produktkategorien statt erfundener Menüprodukte
-- Coffee / Matcha / Açaí Core
-- Tea sowie Cake & Bakery ergänzt
+- Fame Cafe ACH UG (haftungsbeschränkt)
+- Gummersbacher Straße 12, 51645 Gummersbach
+- HRB 129225, Amtsgericht Köln
+- Geschäftsführer: Harisch Sivasoruban
+- Cafébetrieb
+- Matcha-Getränke
+- Açaí-Bowls
+- Kaffee
+- Teespezialitäten
+- Kuchen und Backwaren
+- Cateringdienstleistungen
+
+Nicht erfinden bzw. vor Veröffentlichung noch bestätigen:
+
+- Öffnungszeiten
+- Telefonnummer
+- öffentliche Café-E-Mail-Adresse
+- finale Domain
+- finale Social-Media-Accounts
+- vollständige Speisekarte
+- Preise
+- konkrete Zutaten/Rezepturen
+- konkrete Rösterei/Bohnenherkunft
+- finale Fame-Produktfotos
+
+## Bildstatus
+
+Die aktuell eingebundenen externen Fotografien sind temporäre Entwicklungs-/Demo-Assets. Vor finalem Launch sollen sie durch konsistente echte FAME-Fotografie bzw. final freigegebene Assets ersetzt werden.
+
+## Coolify — Redeploy Contract
+
+Das Repository ist so vorbereitet, dass Coolify direkt aus `main` bauen kann.
+
+Empfohlene Konfiguration:
+
+- Source: Git Repository `HKGrowthOperator/Fame-Caf-`
+- Branch: `main`
+- Build Pack: `Dockerfile`
+- Base Directory: `/`
+- Dockerfile Location: `/Dockerfile`
+- Exposed/Container Port: `3000`
+
+Kompatibilität: Falls die bestehende Coolify-App weiterhin `/deploy/coolify/Dockerfile` verwendet, ist auch dieser Dockerfile auf demselben Stand und kann ohne Umstellung weiterverwendet werden.
+
+Nach einem Redeploy muss `/health.txt` erreichbar sein. Der Endpunkt wird bewusst ohne Cache ausgeliefert und dient dazu zu prüfen, dass wirklich der neue Repository-Build läuft.
+
+Für Quellcodeänderungen in Coolify `Redeploy` verwenden. Wenn ein alter Layer trotz neuem Commit wiederverwendet wird, `Force deploy (without cache)` verwenden.
+
+## Enthalten
+
+- Coffee × Matcha Hero
+- Half/Half Scroll Story
+- Coffee-/Matcha-Ritual
+- Coffee / Matcha / Açaí Produktwelten
+- Tea und Cake & Bakery Kategorien
 - Café Experience
 - Editorial Gallery
-- Catering-Sektion
-- Visit-Bereich mit verifizierter Anschrift
-- Footer mit Registerdaten
-- Impressum-/Datenschutz-Seiten technisch vorbereitet
-- LocalBusiness/CafeOrCoffeeShop Structured Data nur mit bestätigten Angaben
-- Reduced-Motion-Support
-- Mobile-/Tablet-Ergänzungen im Master-CSS
-- robots.txt vorhanden
-
-## Verifizierte Daten
-
-Fame Cafe ACH UG (haftungsbeschränkt)  
-Gummersbacher Straße 12  
-51645 Gummersbach
-
-Handelsregister: HRB 129225  
-Registergericht: Amtsgericht Köln  
-Geschäftsführer: Harisch Sivasoruban
-
-Bestätigter Unternehmensgegenstand umfasst Cafébetrieb, Açaí-Bowls, Matcha-Getränke, Kaffee- und Teespezialitäten, Kuchen, Backwaren und Cateringdienstleistungen.
-
-## Noch offen vor finalem öffentlichen Launch
-
-- echte FAME-Produktfotografie / finales Shooting
-- finale Öffnungszeiten
-- geschäftliche E-Mail-Adresse
-- Telefonnummer, falls vorgesehen
-- vollständige echte Speisekarte und Preise
-- bestätigte Social-Media-Accounts
-- finale Produktionsdomain
-- finaler Legal-/Datenschutzcheck gegen echte Produktionsinfrastruktur
-- lokale/optimierte Auslieferung der finalen Bilder und nach Möglichkeit Fonts
-- canonical + sitemap.xml nach Bestätigung der Produktionsdomain
-
-## Bilder
-
-Der aktuelle Stand verwendet weiterhin temporäre lizenzierte Unsplash-Demoassets als visuelle Entwicklungsgrundlage. Sie sind nicht als finale FAME-Produktfotografie zu behandeln.
+- Catering
+- Visit mit verifizierter Adresse
+- Impressum / Datenschutz als technischer Stand
+- Local SEO / strukturierte Daten nur mit bestätigten Angaben
+- Reduced Motion
+- responsive Desktop / Tablet / Mobile
 
 ## Wichtige Dateien
 
-- `index.html` — Hauptseite
+- `index.html` — Homepage
 - `styles.css` — ursprüngliches Basissystem
-- `premium-fixes.css` — freigegebener Premium-Layer
-- `master-upgrade.css` — Ergänzungen für Menü, Gallery, Catering, Legal, Responsive und Reduced Motion
-- `script.js` — native Scroll-/Ritual-Logik
-- `FAME_MASTER_EXECUTION_PROMPT.md` — korrigierter ausführbarer Master-Prompt
-- `impressum.html` / `datenschutz.html` — technischer Vorabstand
+- `premium-fixes.css` — freigegebene Premium-Designkorrekturen
+- `master-upgrade.css` — Ergänzungen des Master-Passes
+- `script.js` — Scroll-/Reveal-Logik
+- `Dockerfile` — bevorzugter Coolify-Build ab Repo-Root
+- `deploy/coolify/Dockerfile` — kompatibler bestehender Coolify-Build
+- `deploy/coolify/nginx.conf` — Runtime-Konfiguration
+- `health.txt` — Build-/Deploy-Prüfung
+- `FAME_MASTER_EXECUTION_PROMPT.md` — verbindlicher Design-/Content-Lock
 
-## Deployment
+## Grundregel
 
-Coolify-Konfiguration liegt unter `deploy/coolify/`.
+Keine Fake-Daten. Keine erfundenen Preise, Öffnungszeiten, Bewertungen, Zutaten, Herkunftsangaben oder Social Handles. Fehlende Daten werden architektonisch vorbereitet, aber nicht als Fakten veröffentlicht.
