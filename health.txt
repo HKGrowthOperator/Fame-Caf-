@@ -1,6 +1,6 @@
-FAME_CAFE_BUILD=2026-09-16T22:29+02:00
+FAME_CAFE_BUILD=2026-09-16T23:40+02:00
 SOURCE=HKGrowthOperator/Fame-Caf-
-BRANCH=main
+BRANCH=claude/fame-cafe-website-improve-vgfb3j
 DEPLOY_TARGET=Coolify
 EXPECTED_DOCKERFILE=/Dockerfile
 FALLBACK_DOCKERFILE=/deploy/coolify/Dockerfile
