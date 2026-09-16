@@ -1,24 +1,48 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" class="no-js">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="theme-color" content="#F6F3EC" />
+  <meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#171412" media="(prefers-color-scheme: dark)" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="description" content="FAME CAFÉ Gummersbach — Matcha, Açaí-Bowls, Kaffee, Tee, Kuchen und Backwaren in der Gummersbacher Straße 12." />
   <meta property="og:type" content="website" />
   <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="FAME CAFÉ" />
   <meta property="og:title" content="FAME CAFÉ — Gummersbach" />
   <meta property="og:description" content="Matcha. Coffee. Açaí. FAME CAFÉ in Gummersbach." />
+  <meta property="og:image" content="assets/fame-og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="FAME CAFÉ Gummersbach" />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="FAME CAFÉ — Gummersbach" />
   <meta name="twitter:description" content="Matcha. Coffee. Açaí. FAME CAFÉ in Gummersbach." />
+  <meta name="twitter:image" content="assets/fame-og.png" />
   <title>FAME CAFÉ — Matcha, Açaí & Kaffee in Gummersbach</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- og:image ist ein relativer Pfad, bis die produktive Domain feststeht.
+       Beim Setzen der Domain hier und in den Canonical-Tags auf absolute URLs
+       umstellen — Social-Crawler lösen relative Pfade nicht auf. -->
+
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/dm-serif-display-latin-400.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/manrope-latin-variable.woff2" crossorigin />
   <link rel="stylesheet" href="styles.css?v=v5" />
+
+  <script>
+    /* Ohne diese Zeile bleibt der gesamte Seiteninhalt unsichtbar, sobald
+       JavaScript nicht läuft: .reveal startet mit opacity:0 und wird erst
+       per Skript eingeblendet. Die Klasse wird sofort im <head> gesetzt,
+       damit kein Aufblitzen entsteht. */
+    document.documentElement.classList.replace('no-js', 'js');
+  </script>
+
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -36,9 +60,11 @@
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#intro">Zum Inhalt springen</a>
+
   <div class="page-shell">
     <header class="site-header" id="siteHeader">
-      <a class="brand" href="#top" aria-label="FAME CAFÉ Startseite">
+      <a class="brand" href="#top">
         <span class="brand-main">FAME CAFÉ</span>
         <span class="brand-sub">GUMMERSBACH</span>
       </a>
@@ -48,22 +74,62 @@
         <a href="#space">Café</a>
         <a href="#catering">Catering</a>
       </nav>
-      <a class="header-cta" href="#visit"><span class="nav-dot" aria-hidden="true"></span>Besuchen</a>
+      <div class="header-actions">
+        <a class="header-cta" href="#visit"><span class="nav-dot" aria-hidden="true"></span>Besuchen</a>
+        <button class="nav-toggle" id="navToggle" type="button"
+                aria-expanded="false" aria-controls="mobileNav">
+          <span class="nav-toggle-lines" aria-hidden="true"><i></i><i></i></span>
+          <span class="nav-toggle-label">Menü</span>
+        </button>
+      </div>
     </header>
+
+    <div class="mobile-nav" id="mobileNav" hidden>
+      <nav aria-label="Navigation">
+        <ul class="mobile-nav-list">
+          <li><a href="#ritual"><span>01</span>Ritual</a></li>
+          <li><a href="#menu"><span>02</span>Menü</a></li>
+          <li><a href="#space"><span>03</span>Café</a></li>
+          <li><a href="#catering"><span>04</span>Catering</a></li>
+          <li><a href="#visit"><span>05</span>Besuchen</a></li>
+        </ul>
+      </nav>
+      <div class="mobile-nav-foot">
+        <address>
+          <span>Gummersbacher Straße 12</span>
+          <span>51645 Gummersbach</span>
+        </address>
+        <div class="mobile-nav-legal">
+          <a href="impressum.html">Impressum</a>
+          <a href="datenschutz.html">Datenschutz</a>
+        </div>
+      </div>
+    </div>
 
     <main id="top">
       <section class="hero" aria-label="FAME CAFÉ — Coffee und Matcha">
-        <div class="hero-half hero-coffee" data-parallax="-0.035">
-          <div class="hero-image coffee-image" role="img" aria-label="Temporäre Coffee-Fotografie für die FAME Designvorschau"></div>
-          <div class="hero-shade coffee-shade"></div>
+        <div class="hero-half hero-coffee" data-parallax="-1">
+          <!-- Bildquellen zentral in styles.css unter "Bildslots". Die Flächen
+               sind rein dekorativ; die Aussage steht in der sichtbaren Copy. -->
+          <div class="hero-image coffee-image" aria-hidden="true"></div>
+          <div class="hero-shade coffee-shade" aria-hidden="true"></div>
           <div class="hero-meta hero-meta-left reveal">
             <span>COFFEE</span>
             <p>Craft. Detail. Daily.</p>
           </div>
         </div>
-        <div class="hero-half hero-matcha" data-parallax="0.035">
-          <div class="hero-image matcha-image" role="img" aria-label="Temporäre Matcha-Fotografie für die FAME Designvorschau"></div>
-          <div class="hero-shade matcha-shade"></div>
+        <div class="hero-half hero-matcha" data-parallax="1">
+          <div class="hero-image matcha-image" aria-hidden="true"></div>
+          <div class="hero-shade matcha-shade" aria-hidden="true"></div>
+          <div class="hero-bubbles" aria-hidden="true">
+            <i style="--x:14%;--s:.55;--d:0s;--t:17s"></i>
+            <i style="--x:27%;--s:.95;--d:-4s;--t:22s"></i>
+            <i style="--x:41%;--s:.4;--d:-9s;--t:14s"></i>
+            <i style="--x:56%;--s:1.25;--d:-2s;--t:26s"></i>
+            <i style="--x:68%;--s:.65;--d:-12s;--t:19s"></i>
+            <i style="--x:83%;--s:.85;--d:-7s;--t:23s"></i>
+            <i style="--x:92%;--s:.45;--d:-15s;--t:16s"></i>
+          </div>
           <div class="hero-meta hero-meta-right reveal">
             <span>MATCHA</span>
             <p>Green. Clean. FAME.</p>
@@ -71,46 +137,52 @@
         </div>
 
         <div class="hero-centerline" aria-hidden="true"></div>
+        <p class="hero-orbit" aria-hidden="true"><span>COFFEE</span><b>×</b><span>MATCHA</span></p>
+
         <div class="hero-center reveal">
           <p class="hero-kicker">COFFEE · MATCHA · AÇAÍ</p>
           <h1>FAME<br><em>CAFÉ</em></h1>
           <p class="hero-city">GUMMERSBACH</p>
-          <a class="hero-scroll" href="#intro" aria-label="Weiter zum nächsten Abschnitt"><span class="scroll-dot" aria-hidden="true"></span></a>
+          <a class="hero-scroll" href="#intro">
+            <span class="hero-scroll-text">SCROLL TO TASTE</span>
+            <span class="scroll-dot" aria-hidden="true"></span>
+          </a>
         </div>
       </section>
 
-      <section class="intro" id="intro">
+      <section class="intro" id="intro" aria-labelledby="introTitle">
         <div class="intro-line" aria-hidden="true"></div>
         <p class="intro-eyebrow reveal">FAME CAFÉ · GUMMERSBACH</p>
-        <h2 class="intro-title reveal">Gummersbach, meet FAME.</h2>
+        <h2 class="intro-title reveal" id="introTitle">Gummersbach, meet FAME.</h2>
         <p class="intro-copy reveal">Matcha, Açaí und Kaffee. Dazu Tee, Kuchen und Backwaren — in einer Café-Welt, die über Produkt, Raum und Atmosphäre funktioniert.</p>
-        <div class="intro-pills reveal" aria-label="Bestätigte FAME Produktwelten">
-          <span>Coffee</span><span>Matcha</span><span>Açaí</span><span>Tea</span><span>Cake &amp; Bakery</span><span>Catering</span>
-        </div>
+        <ul class="intro-pills reveal">
+          <li>Coffee</li><li>Matcha</li><li>Açaí</li><li>Tea</li><li>Cake &amp; Bakery</li><li>Catering</li>
+        </ul>
       </section>
 
-      <section class="ritual" id="ritual" aria-label="Coffee und Matcha Scroll Ritual">
+      <section class="ritual" id="ritual" aria-labelledby="ritualTitle">
+        <h2 class="visually-hidden" id="ritualTitle">Coffee und Matcha — Ritual in sechs Schritten</h2>
         <div class="ritual-sticky">
           <div class="ritual-half ritual-coffee">
-            <div class="ritual-photo coffee-ritual-photo" role="img" aria-label="Temporäre Coffee-Fotografie"></div>
-            <div class="ritual-vignette ritual-vignette-coffee"></div>
+            <div class="ritual-photo coffee-ritual-photo" aria-hidden="true"></div>
+            <div class="ritual-vignette ritual-vignette-coffee" aria-hidden="true"></div>
             <div class="ritual-copy ritual-copy-left">
               <div class="ritual-label"><span class="ritual-number" id="coffeeNo">01</span><span>COFFEE</span></div>
-              <h2 id="coffeeTitle">BEANS.</h2>
-              <p id="coffeeText">Der Coffee-Moment beginnt mit Ruhe, Materialität und Präzision.</p>
+              <p class="ritual-title" id="coffeeTitle">BEANS.</p>
+              <p id="coffeeText">Der Coffee-Moment beginnt mit Materialität, Ruhe und Fokus auf das Produkt.</p>
             </div>
-            <div class="ritual-mini ritual-mini-left" id="coffeeMini">BEANS · GRIND · DOSE · EXTRACT · POUR · SERVE</div>
+            <div class="ritual-mini ritual-mini-left">BEANS · GRIND · DOSE · EXTRACT · POUR · SERVE</div>
           </div>
 
           <div class="ritual-half ritual-matcha">
-            <div class="ritual-photo matcha-ritual-photo" role="img" aria-label="Temporäre Matcha-Fotografie"></div>
-            <div class="ritual-vignette ritual-vignette-matcha"></div>
+            <div class="ritual-photo matcha-ritual-photo" aria-hidden="true"></div>
+            <div class="ritual-vignette ritual-vignette-matcha" aria-hidden="true"></div>
             <div class="ritual-copy ritual-copy-right">
               <div class="ritual-label"><span>MATCHA</span><span class="ritual-number" id="matchaNo">01</span></div>
-              <h2 id="matchaTitle">FOAM.</h2>
-              <p id="matchaText">Eine visuelle Build-Sequenz, Schicht für Schicht — ohne eine unbestätigte Rezeptur als Menüfakt auszugeben.</p>
+              <p class="ritual-title" id="matchaTitle">FOAM.</p>
+              <p id="matchaText">Eine visuelle Build-Sequenz, Schicht für Schicht.</p>
             </div>
-            <div class="ritual-mini ritual-mini-right" id="matchaMini">FOAM · ICE · LAYER · MATCHA · LID · STRAW</div>
+            <div class="ritual-mini ritual-mini-right">FOAM · ICE · LAYER · MATCHA · LID · STRAW</div>
           </div>
 
           <div class="ritual-axis" aria-hidden="true">
@@ -119,6 +191,18 @@
             <div class="axis-disc" id="axisDisc" data-step="01" data-phase="START"></div>
           </div>
         </div>
+
+        <!-- Vollständige Sequenz als Text. Sichtbar für Screenreader, für
+             Nutzer mit prefers-reduced-motion und wenn kein JavaScript läuft —
+             also überall dort, wo die Scroll-Choreografie nicht greift. -->
+        <ol class="ritual-steps">
+          <li><span>01</span><b>Beans · Foam</b><p>Der Coffee-Moment beginnt mit Materialität, Ruhe und Fokus auf das Produkt. Auf der Matcha-Seite startet eine visuelle Build-Sequenz, Schicht für Schicht.</p></li>
+          <li><span>02</span><b>Grind · Ice</b><p>Der nächste Schritt wird sichtbar, ohne die Seite mit technischer Erklärung zu überladen. Kühle Textur und klare Formen bringen Bewegung in das Glas.</p></li>
+          <li><span>03</span><b>Dose · Layer</b><p>Präzision als Teil der Bildsprache — kurz, ruhig und kontrolliert. Eine neutrale visuelle Schicht ersetzt unbestätigte Zutatenangaben.</p></li>
+          <li><span>04</span><b>Extract · Matcha</b><p>Bewegung, Textur und Kontrast tragen die Coffee-Welt. Das Grün übernimmt den Frame und macht die Produktwelt sofort erkennbar.</p></li>
+          <li><span>05</span><b>Pour · Lid</b><p>Der Übergang bleibt weich und editorial statt wie eine technische Demo. Der Build schließt sich, ohne daraus eine erfundene Rezeptur zu machen.</p></li>
+          <li><span>06</span><b>Serve · Straw</b><p>Der Abschluss gehört dem Produkt und dem Moment an der Bar.</p></li>
+        </ol>
       </section>
 
       <section class="signature" aria-labelledby="signatureTitle">
@@ -132,18 +216,18 @@
 
         <div class="signature-grid">
           <article class="signature-card signature-card-coffee reveal">
-            <div class="signature-media signature-media-coffee" role="img" aria-label="Temporäre Coffee-Fotografie"></div>
-            <div class="signature-overlay"></div>
+            <div class="signature-media signature-media-coffee" aria-hidden="true"></div>
+            <div class="signature-overlay" aria-hidden="true"></div>
             <div class="signature-copy"><span>01</span><h3>COFFEE</h3><p>COFFEE AT FAME</p></div>
           </article>
           <article class="signature-card signature-card-matcha reveal">
-            <div class="signature-media signature-media-matcha" role="img" aria-label="Temporäre Matcha-Fotografie"></div>
-            <div class="signature-overlay"></div>
+            <div class="signature-media signature-media-matcha" aria-hidden="true"></div>
+            <div class="signature-overlay" aria-hidden="true"></div>
             <div class="signature-copy"><span>02</span><h3>MATCHA</h3><p>MATCHA AT FAME</p></div>
           </article>
           <article class="signature-card signature-card-acai reveal">
-            <div class="signature-media signature-media-acai" role="img" aria-label="Temporäre Açaí-Fotografie"></div>
-            <div class="signature-overlay"></div>
+            <div class="signature-media signature-media-acai" aria-hidden="true"></div>
+            <div class="signature-overlay" aria-hidden="true"></div>
             <div class="signature-copy"><span>03</span><h3>AÇAÍ</h3><p>AÇAÍ AT FAME</p></div>
           </article>
         </div>
@@ -157,14 +241,14 @@
           <a href="#menu" class="line-link">Produktwelten ansehen</a>
         </div>
         <div class="acai-stage reveal">
-          <div class="acai-photo" role="img" aria-label="Temporäre Açaí-Bowl-Fotografie"></div>
-          <div class="acai-stamp" aria-hidden="true"><span>AÇAÍ</span><b>•</b><span>FAME</span></div>
+          <div class="acai-photo" aria-hidden="true"></div>
+          <p class="acai-stamp" aria-hidden="true"><span>AÇAÍ</span><b>•</b><span>FAME</span></p>
         </div>
       </section>
 
       <section class="space" id="space" aria-labelledby="spaceTitle">
-        <div class="space-photo" role="img" aria-label="Temporäre Café-Atmosphäre als Designvorschau"></div>
-        <div class="space-overlay"></div>
+        <div class="space-photo" aria-hidden="true"></div>
+        <div class="space-overlay" aria-hidden="true"></div>
         <div class="space-copy reveal">
           <span class="section-kicker light">FAME CAFÉ · GUMMERSBACH</span>
           <h2 id="spaceTitle">WORK.<br>MEET.<br>STAY.</h2>
@@ -181,32 +265,37 @@
           <p>Die bestätigten Produktbereiche — bewusst ohne erfundene Einzelprodukte, Zutaten oder Preise. Die Struktur ist für die spätere echte Karte vorbereitet.</p>
         </div>
 
+        <!-- Aufbau für die echte Karte: Sobald bestätigte Produkte vorliegen,
+             bekommt jedes <article class="menu-item"> ein <ul class="menu-list">
+             mit <li><span class="menu-list-name">…</span><span class="menu-list-price">…</span></li>.
+             Das Stylesheet bringt die Klassen bereits mit — siehe Abschnitt 11.
+             Bis dahin werden keine Namen, Größen, Zutaten oder Preise erfunden. -->
         <div class="menu-row menu-categories">
           <article class="menu-item reveal">
-            <div class="menu-image menu-image-coffee" role="img" aria-label="Coffee Kategorie"></div>
+            <div class="menu-image menu-image-coffee" aria-hidden="true"></div>
             <div class="menu-meta"><span>01</span><h3>Coffee</h3><p>Kaffee</p></div>
           </article>
           <article class="menu-item reveal">
-            <div class="menu-image menu-image-matcha" role="img" aria-label="Matcha Kategorie"></div>
+            <div class="menu-image menu-image-matcha" aria-hidden="true"></div>
             <div class="menu-meta"><span>02</span><h3>Matcha</h3><p>Matcha-Getränke</p></div>
           </article>
           <article class="menu-item reveal">
-            <div class="menu-image menu-image-acai" role="img" aria-label="Açaí Kategorie"></div>
+            <div class="menu-image menu-image-acai" aria-hidden="true"></div>
             <div class="menu-meta"><span>03</span><h3>Açaí</h3><p>Açaí-Bowls</p></div>
           </article>
           <article class="menu-item reveal">
-            <div class="menu-image menu-image-tea" role="img" aria-label="Tea Kategorie"></div>
+            <div class="menu-image menu-image-tea" aria-hidden="true"></div>
             <div class="menu-meta"><span>04</span><h3>Tea</h3><p>Teespezialitäten</p></div>
           </article>
           <article class="menu-item reveal">
-            <div class="menu-image menu-image-bakery" role="img" aria-label="Cake und Bakery Kategorie"></div>
+            <div class="menu-image menu-image-bakery" aria-hidden="true"></div>
             <div class="menu-meta"><span>05</span><h3>Cake &amp; Bakery</h3><p>Kuchen &amp; Backwaren</p></div>
           </article>
         </div>
       </section>
 
       <section class="craft" aria-labelledby="craftTitle">
-        <div class="craft-media" role="img" aria-label="Temporäre Coffee-Craft-Fotografie"></div>
+        <div class="craft-media" aria-hidden="true"></div>
         <div class="craft-copy reveal">
           <span class="section-kicker light">COFFEE CRAFT</span>
           <h2 id="craftTitle">DETAIL<br>MATTERS.</h2>
@@ -222,13 +311,13 @@
           </div>
           <p>Die Galerie ist editorial statt rasterartig aufgebaut. Bis echte FAME-Fotos vorliegen, bleiben die vorhandenen lizenzierten Demo-Assets klar als temporärer Entwicklungsstand behandelt.</p>
         </div>
-        <div class="gallery-grid" aria-label="FAME Bildwelt Vorschau">
-          <div class="gallery-tile reveal" role="img" aria-label="Temporäre Matcha-Fotografie"><span class="gallery-tile-label">MATCHA</span></div>
-          <div class="gallery-tile reveal" role="img" aria-label="Temporäre Coffee-Fotografie"><span class="gallery-tile-label">COFFEE</span></div>
-          <div class="gallery-tile reveal" role="img" aria-label="Temporäre Açaí-Fotografie"><span class="gallery-tile-label">AÇAÍ</span></div>
-          <div class="gallery-tile reveal" role="img" aria-label="Temporäre Café-Atmosphäre"><span class="gallery-tile-label">CAFÉ</span></div>
-          <div class="gallery-tile reveal" aria-hidden="true"><span class="gallery-tile-label">FAME</span></div>
-        </div>
+        <ul class="gallery-grid">
+          <li class="gallery-tile reveal"><span class="gallery-tile-label">MATCHA</span></li>
+          <li class="gallery-tile reveal"><span class="gallery-tile-label">COFFEE</span></li>
+          <li class="gallery-tile reveal"><span class="gallery-tile-label">AÇAÍ</span></li>
+          <li class="gallery-tile reveal"><span class="gallery-tile-label">CAFÉ</span></li>
+          <li class="gallery-tile reveal"><span class="gallery-tile-label">FAME</span></li>
+        </ul>
       </section>
 
       <section class="catering" id="catering" aria-labelledby="cateringTitle">
@@ -236,7 +325,7 @@
           <span class="section-kicker light">FAME CATERING</span>
           <h2 id="cateringTitle">FAME,<br>BEYOND<br>THE CAFÉ.</h2>
           <p>Catering gehört zum bestätigten Unternehmensgegenstand. Die Website hält den Bereich bewusst kompakt, bis konkrete Formate, Leistungen und Konditionen final feststehen.</p>
-          <div class="catering-note">EVENTS · TEAMS · BESONDERE ANLÄSSE</div>
+          <p class="catering-note">EVENTS · TEAMS · BESONDERE ANLÄSSE</p>
         </div>
         <div class="catering-visual" aria-hidden="true"></div>
       </section>
@@ -250,15 +339,15 @@
             <span>Gummersbacher Straße 12</span>
             <span>51645 Gummersbach</span>
           </address>
-          <div class="visit-note visit-note-verified"><span aria-hidden="true"></span>Öffnungszeiten werden ergänzt, sobald sie öffentlich bestätigt sind.</div>
+          <p class="visit-note visit-note-verified"><span aria-hidden="true"></span>Öffnungszeiten werden ergänzt, sobald sie öffentlich bestätigt sind.</p>
         </div>
-        <div class="visit-mark reveal" aria-hidden="true"><span>GOOD</span><span>DRINKS.</span><b>FAME</b><span>GUMMERSBACH.</span></div>
+        <p class="visit-mark reveal" aria-hidden="true"><span>GOOD</span><span>DRINKS.</span><b>FAME</b><span>GUMMERSBACH.</span></p>
       </section>
     </main>
 
     <footer>
-      <a class="brand footer-brand" href="#top" aria-label="Zurück zum Seitenanfang"><span class="brand-main">FAME CAFÉ</span><span class="brand-sub">GUMMERSBACH</span></a>
-      <div class="footer-links"><a href="#ritual">Ritual</a><a href="#menu">Menü</a><a href="#space">Café</a><a href="#catering">Catering</a><a href="#visit">Besuchen</a></div>
+      <a class="brand footer-brand" href="#top"><span class="brand-main">FAME CAFÉ</span><span class="brand-sub">GUMMERSBACH</span></a>
+      <nav class="footer-links" aria-label="Fußnavigation"><a href="#ritual">Ritual</a><a href="#menu">Menü</a><a href="#space">Café</a><a href="#catering">Catering</a><a href="#visit">Besuchen</a></nav>
       <div class="footer-meta">
         <span>Fame Cafe ACH UG (haftungsbeschränkt)</span>
         <span>Gummersbacher Straße 12 · 51645 Gummersbach</span>
@@ -267,6 +356,6 @@
       <div class="footer-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
     </footer>
   </div>
-  <script src="script.js?v=v4-20260916"></script>
+  <script src="script.js?v=v5"></script>
 </body>
 </html>

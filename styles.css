@@ -10,24 +10,25 @@
 
    Gliederung
    01 Tokens
-   02 Basis
-   03 Bausteine
-   04 Header + Navigation
-   05 Hero
-   06 Intro
-   07 Ritual (Half/Half)
-   08 Signature
-   09 Açaí
-   10 Café Experience
-   11 Menü
-   12 Coffee Craft
-   13 Gallery
-   14 Catering
-   15 Visit
-   16 Footer
-   17 Rechtstexte
-   18 Breakpoints
-   19 Reduced Motion
+   02 Schriften
+   03 Basis
+   04 Bausteine
+   05 Header + Navigation
+   06 Hero
+   07 Intro
+   08 Ritual (Half/Half)
+   09 Signature
+   10 Açaí
+   11 Café Experience
+   12 Menü
+   13 Coffee Craft
+   14 Gallery
+   15 Catering
+   16 Visit
+   17 Footer
+   18 Rechtstexte
+   19 Breakpoints
+   20 Reduced Motion
    ========================================================================== */
 
 /* == 01 Tokens ============================================================ */
@@ -49,6 +50,27 @@
   --serif:"DM Serif Display",Georgia,serif;
   --sans:"Manrope",Arial,sans-serif;
 
+  /* Bildslots — eine Stelle für alle Fotos.
+     Beim Austausch gegen echte FAME-Fotografie nur diese sieben Zeilen
+     ändern; vorher standen dieselben vier URLs an elf Stellen in zwei
+     Dateien. --img-*-fallback greift, wenn eine Bildquelle nicht lädt. */
+  --img-coffee:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=86&w=2200');
+  --img-coffee-s:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=80&w=1000');
+  --img-matcha:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=86&w=2200');
+  --img-matcha-s:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=80&w=1000');
+  --img-acai:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=86&w=2000');
+  --img-acai-s:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=80&w=1000');
+  --img-space:url('https://images.unsplash.com/photo-1769184613600-1a309a70196b?auto=format&fit=crop&fm=jpg&q=86&w=2200');
+  --img-space-s:url('https://images.unsplash.com/photo-1769184613600-1a309a70196b?auto=format&fit=crop&fm=jpg&q=80&w=1000');
+  --img-craft:url('https://images.unsplash.com/photo-1770012117402-853655541b9b?auto=format&fit=crop&fm=jpg&q=86&w=2000');
+
+  /* Markenfarbige Flächen hinter jedem Foto. Fällt eine Bildquelle aus,
+     bleibt eine FAME-Fläche stehen statt eines schwarzen Kastens. */
+  --fallback-coffee:linear-gradient(150deg,#2A1D15 0%,#7A5037 58%,#C9A98D 100%);
+  --fallback-matcha:linear-gradient(150deg,#1B2A1D 0%,#263829 46%,#89A86B 100%);
+  --fallback-acai:linear-gradient(150deg,#241021 0%,#682E54 52%,#8A5875 100%);
+  --fallback-space:linear-gradient(150deg,#171412 0%,#3A322A 55%,#EDE6DA 100%);
+
   --gutter:clamp(22px,4vw,68px);
   --header-gutter:clamp(26px,4vw,64px);
   --radius:18px;
@@ -56,7 +78,39 @@
   --ease:cubic-bezier(.2,.7,.2,1);
 }
 
-/* == 02 Basis ============================================================= */
+/* == 02 Schriften =========================================================
+   Lokal ausgeliefert statt über Google Fonts. Der Abruf von fonts.googleapis.com
+   baut beim Seitenaufruf eine Verbindung zu Google auf; die Datenschutzerklärung
+   hat das bisher als offenen Punkt geführt. Lizenz und Herkunft der Dateien
+   stehen in assets/fonts/LICENSE.md.
+   ========================================================================== */
+
+@font-face{
+  font-family:"DM Serif Display";
+  font-style:normal;
+  font-weight:400;
+  font-display:swap;
+  src:url("assets/fonts/dm-serif-display-latin-400.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"DM Serif Display";
+  font-style:italic;
+  font-weight:400;
+  font-display:swap;
+  src:url("assets/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Manrope";
+  font-style:normal;
+  font-weight:400 700;
+  font-display:swap;
+  src:url("assets/fonts/manrope-latin-variable.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
+/* == 03 Basis ============================================================= */
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
@@ -78,7 +132,7 @@ img{max-width:100%;display:block}
 
 .page-shell{width:100%;overflow:hidden}
 
-/* == 03 Bausteine ========================================================= */
+/* == 04 Bausteine ========================================================= */
 
 .section-kicker,
 .intro-eyebrow{
@@ -100,12 +154,42 @@ img{max-width:100%;display:block}
   font-weight:700;
 }
 
-.reveal{
+/* Sichtbar per Default. Erst wenn JavaScript die Klasse .js gesetzt hat,
+   wird ausgeblendet — sonst bleibt bei JS-Ausfall die ganze Seite leer. */
+.js .reveal{
   opacity:0;
   transform:translateY(24px);
   transition:opacity .9s var(--ease),transform .9s var(--ease);
 }
-.reveal.in-view{opacity:1;transform:none}
+.js .reveal.in-view{opacity:1;transform:none}
+
+.visually-hidden{
+  position:absolute;
+  width:1px;height:1px;
+  margin:-1px;padding:0;
+  overflow:hidden;
+  clip-path:inset(50%);
+  white-space:nowrap;
+  border:0;
+}
+
+.skip-link{
+  position:absolute;
+  left:var(--gutter);
+  top:-100px;
+  z-index:200;
+  padding:12px 18px;
+  background:var(--paper);
+  color:var(--ink);
+  border:1px solid var(--line);
+  border-radius:999px;
+  font-size:.62rem;
+  letter-spacing:.12em;
+  font-weight:600;
+  transition:top .25s var(--ease);
+}
+.skip-link:focus,
+.skip-link:focus-visible{top:14px}
 
 a:focus-visible,
 button:focus-visible{
@@ -114,7 +198,7 @@ button:focus-visible{
   border-radius:4px;
 }
 
-/* == 04 Header + Navigation =============================================== */
+/* == 05 Header + Navigation =============================================== */
 
 .site-header{
   position:fixed;
@@ -179,7 +263,133 @@ button:focus-visible{
   flex:0 0 auto;
 }
 
-/* == 05 Hero ============================================================== */
+.header-actions{
+  justify-self:end;
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+/* Reduzierter Zwei-Linien-Marker statt UI-Kit-Burger. */
+.nav-toggle{
+  display:none;
+  align-items:center;
+  gap:9px;
+  padding:9px 14px 9px 12px;
+  border:0;
+  border-radius:999px;
+  background:rgba(255,255,255,.11);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  color:inherit;
+  font-family:var(--sans);
+  font-size:.61rem;
+  font-weight:500;
+  letter-spacing:.08em;
+  cursor:pointer;
+}
+.site-header.scrolled .nav-toggle{background:rgba(38,56,41,.07)}
+.nav-toggle-lines{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  gap:4px;
+  width:15px;height:10px;
+}
+.nav-toggle-lines i{
+  display:block;
+  height:1px;
+  background:currentColor;
+  transition:transform .3s var(--ease),opacity .2s ease;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle-lines i:first-child{transform:translateY(2.5px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] .nav-toggle-lines i:last-child{transform:translateY(-2.5px) rotate(-45deg)}
+
+.mobile-nav{
+  position:fixed;
+  inset:0;
+  z-index:99;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:calc(70px + clamp(34px,8vh,74px)) var(--gutter) clamp(30px,6vh,54px);
+  background:var(--ink);
+  color:#fff;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+}
+.mobile-nav[hidden]{display:none}
+.mobile-nav::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 80% 16%,rgba(137,168,107,.14) 0 24%,transparent 24.6%),
+    radial-gradient(circle at 10% 86%,rgba(104,46,84,.13) 0 19%,transparent 19.6%);
+  pointer-events:none;
+}
+.js .mobile-nav{animation:navIn .34s var(--ease) both}
+@keyframes navIn{from{opacity:0}to{opacity:1}}
+
+.mobile-nav-list{
+  position:relative;
+  list-style:none;
+  margin:0;padding:0;
+}
+.mobile-nav-list li{border-top:1px solid rgba(255,255,255,.12)}
+.mobile-nav-list li:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
+.mobile-nav-list a{
+  display:flex;
+  align-items:baseline;
+  gap:16px;
+  padding:clamp(14px,2.4vh,22px) 0;
+  font-family:var(--serif);
+  font-size:clamp(2.2rem,11vw,3.4rem);
+  line-height:1;
+  letter-spacing:-.02em;
+}
+.mobile-nav-list a span{
+  font-family:var(--sans);
+  font-size:.46rem;
+  font-weight:500;
+  letter-spacing:.2em;
+  opacity:.5;
+}
+.js .mobile-nav-list li{animation:navItem .42s var(--ease) both}
+.js .mobile-nav-list li:nth-child(1){animation-delay:.05s}
+.js .mobile-nav-list li:nth-child(2){animation-delay:.09s}
+.js .mobile-nav-list li:nth-child(3){animation-delay:.13s}
+.js .mobile-nav-list li:nth-child(4){animation-delay:.17s}
+.js .mobile-nav-list li:nth-child(5){animation-delay:.21s}
+@keyframes navItem{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+
+.mobile-nav-foot{
+  position:relative;
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:space-between;
+  align-items:flex-end;
+  gap:18px;
+  margin-top:clamp(28px,5vh,52px);
+}
+.mobile-nav-foot address{
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  font-style:normal;
+  font-size:.62rem;
+  line-height:1.5;
+  opacity:.68;
+}
+.mobile-nav-legal{display:flex;gap:16px;font-size:.55rem;letter-spacing:.1em;opacity:.68}
+.mobile-nav-legal a{border-bottom:1px solid transparent}
+.mobile-nav-legal a:hover,
+.mobile-nav-legal a:focus-visible{border-color:currentColor}
+
+/* Scroll sperren, solange das Overlay offen ist. */
+body.nav-open{overflow:hidden}
+
+/* == 06 Hero ============================================================== */
 
 .hero{
   min-height:100svh;
@@ -195,15 +405,18 @@ button:focus-visible{
   inset:0;
   background-size:cover;
   background-position:center;
-  transform:scale(1.035);
+  /* --shift wird beim Scrollen gesetzt (leichte Parallax, gegenläufig je
+     Hälfte). Der Versatz bleibt innerhalb der Überdeckung aus scale(1.035),
+     deshalb entsteht an den Kanten keine Lücke. */
+  transform:translate3d(0,var(--shift,0%),0) scale(1.035);
   will-change:transform;
 }
 .coffee-image{
-  background-image:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=88&w=2200');
+  background-image:var(--img-coffee),var(--fallback-coffee);
   background-position:center 50%;
 }
 .matcha-image{
-  background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=88&w=2200');
+  background-image:var(--img-matcha),var(--fallback-matcha);
   background-position:center 52%;
 }
 .hero-shade{position:absolute;inset:0}
@@ -272,7 +485,7 @@ button:focus-visible{
   font-weight:500;
   pointer-events:auto;
 }
-.hero-scroll::before{content:"SCROLL TO TASTE"}
+
 .hero-scroll .scroll-dot{
   display:block;
   width:5px;height:5px;
@@ -280,32 +493,65 @@ button:focus-visible{
   background:rgba(255,255,255,.88);
 }
 
-/* Kreis-Sprache: Coffee × Matcha Marker auf der Mittelachse. */
-.hero::before{
-  content:"COFFEE\A×\AMATCHA";
-  white-space:pre;
+/* Kreis-Sprache: Coffee × Matcha Marker auf der Mittelachse.
+   Vorher als CSS-content erzeugt — jetzt echtes Markup, damit der Text
+   im DOM steht und übersetzbar bleibt. */
+.hero-orbit{
   position:absolute;
   z-index:8;
   left:50%;
   top:66%;
   transform:translate(-50%,-50%);
+  margin:0;
   width:76px;
   height:76px;
   border:1px solid rgba(255,255,255,.27);
   border-radius:50%;
   display:grid;
   place-items:center;
+  align-content:center;
   color:#fff;
   font-size:.37rem;
   letter-spacing:.14em;
   line-height:1.45;
   text-align:center;
   backdrop-filter:blur(8px);
+  -webkit-backdrop-filter:blur(8px);
   pointer-events:none;
   opacity:.82;
 }
+.hero-orbit span,
+.hero-orbit b{display:block;font-weight:inherit}
 
-/* == 06 Intro ============================================================= */
+/* Matcha-Seite: aufsteigende Kreise als Markentextur, nicht als Effekt.
+   Nur transform/opacity, damit kein Layout neu berechnet wird. */
+.hero-bubbles{
+  position:absolute;
+  inset:0;
+  z-index:6;
+  overflow:hidden;
+  pointer-events:none;
+}
+.hero-bubbles i{
+  position:absolute;
+  left:var(--x);
+  bottom:-14%;
+  width:calc(44px * var(--s,1));
+  aspect-ratio:1;
+  border-radius:50%;
+  border:1px solid rgba(246,243,236,.26);
+  background:radial-gradient(circle at 34% 30%,rgba(246,243,236,.15),rgba(246,243,236,.02) 58%,transparent 72%);
+  opacity:0;
+  animation:famebubble var(--t,20s) linear var(--d,0s) infinite;
+}
+@keyframes famebubble{
+  0%{transform:translate3d(0,0,0) scale(.88);opacity:0}
+  14%{opacity:.42}
+  72%{opacity:.30}
+  100%{transform:translate3d(16px,-120svh,0) scale(1.1);opacity:0}
+}
+
+/* == 07 Intro ============================================================= */
 
 .intro{
   padding:clamp(76px,8vw,118px) var(--gutter) clamp(70px,8vw,110px);
@@ -335,9 +581,11 @@ button:focus-visible{
   flex-wrap:wrap;
   justify-content:center;
   gap:8px;
-  margin-top:28px;
+  margin:28px 0 0;
+  padding:0;
+  list-style:none;
 }
-.intro-pills span{
+.intro-pills li{
   border:1px solid rgba(23,20,18,.13);
   border-radius:999px;
   padding:8px 13px;
@@ -346,7 +594,7 @@ button:focus-visible{
   background:rgba(255,255,255,.12);
 }
 
-/* == 07 Ritual (Half/Half) ================================================ */
+/* == 08 Ritual (Half/Half) ================================================ */
 
 .ritual{height:400vh;background:var(--ink);position:relative}
 .ritual-sticky{
@@ -358,20 +606,40 @@ button:focus-visible{
   overflow:hidden;
 }
 .ritual-half{position:relative;overflow:hidden;color:#fff}
+
+/* --p ist der Scroll-Fortschritt durch den Ritual-Abschnitt (0 bis 1),
+   gesetzt vom Skript. Vorher hat das Skript Transform und Filter direkt
+   als Inline-Styles geschrieben; jetzt gibt es dafür nur noch eine Quelle. */
 .ritual-photo{
   position:absolute;
   inset:0;
   background-size:cover;
   background-position:center;
-  transform:scale(1.055);
+  transform:scale(calc(1.055 + var(--p,0) * .028));
   will-change:transform,filter;
 }
+.ritual-coffee .ritual-photo{filter:brightness(calc(.87 + var(--p,0) * .11))}
+.ritual-matcha .ritual-photo{filter:saturate(calc(1 + var(--p,0) * .24)) brightness(calc(.90 + var(--p,0) * .08))}
+
+/* Farbflächenwechsel: Die Produktwelt zieht über den Scroll an.
+   Bisher hat sich über 400vh nur der Text geändert. */
+.ritual-half::after{
+  content:"";
+  position:absolute;
+  inset:0;
+  z-index:3;
+  pointer-events:none;
+  opacity:calc(var(--p,0) * .62);
+}
+.ritual-coffee::after{background:radial-gradient(125% 95% at 18% 82%,rgba(122,80,55,.62),transparent 68%)}
+.ritual-matcha::after{background:radial-gradient(125% 95% at 82% 78%,rgba(137,168,107,.55),transparent 68%)}
+
 .coffee-ritual-photo{
-  background-image:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=86&w=2200');
+  background-image:var(--img-coffee),var(--fallback-coffee);
   background-position:center 54%;
 }
 .matcha-ritual-photo{
-  background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=86&w=2200');
+  background-image:var(--img-matcha),var(--fallback-matcha);
   background-position:center 52%;
 }
 .ritual-vignette{position:absolute;inset:0}
@@ -402,7 +670,10 @@ button:focus-visible{
   font-weight:500;
   letter-spacing:.12em;
 }
-.ritual-copy h2{
+/* Bewusst kein <h2>: Der Text wechselt beim Scrollen. Eine Überschrift,
+   die ihren Inhalt ändert, zerlegt die Dokumentstruktur. Die feste
+   Abschnittsüberschrift steht unsichtbar im Markup. */
+.ritual-title{
   font-family:var(--serif);
   font-size:clamp(3.7rem,6.3vw,7rem);
   font-weight:400;
@@ -410,6 +681,13 @@ button:focus-visible{
   letter-spacing:-.018em;
   margin:13px 0 15px;
 }
+
+/* Weicher Wechsel statt hartem Textsprung. */
+@keyframes stepIn{
+  from{opacity:0;transform:translateY(9px);filter:blur(5px)}
+  to{opacity:1;transform:none;filter:blur(0)}
+}
+.js .step-in{animation:stepIn .5s var(--ease) both}
 .ritual-copy p{
   font-size:.72rem;
   line-height:1.68;
@@ -469,6 +747,50 @@ button:focus-visible{
   font-weight:600;
 }
 .axis-disc::before{content:attr(data-step)}
+/* Textfassung der Sequenz. Sichtbar ohne JavaScript und bei
+   prefers-reduced-motion — dort greift die Scroll-Choreografie nicht,
+   und bisher blieben fünf von sechs Schritten unerreichbar. */
+.ritual-steps{
+  display:none;
+  list-style:none;
+  margin:0;
+  padding:clamp(60px,8vw,100px) var(--gutter) clamp(66px,9vw,110px);
+  color:#fff;
+  counter-reset:none;
+}
+.ritual-steps li{
+  display:grid;
+  grid-template-columns:auto 1fr;
+  column-gap:clamp(18px,3vw,38px);
+  row-gap:4px;
+  padding:22px 0;
+  border-top:1px solid rgba(255,255,255,.14);
+  max-width:900px;
+}
+.ritual-steps li:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
+.ritual-steps span{
+  grid-row:1/3;
+  font-size:.5rem;
+  letter-spacing:.2em;
+  font-weight:500;
+  opacity:.5;
+  padding-top:6px;
+}
+.ritual-steps b{
+  font-family:var(--serif);
+  font-size:clamp(1.5rem,3vw,2.3rem);
+  font-weight:400;
+  letter-spacing:-.015em;
+}
+.ritual-steps p{
+  margin:0;
+  font-size:.78rem;
+  line-height:1.7;
+  opacity:.74;
+  max-width:560px;
+}
+.no-js .ritual-steps{display:block}
+
 .axis-disc::after{
   content:attr(data-phase);
   position:absolute;
@@ -482,7 +804,7 @@ button:focus-visible{
   font-weight:500;
 }
 
-/* == 08 Signature ========================================================= */
+/* == 09 Signature ========================================================= */
 
 .signature{padding:clamp(76px,8vw,120px) var(--gutter)}
 .signature-heading{
@@ -527,9 +849,9 @@ button:focus-visible{
   transition:transform .8s var(--ease);
 }
 .signature-card:hover .signature-media{transform:scale(1.035)}
-.signature-media-coffee{background-image:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=84&w=1600')}
-.signature-media-matcha{background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=84&w=1600')}
-.signature-media-acai{background-image:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=84&w=1600')}
+.signature-media-coffee{background-image:var(--img-coffee),var(--fallback-coffee)}
+.signature-media-matcha{background-image:var(--img-matcha),var(--fallback-matcha)}
+.signature-media-acai{background-image:var(--img-acai),var(--fallback-acai)}
 .signature-overlay{
   position:absolute;
   inset:0;
@@ -553,7 +875,7 @@ button:focus-visible{
   opacity:.78;
 }
 
-/* == 09 Açaí ============================================================== */
+/* == 10 Açaí ============================================================== */
 
 .acai-feature{
   display:grid;
@@ -585,9 +907,13 @@ button:focus-visible{
 .acai-photo{
   position:absolute;
   inset:0;
-  background:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=88&w=2000') center/cover no-repeat;
+  background-image:var(--img-acai),var(--fallback-acai);
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
 }
 .acai-stamp{
+  margin:0;
   position:absolute;
   right:22px;top:22px;
   width:68px;height:68px;
@@ -602,7 +928,7 @@ button:focus-visible{
   letter-spacing:.12em;
 }
 
-/* == 10 Café Experience =================================================== */
+/* == 11 Café Experience =================================================== */
 
 .space{
   position:relative;
@@ -615,7 +941,10 @@ button:focus-visible{
 .space-photo{
   position:absolute;
   inset:-4%;
-  background:url('https://images.unsplash.com/photo-1769184613600-1a309a70196b?auto=format&fit=crop&fm=jpg&q=86&w=2200') center/cover no-repeat;
+  background-image:var(--img-space),var(--fallback-space);
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
   transform:scale(1.03);
 }
 .space-overlay{
@@ -645,7 +974,7 @@ button:focus-visible{
   opacity:.72;
 }
 
-/* == 11 Menü ============================================================== */
+/* == 12 Menü ============================================================== */
 
 .menu{padding:clamp(76px,8vw,120px) var(--gutter)}
 .menu-head{
@@ -691,11 +1020,11 @@ button:focus-visible{
   pointer-events:none;
 }
 .menu-image-coffee{
-  background-image:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=82&w=1200');
+  background-image:var(--img-coffee),var(--fallback-coffee);
   background-position:center 58%;
 }
-.menu-image-matcha{background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=82&w=1200')}
-.menu-image-acai{background-image:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=82&w=1200')}
+.menu-image-matcha{background-image:var(--img-matcha),var(--fallback-matcha)}
+.menu-image-acai{background-image:var(--img-acai),var(--fallback-acai)}
 .menu-image-tea{
   background:
     radial-gradient(circle at 62% 35%,rgba(246,243,236,.52) 0 13%,transparent 13.5%),
@@ -718,7 +1047,31 @@ button:focus-visible{
 }
 .menu-meta p{font-size:.62rem;line-height:1.55;opacity:.68;margin:0}
 
-/* == 12 Coffee Craft ====================================================== */
+/* Vorbereitet für die echte Karte. Wird erst befüllt, wenn bestätigte
+   Produkte und Preise vorliegen — bis dahin bleibt das Markup leer. */
+.menu-list{
+  list-style:none;
+  margin:14px 0 0;
+  padding:0;
+}
+.menu-list li{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  padding:9px 0;
+  border-top:1px solid var(--hairline);
+  font-size:.72rem;
+  line-height:1.5;
+}
+.menu-list-name{flex:1 1 auto}
+.menu-list-price{
+  flex:0 0 auto;
+  font-variant-numeric:tabular-nums;
+  letter-spacing:.04em;
+  opacity:.72;
+}
+
+/* == 13 Coffee Craft ====================================================== */
 
 .craft{
   display:grid;
@@ -728,7 +1081,10 @@ button:focus-visible{
   color:#fff;
 }
 .craft-media{
-  background:url('https://images.unsplash.com/photo-1770012117402-853655541b9b?auto=format&fit=crop&fm=jpg&q=86&w=2000') center/cover no-repeat;
+  background-image:var(--img-craft),var(--fallback-coffee);
+  background-position:center;
+  background-size:cover;
+  background-repeat:no-repeat;
   min-height:78vh;
 }
 .craft-copy{
@@ -747,7 +1103,7 @@ button:focus-visible{
 }
 .craft-copy p{font-size:.80rem;line-height:1.7;opacity:.8;max-width:470px}
 
-/* == 13 Gallery =========================================================== */
+/* == 14 Gallery =========================================================== */
 
 .gallery{
   padding:clamp(80px,9vw,132px) var(--gutter);
@@ -776,6 +1132,9 @@ button:focus-visible{
   color:rgba(23,20,18,.68);
 }
 .gallery-grid{
+  margin:0;
+  padding:0;
+  list-style:none;
   display:grid;
   grid-template-columns:1.25fr .75fr 1fr;
   grid-template-rows:minmax(260px,38vw) minmax(220px,31vw);
@@ -797,19 +1156,19 @@ button:focus-visible{
 }
 .gallery-tile:nth-child(1){
   grid-row:1/3;
-  background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=86&w=1800');
+  background-image:var(--img-matcha),var(--fallback-matcha);
   background-position:center 54%;
 }
 .gallery-tile:nth-child(2){
-  background-image:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=86&w=1500');
+  background-image:var(--img-coffee),var(--fallback-coffee);
   background-position:center 52%;
 }
 .gallery-tile:nth-child(3){
-  background-image:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=86&w=1500');
+  background-image:var(--img-acai),var(--fallback-acai);
   background-position:center 50%;
 }
 .gallery-tile:nth-child(4){
-  background-image:url('https://images.unsplash.com/photo-1769184613600-1a309a70196b?auto=format&fit=crop&fm=jpg&q=86&w=1500');
+  background-image:var(--img-space),var(--fallback-space);
   background-position:center 55%;
 }
 .gallery-tile:nth-child(5){
@@ -828,7 +1187,7 @@ button:focus-visible{
   font-weight:600;
 }
 
-/* == 14 Catering ========================================================== */
+/* == 15 Catering ========================================================== */
 
 .catering{
   display:grid;
@@ -862,7 +1221,7 @@ button:focus-visible{
   color:rgba(255,255,255,.78);
 }
 .catering-note{
-  margin-top:26px;
+  margin:26px 0 0;
   font-size:.52rem;
   letter-spacing:.15em;
   text-transform:uppercase;
@@ -890,7 +1249,7 @@ button:focus-visible{
   mix-blend-mode:soft-light;
 }
 
-/* == 15 Visit ============================================================= */
+/* == 16 Visit ============================================================= */
 
 .visit{
   display:grid;
@@ -918,15 +1277,23 @@ button:focus-visible{
 }
 .visit-address span{display:block}
 .visit-note{
-  margin-top:24px;
+  display:flex;
+  align-items:center;
+  margin:24px 0 0;
   font-size:.52rem;
   letter-spacing:.14em;
   font-weight:500;
   gap:10px;
   line-height:1.55;
 }
-.visit-note>span{width:6px;height:6px}
+.visit-note>span{
+  flex:0 0 auto;
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--matcha);
+}
 .visit-mark{
+  margin:0;
   justify-self:end;
   width:min(420px,100%);
   max-width:330px;
@@ -944,7 +1311,7 @@ button:focus-visible{
 }
 .visit-mark b{font-style:italic;font-weight:400;color:var(--matcha)}
 
-/* == 16 Footer ============================================================ */
+/* == 17 Footer ============================================================ */
 
 footer{
   min-height:132px;
@@ -998,7 +1365,7 @@ footer{
 .footer-legal a:hover,
 .footer-legal a:focus-visible{border-color:currentColor}
 
-/* == 17 Rechtstexte ======================================================= */
+/* == 18 Rechtstexte ======================================================= */
 
 .legal-page{
   min-height:100svh;
@@ -1027,6 +1394,7 @@ footer{
   line-height:1.75;
   color:rgba(23,20,18,.76);
   font-style:normal;
+  overflow-wrap:break-word;
 }
 .legal-page ul{padding-left:20px}
 .legal-status{
@@ -1048,7 +1416,102 @@ footer{
   font-weight:600;
 }
 
-/* == 18 Breakpoints ======================================================= */
+/* == 18b 404 ==============================================================
+   Die nginx-Konfiguration hat bisher jede unbekannte Adresse auf die
+   Startseite umgeschrieben und dabei Status 200 geliefert. Für eine
+   statische Seite ist das falsch: Suchmaschinen indexieren dann
+   beliebig viele Varianten derselben Seite.
+   ========================================================================== */
+
+.notfound{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  padding:clamp(80px,10vw,140px) var(--gutter);
+  background:var(--ink);
+  color:#fff;
+  overflow:hidden;
+}
+.notfound::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 74% 18%,rgba(137,168,107,.15) 0 13%,transparent 13.4%),
+    radial-gradient(circle at 18% 92%,rgba(122,80,55,.18) 0 16%,transparent 16.4%);
+  pointer-events:none;
+}
+.notfound-inner{position:relative;max-width:660px}
+.notfound-code{
+  margin:14px 0 0;
+  font-family:var(--serif);
+  font-size:clamp(3rem,7vw,5.4rem);
+  line-height:1;
+  opacity:.28;
+}
+.notfound h1{
+  margin:6px 0 22px;
+  font-family:var(--serif);
+  font-size:clamp(3.4rem,8vw,7rem);
+  line-height:.82;
+  font-weight:400;
+  letter-spacing:-.02em;
+}
+.notfound-copy{
+  margin:0;
+  max-width:460px;
+  font-size:.84rem;
+  line-height:1.7;
+  opacity:.78;
+}
+.notfound-links{
+  list-style:none;
+  margin:34px 0 0;
+  padding:0;
+  max-width:420px;
+}
+.notfound-links li{border-top:1px solid rgba(255,255,255,.14)}
+.notfound-links li:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
+.notfound-links a{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  padding:15px 0;
+  font-family:var(--serif);
+  font-size:clamp(1.5rem,3.4vw,2.1rem);
+  line-height:1;
+}
+.notfound-links a span{
+  font-family:var(--sans);
+  font-size:.44rem;
+  font-weight:500;
+  letter-spacing:.2em;
+  opacity:.5;
+}
+.notfound-mark{
+  position:absolute;
+  right:clamp(24px,7vw,120px);
+  top:50%;
+  transform:translateY(-50%);
+  width:clamp(120px,17vw,210px);
+  aspect-ratio:1;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  align-content:center;
+  text-align:center;
+  font-size:.5rem;
+  letter-spacing:.2em;
+  line-height:2.1;
+  opacity:.7;
+}
+@media (max-width:860px){
+  .notfound-mark{display:none}
+}
+
+/* == 19 Breakpoints ======================================================= */
 
 @media (max-width:1100px){
   .desktop-nav{gap:26px}
@@ -1056,7 +1519,7 @@ footer{
   .hero-meta{width:min(220px,31vw)}
   .hero::before{width:68px;height:68px;top:68%}
   .ritual-copy{width:64%}
-  .ritual-copy h2{font-size:clamp(3.5rem,7vw,5.6rem)}
+  .ritual-title{font-size:clamp(3.5rem,7vw,5.6rem)}
   .ritual-mini{top:90px}
   .signature-card{min-height:500px}
   .menu-row.menu-categories{grid-template-columns:repeat(3,minmax(0,1fr))}
@@ -1075,9 +1538,16 @@ footer{
   .footer-legal{justify-content:flex-end}
 }
 
+/* Über 980px gibt es nur die Desktop-Navigation — das Overlay darf dort
+   auch dann nicht auftauchen, wenn es beim Verkleinern offen war. */
+@media (min-width:981px){
+  .mobile-nav{display:none!important}
+}
+
 @media (max-width:980px){
   .site-header{grid-template-columns:1fr auto}
   .desktop-nav{display:none}
+  .nav-toggle{display:inline-flex}
   .signature-heading{grid-template-columns:1fr;gap:18px}
   .signature-grid{grid-template-columns:1fr 1fr}
   .signature-card{min-height:500px}
@@ -1126,6 +1596,7 @@ footer{
   .brand-main{font-size:1.2rem}
   .brand-sub{font-size:.35rem}
   .header-cta{padding:8px 10px;font-size:.50rem}
+  .mobile-nav{padding-top:calc(62px + clamp(30px,7vh,60px))}
 
   .hero{grid-template-columns:1fr;grid-template-rows:1fr 1fr;min-height:100svh}
   .hero-half{min-height:50svh}
@@ -1154,7 +1625,7 @@ footer{
   .ritual-copy{bottom:4vh;width:73%}
   .ritual-copy-left{left:20px}
   .ritual-copy-right{right:20px}
-  .ritual-copy h2{font-size:clamp(2.8rem,13vw,4rem);margin:9px 0 9px}
+  .ritual-title{font-size:clamp(2.8rem,13vw,4rem);margin:9px 0 9px}
   .ritual-copy p{font-size:.61rem;line-height:1.5}
   .ritual-label{font-size:.39rem}
 
@@ -1173,10 +1644,10 @@ footer{
 
   .craft-media{min-height:52vh}
 
-  .gallery-tile:nth-child(1){background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=80&w=1000')}
-  .gallery-tile:nth-child(2){background-image:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=80&w=1000')}
-  .gallery-tile:nth-child(3){background-image:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=80&w=1000')}
-  .gallery-tile:nth-child(4){background-image:url('https://images.unsplash.com/photo-1769184613600-1a309a70196b?auto=format&fit=crop&fm=jpg&q=80&w=1000')}
+  .gallery-tile:nth-child(1){background-image:var(--img-matcha-s),var(--fallback-matcha)}
+  .gallery-tile:nth-child(2){background-image:var(--img-coffee-s),var(--fallback-coffee)}
+  .gallery-tile:nth-child(3){background-image:var(--img-acai-s),var(--fallback-acai)}
+  .gallery-tile:nth-child(4){background-image:var(--img-space-s),var(--fallback-space)}
 
   .visit{grid-template-columns:1fr;padding-left:20px;padding-right:20px}
   .visit-mark{justify-self:start;max-width:230px}
@@ -1185,6 +1656,11 @@ footer{
 }
 
 @media (max-width:520px){
+  /* "Datenschutz." hat bei 3.6rem die Zeile gesprengt und die Seite
+     horizontal scrollbar gemacht. */
+  .legal-page h1{font-size:clamp(2.4rem,11vw,3.6rem)}
+  /* Platz wird knapp — "Besuchen" ist als Punkt 05 im Overlay erreichbar. */
+  .header-cta{display:none}
   .menu-row.menu-categories{grid-template-columns:1fr}
   .menu-image{height:58svh;min-height:330px}
   .gallery{padding-left:16px;padding-right:16px}
@@ -1194,7 +1670,16 @@ footer{
   .catering-copy{padding-left:20px;padding-right:20px}
 }
 
-/* == 19 Reduced Motion ==================================================== */
+/* == 20 Reduced Motion ==================================================== */
+
+/* Ohne JavaScript greift die Scroll-Choreografie nicht: Das Ritual bliebe
+   auf Schritt 01 stehen und vier Bildschirmhöhen lang unverändert. Deshalb
+   wird der Abschnitt auf eine Bildschirmhöhe gekürzt und die vollständige
+   Sequenz als Liste ausgegeben. */
+.no-js .ritual{height:auto}
+.no-js .ritual-sticky{position:relative;height:100svh}
+.no-js .ritual-axis,
+.no-js .hero-bubbles{display:none}
 
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto!important}
@@ -1205,8 +1690,14 @@ footer{
   }
   .reveal{opacity:1!important;transform:none!important}
   .hero-image,.ritual-photo,.space-photo{transform:none!important;filter:none!important}
+  .hero-bubbles{display:none!important}
+  .ritual-half::after{opacity:0!important}
+
+  /* Dieselbe Lage wie ohne JavaScript: Die verkürzte Sticky-Bühne behält
+     die Bildkomposition, die Liste liefert alle sechs Schritte. Vorher
+     waren die Schritte 02 bis 06 hier nicht erreichbar. */
   .ritual{height:auto!important}
   .ritual-sticky{position:relative!important;height:100svh!important}
-  .axis-progress{display:none!important}
-  .axis-disc{top:50%!important}
+  .ritual-axis{display:none!important}
+  .ritual-steps{display:block!important}
 }
