@@ -3,3 +3,9 @@
 README.md
 FAME_MASTER_EXECUTION_PROMPT.md
 .DS_Store
+tools
+package.json
+package-lock.json
+node_modules
+CLAUDE.md
+.claude
