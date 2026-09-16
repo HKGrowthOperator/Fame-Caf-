@@ -5,6 +5,7 @@ RUN rm -f /etc/nginx/conf.d/default.conf
 COPY deploy/coolify/nginx.conf /etc/nginx/conf.d/default.conf
 COPY index.html /usr/share/nginx/html/index.html
 COPY styles.css /usr/share/nginx/html/styles.css
+COPY premium-fixes.css /usr/share/nginx/html/premium-fixes.css
 COPY script.js /usr/share/nginx/html/script.js
 
 EXPOSE 3000
