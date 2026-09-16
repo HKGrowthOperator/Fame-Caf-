@@ -21,6 +21,7 @@ Verifiziert und deshalb verwendbar:
 - Teespezialitäten
 - Kuchen und Backwaren
 - Cateringdienstleistungen
+- Offizieller Instagram-Account: https://www.instagram.com/fame.cafe.gm/ (`@fame.cafe.gm`)
 
 Nicht erfinden bzw. vor Veröffentlichung noch bestätigen:
 
@@ -28,7 +29,7 @@ Nicht erfinden bzw. vor Veröffentlichung noch bestätigen:
 - Telefonnummer
 - öffentliche Café-E-Mail-Adresse
 - finale Domain
-- finale Social-Media-Accounts
+- weitere Social-Media-Accounts
 - vollständige Speisekarte
 - Preise
 - konkrete Zutaten/Rezepturen
@@ -69,6 +70,8 @@ Für Quellcodeänderungen in Coolify `Redeploy` verwenden. Wenn ein alter Layer 
 - Editorial Gallery
 - Catering
 - Visit mit verifizierter Adresse
+- Direkte Instagram-Verknüpfung zu `@fame.cafe.gm`
+- Google-Maps-Verknüpfung zur verifizierten Adresse
 - Impressum / Datenschutz als technischer Stand
 - Local SEO / strukturierte Daten nur mit bestätigten Angaben
 - Reduced Motion
@@ -80,7 +83,7 @@ Für Quellcodeänderungen in Coolify `Redeploy` verwenden. Wenn ein alter Layer 
 - `styles.css` — ursprüngliches Basissystem
 - `premium-fixes.css` — freigegebene Premium-Designkorrekturen
 - `master-upgrade.css` — Ergänzungen des Master-Passes
-- `script.js` — Scroll-/Reveal-Logik
+- `script.js` — Scroll-/Reveal-Logik sowie Social-/Maps-Verknüpfung
 - `Dockerfile` — bevorzugter Coolify-Build ab Repo-Root
 - `deploy/coolify/Dockerfile` — kompatibler bestehender Coolify-Build
 - `deploy/coolify/nginx.conf` — Runtime-Konfiguration
