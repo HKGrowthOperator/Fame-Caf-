@@ -1,5 +1,7 @@
-FAME_CAFE_BUILD=2026-09-16T22:24+02:00
+FAME_CAFE_BUILD=2026-09-16T22:29+02:00
 SOURCE=HKGrowthOperator/Fame-Caf-
 BRANCH=main
 DEPLOY_TARGET=Coolify
-STATUS=repo-ready
+EXPECTED_DOCKERFILE=/Dockerfile
+FALLBACK_DOCKERFILE=/deploy/coolify/Dockerfile
+STATUS=repo-ready-for-redeploy
