@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <link rel="stylesheet" href="premium-fixes.css" />
 </head>
 <body>
   <div class="page-shell">
@@ -24,7 +25,7 @@
         <a href="#space">Café</a>
         <a href="#visit">Besuchen</a>
       </nav>
-      <a class="header-cta" href="#visit">COME BY <span>↗</span></a>
+      <a class="header-cta" href="#visit"><span class="nav-dot" aria-hidden="true"></span>Besuchen</a>
     </header>
 
     <main id="top">
@@ -33,37 +34,33 @@
           <div class="hero-image coffee-image"></div>
           <div class="hero-shade coffee-shade"></div>
           <div class="hero-meta hero-meta-left reveal">
-            <span>01 / SPECIALTY COFFEE</span>
-            <p>ROASTED WITH INTENT<br>POURED WITH PRECISION</p>
+            <span>SPECIALTY COFFEE</span>
+            <p>Röstung · Espresso · Filter</p>
           </div>
         </div>
         <div class="hero-half hero-matcha" data-parallax="0.035">
           <div class="hero-image matcha-image"></div>
           <div class="hero-shade matcha-shade"></div>
           <div class="hero-meta hero-meta-right reveal">
-            <span>02 / MATCHA CREATIONS</span>
-            <p>BRIGHT. CLEAN. CREAMY.<br>GOOD ENERGY ONLY.</p>
+            <span>MATCHA</span>
+            <p>Classic · Iced · Seasonal</p>
           </div>
         </div>
 
         <div class="hero-centerline" aria-hidden="true"></div>
         <div class="hero-center reveal">
-          <p class="hero-kicker">TWO CULTURES. ONE PLACE.</p>
+          <p class="hero-kicker">COFFEE · MATCHA · AÇAÍ</p>
           <h1>FAME<br><em>CAFÉ</em></h1>
           <p class="hero-city">GUMMERSBACH</p>
-          <a class="hero-scroll" href="#intro">SCROLL TO TASTE <span>↓</span></a>
-        </div>
-
-        <div class="hero-orbit" aria-hidden="true">
-          <span>COFFEE</span><b>×</b><span>MATCHA</span>
+          <a class="hero-scroll" href="#intro" aria-label="Weiter scrollen"><span class="scroll-dot"></span></a>
         </div>
       </section>
 
       <section class="intro" id="intro">
         <div class="intro-line"></div>
-        <p class="intro-eyebrow reveal">THE NEW EVERYDAY RITUAL</p>
-        <h2 class="intro-title reveal">Gummersbach gets a new kind of café.</h2>
-        <p class="intro-copy reveal">Specialty Coffee, Matcha, Açaí und ein Ort, an dem man nicht nur bestellt — sondern bleibt.</p>
+        <p class="intro-eyebrow reveal">FAME CAFÉ · GUMMERSBACH</p>
+        <h2 class="intro-title reveal">Gummersbach, meet FAME.</h2>
+        <p class="intro-copy reveal">Matcha, Açaí und richtig guter Kaffee. Für morgens, zwischendurch und für Nachmittage, die länger werden als geplant.</p>
         <div class="intro-pills reveal" aria-label="FAME Highlights">
           <span>Specialty Coffee</span><span>Matcha</span><span>Açaí</span><span>Work</span><span>Meet</span><span>Stay</span>
         </div>
@@ -75,66 +72,64 @@
             <div class="ritual-photo coffee-ritual-photo"></div>
             <div class="ritual-vignette ritual-vignette-coffee"></div>
             <div class="ritual-copy ritual-copy-left">
-              <div class="ritual-label"><span class="ritual-number" id="coffeeNo">01</span><span>COFFEE RITUAL</span></div>
+              <div class="ritual-label"><span class="ritual-number" id="coffeeNo">01</span><span>COFFEE</span></div>
               <h2 id="coffeeTitle">GRIND.</h2>
-              <p id="coffeeText">Good coffee starts before the first drop. Fresh grind. Exact dose. No shortcuts.</p>
+              <p id="coffeeText">Frisch gemahlen. Exakt dosiert. Der Anfang von richtig gutem Kaffee.</p>
             </div>
-            <div class="ritual-mini ritual-mini-left" id="coffeeMini">BEANS → GRIND → EXTRACT → POUR</div>
+            <div class="ritual-mini ritual-mini-left" id="coffeeMini">BEANS · GRIND · EXTRACT · POUR</div>
           </div>
 
           <div class="ritual-half ritual-matcha">
             <div class="ritual-photo matcha-ritual-photo"></div>
             <div class="ritual-vignette ritual-vignette-matcha"></div>
             <div class="ritual-copy ritual-copy-right">
-              <div class="ritual-label"><span>MATCHA RITUAL</span><span class="ritual-number" id="matchaNo">01</span></div>
+              <div class="ritual-label"><span>MATCHA</span><span class="ritual-number" id="matchaNo">01</span></div>
               <h2 id="matchaTitle">ICE.</h2>
-              <p id="matchaText">Big cubes first. Cold, clear and ready for layers.</p>
+              <p id="matchaText">Große Eiswürfel zuerst. Kalt, klar und bereit für die nächsten Schichten.</p>
             </div>
-            <div class="ritual-mini ritual-mini-right" id="matchaMini">ICE → COCONUT → MATCHA → STRAW</div>
+            <div class="ritual-mini ritual-mini-right" id="matchaMini">ICE · COCONUT · MATCHA · STRAW</div>
           </div>
 
           <div class="ritual-axis" aria-hidden="true">
             <div class="axis-track"></div>
             <div class="axis-progress" id="axisProgress"></div>
-            <div class="axis-disc" id="axisDisc"><span>HALF</span><b>/</b><span>HALF</span></div>
+            <div class="axis-disc" id="axisDisc"></div>
           </div>
-
-          <div class="stage-toast" id="stageToast" aria-live="polite">01 / START</div>
         </div>
       </section>
 
       <section class="signature">
         <div class="signature-heading reveal">
-          <span class="section-kicker">FAME SIGNATURES</span>
-          <h2>Pick your mood.</h2>
-          <p>Three worlds, one visual language. No generic café menu. Every category gets its own atmosphere.</p>
+          <span class="section-kicker">FAME FAVORITES</span>
+          <h2>Coffee. Matcha. Açaí.</h2>
+          <p>Drei Dinge, die FAME prägen. Klar im Geschmack, stark im Look und gemacht für jeden Tag.</p>
         </div>
 
         <div class="signature-grid">
           <article class="signature-card signature-card-coffee reveal">
             <div class="signature-media signature-media-coffee"></div>
             <div class="signature-overlay"></div>
-            <div class="signature-copy"><span>01</span><h3>COFFEE</h3><p>espresso / flat white / filter</p></div>
+            <div class="signature-copy"><span>01</span><h3>COFFEE</h3><p>espresso · flat white · filter</p></div>
           </article>
           <article class="signature-card signature-card-matcha reveal">
             <div class="signature-media signature-media-matcha"></div>
             <div class="signature-overlay"></div>
-            <div class="signature-copy"><span>02</span><h3>MATCHA</h3><p>classic / iced / seasonal</p></div>
+            <div class="signature-copy"><span>02</span><h3>MATCHA</h3><p>classic · iced · seasonal</p></div>
           </article>
           <article class="signature-card signature-card-acai reveal">
             <div class="signature-media signature-media-acai"></div>
             <div class="signature-overlay"></div>
-            <div class="signature-copy"><span>03</span><h3>AÇAÍ</h3><p>fruit / crunch / energy</p></div>
+            <div class="signature-copy"><span>03</span><h3>AÇAÍ</h3><p>fruit · crunch · energy</p></div>
           </article>
         </div>
       </section>
 
       <section class="acai-feature">
         <div class="acai-copy reveal">
-          <span class="section-kicker berry">BRIGHT BOWLS / BIG ENERGY</span>
-          <h2>AÇAÍ,<br>NOT AS<br>AN AFTERTHOUGHT.</h2>
-          <p>Eine eigene Produktwelt: kräftige Farben, natürliche Texturen und ein Aufbau, der auf Mobile genauso stark funktioniert wie auf Desktop.</p>
-          <a href="#menu" class="line-link">SEE THE MENU <span>↗</span></a>
+          <span class="section-kicker berry">AÇAÍ · FRESH · EVERYDAY</span>
+          <h2>FRESH.<br>FRUITY.<br>FAME.</h2>
+          <p>Açaí, frische Früchte und Crunch. Leicht genug für jeden Morgen und gut genug, dass man am nächsten Tag wiederkommt.</p>
+          <a href="#menu" class="line-link">Menü ansehen</a>
         </div>
         <div class="acai-stage reveal">
           <div class="acai-photo"></div>
@@ -146,19 +141,19 @@
         <div class="space-photo"></div>
         <div class="space-overlay"></div>
         <div class="space-copy reveal">
-          <span class="section-kicker light">THE SPACE</span>
+          <span class="section-kicker light">FAME CAFÉ · GUMMERSBACH</span>
           <h2>WORK.<br>MEET.<br>STAY.</h2>
-          <p>FAME soll digital genauso wirken, wie sich der Laden anfühlen soll: warm, ruhig, hochwertig und offen genug, um einfach länger zu bleiben.</p>
+          <p>Ein Ort für den ersten Kaffee, Matcha mit Freunden, eine Bowl zwischendurch oder ein paar Stunden mit dem MacBook.</p>
         </div>
         <div class="space-index reveal">
-          <span>01 / LAPTOP</span><span>02 / FRIENDS</span><span>03 / COFFEE</span><span>04 / MATCHA</span>
+          <span>WORK</span><span>MEET</span><span>COFFEE</span><span>MATCHA</span>
         </div>
       </section>
 
       <section class="menu" id="menu">
         <div class="menu-head reveal">
-          <div><span class="section-kicker">MENU PREVIEW</span><h2>FAME FAVORITES.</h2></div>
-          <p>Die finalen Preise und Produkte setzen wir ein, sobald eure echte Karte steht. Bis dahin bleibt die Seite bewusst als hochwertige Produkt-Preview aufgebaut.</p>
+          <div><span class="section-kicker">A FEW FAVORITES</span><h2>GOOD STUFF.</h2></div>
+          <p>Von klassischen Espresso Drinks über Iced Matcha bis zu Açaí Bowls und saisonalen Specials.</p>
         </div>
 
         <div class="menu-row">
@@ -175,7 +170,7 @@
             <div class="menu-meta"><span>AÇAÍ</span><h3>FAME Bowl</h3><p>Fruit · crunch · fresh</p></div>
           </article>
           <article class="menu-item menu-item-dark reveal">
-            <div class="menu-dark-copy"><span>SEASONAL</span><h3>Something new<br>on repeat.</h3><p>Limited drinks, rotating toppings and drops that make people come back.</p></div>
+            <div class="menu-dark-copy"><span>SEASONAL</span><h3>Limited<br>favorites.</h3><p>Neue Drinks, Toppings und Specials, die immer wieder wechseln.</p></div>
           </article>
         </div>
       </section>
@@ -183,21 +178,18 @@
       <section class="craft">
         <div class="craft-media"></div>
         <div class="craft-copy reveal">
-          <span class="section-kicker light">CRAFT / NOT CONTENT</span>
-          <h2>THE BARISTA<br>IS PART OF<br>THE BRAND.</h2>
-          <p>Keine austauschbaren Food-Stockkarten. Hände, Textur, Maschine, Dampf, Eis, Matcha und echte Zubereitung werden zur visuellen Sprache der Website.</p>
+          <span class="section-kicker light">BEHIND THE BAR</span>
+          <h2>MADE<br>WITH CARE.</h2>
+          <p>Guter Kaffee und guter Matcha leben von den Details. Bohne, Wasser, Temperatur, Textur und Menschen, die wissen, was sie tun.</p>
         </div>
       </section>
 
       <section class="visit" id="visit">
         <div class="visit-copy reveal">
-          <span class="section-kicker">GUMMERSBACH / OUR HOME</span>
-          <h2>COME BY.<br>STAY A WHILE.</h2>
-          <p>Adresse, Öffnungszeiten, Google Maps und Social Links ergänzen wir, sobald die finalen Daten bestätigt sind.</p>
-          <div class="visit-actions">
-            <a href="#top" class="button button-dark">ROUTE FOLGT <span>↗</span></a>
-            <a href="#top" class="button button-light">INSTAGRAM FOLGT</a>
-          </div>
+          <span class="section-kicker">GUMMERSBACH · OUR HOME</span>
+          <h2>SEE YOU<br>AT FAME.</h2>
+          <p>Mitten in Gummersbach. Für Kaffee am Morgen, Matcha am Nachmittag und alles dazwischen.</p>
+          <div class="visit-note"><span></span>GUMMERSBACH · OPENING SOON</div>
         </div>
         <div class="visit-mark reveal" aria-hidden="true"><span>GOOD</span><span>DRINKS.</span><b>BETTER</b><span>DAYS.</span></div>
       </section>
