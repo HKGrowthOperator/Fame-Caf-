@@ -1,11 +1,11 @@
-/* FAME CAFÉ — premium cleanup layer
-   Keeps the established palette, removes gimmicky UI and aligns the layout. */
+/* FAME CAFÉ — targeted cleanup only.
+   Keep the original motion language. Remove the two disliked arrow CTAs and keep the grid aligned. */
 
 :root{
   --radius:18px;
 }
 
-/* Header */
+/* Header: no arrow icon, just a small brand dot */
 .site-header{
   height:72px;
   border-bottom:1px solid rgba(255,255,255,.16);
@@ -37,104 +37,101 @@
   flex:0 0 auto;
 }
 
-/* Hero: cleaner, quieter, no arrows or decorative orbit */
-.hero-meta{
-  width:auto;
-  max-width:260px;
-}
-.hero-meta span{
-  font-size:.54rem;
-  letter-spacing:.19em;
-}
-.hero-meta p{
-  margin-top:10px;
-  font-family:var(--sans);
-  font-size:.64rem;
-  line-height:1.5;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  opacity:.72;
-}
-.hero-center h1{
-  line-height:.73;
-}
-.hero-kicker{
-  letter-spacing:.26em;
-}
+/* Restore visible hero cue without adding a diagonal CTA arrow */
 .hero-scroll{
-  bottom:24px;
-  width:18px;
-  height:58px;
-  display:block;
-  font-size:0;
+  bottom:26px;
+  width:auto;
+  height:auto;
+  display:flex;
+  gap:12px;
+  align-items:center;
+  font-size:.55rem;
+  letter-spacing:.22em;
 }
 .hero-scroll::before{
-  content:"";
-  position:absolute;
-  left:50%;
-  top:0;
-  width:1px;
-  height:46px;
-  background:rgba(255,255,255,.55);
-  transform:translateX(-50%);
+  content:"SCROLL TO TASTE";
 }
 .hero-scroll .scroll-dot{
-  position:absolute;
-  left:50%;
-  bottom:0;
   width:6px;
   height:6px;
   border-radius:50%;
   background:rgba(255,255,255,.9);
-  transform:translateX(-50%);
+  display:block;
 }
-.hero-orbit{display:none!important}
+.hero::before{
+  content:"COFFEE\A×\AMATCHA";
+  white-space:pre;
+  position:absolute;
+  z-index:8;
+  left:50%;
+  top:66%;
+  transform:translate(-50%,-50%);
+  width:106px;
+  height:106px;
+  border:1px solid rgba(255,255,255,.46);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-size:.46rem;
+  letter-spacing:.16em;
+  line-height:1.55;
+  text-align:center;
+  backdrop-filter:blur(8px);
+  pointer-events:none;
+}
 
-/* Intro */
-.intro-pills{
-  gap:10px;
-}
-.intro-pills span{
-  padding:9px 13px;
-  border-color:rgba(23,20,18,.12);
-  background:rgba(255,255,255,.18);
-}
-
-/* Half / half scroll experience */
+/* Restore the half/half scroll badge and stage bubble */
 .ritual-axis{
-  width:34px;
+  width:90px;
 }
 .axis-track{
   width:1px;
-  background:rgba(255,255,255,.28);
+  background:rgba(255,255,255,.35);
 }
 .axis-progress{
-  width:1px;
-  background:rgba(255,255,255,.82);
+  width:3px;
+  background:var(--matcha);
 }
 .axis-disc{
-  width:12px;
-  height:12px;
+  width:88px;
+  height:88px;
   border-radius:50%;
-  background:var(--matcha);
-  border:2px solid rgba(255,255,255,.92);
-  box-shadow:0 0 0 5px rgba(137,168,107,.14);
+  background:var(--paper);
+  color:var(--ink);
+  border:0;
+  box-shadow:0 18px 50px rgba(0,0,0,.24);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
 }
-.stage-toast{display:none!important}
-.ritual-mini{
-  top:88px;
-  font-size:.49rem;
-  letter-spacing:.18em;
-  opacity:.56;
+.axis-disc::before{
+  content:"HALF\A/\AHALF";
+  white-space:pre;
+  font-size:.48rem;
+  letter-spacing:.2em;
+  line-height:1.35;
 }
-.ritual-copy h2{
-  margin-top:16px;
+.ritual-sticky::after{
+  content:attr(data-stage);
+  position:absolute;
+  z-index:10;
+  top:84px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(246,243,236,.9);
+  color:var(--ink);
+  border-radius:999px;
+  padding:8px 12px;
+  font-size:.5rem;
+  letter-spacing:.2em;
+  font-weight:700;
+  backdrop-filter:blur(12px);
 }
 
-/* Strict alignment for cards */
-.signature-heading{
-  align-items:start;
-}
+/* Keep the cards on a common baseline */
+.signature-heading{align-items:start}
 .signature-grid{
   grid-template-columns:repeat(3,minmax(0,1fr));
   gap:16px;
@@ -147,37 +144,6 @@
   min-height:590px;
   border-radius:var(--radius);
 }
-.signature-media{
-  transform:scale(1.001);
-}
-.signature-card:hover .signature-media{
-  transform:scale(1.025);
-}
-
-/* Açaí */
-.acai-stamp{
-  width:74px;
-  height:74px;
-  right:22px;
-  top:22px;
-  font-size:.42rem;
-  letter-spacing:.14em;
-  transform:none;
-  box-shadow:none;
-}
-.line-link{
-  font-size:.6rem;
-  letter-spacing:.13em;
-}
-
-/* Space section */
-.space-index{
-  gap:11px;
-  font-size:.5rem;
-  opacity:.72;
-}
-
-/* Menu rows on one clean baseline */
 .menu-row{
   gap:14px;
   align-items:stretch;
@@ -198,7 +164,8 @@
   padding:28px;
 }
 
-/* Visit */
+/* Bottom-left CTA is text-only: no diagonal arrow */
+.line-link{font-size:.6rem;letter-spacing:.13em}
 .visit-note{
   display:inline-flex;
   align-items:center;
@@ -214,15 +181,6 @@
   border-radius:50%;
   background:var(--matcha);
 }
-.visit-mark{
-  border-color:rgba(23,20,18,.12);
-}
-
-/* Motion should feel quiet and premium */
-.reveal{
-  transform:translateY(16px);
-  transition-duration:.78s;
-}
 
 @media (max-width:980px){
   .signature-grid{grid-template-columns:1fr 1fr}
@@ -232,13 +190,12 @@
 
 @media (max-width:680px){
   .header-cta{padding:8px 10px;font-size:.53rem}
-  .hero-scroll{height:42px;bottom:15px}
-  .hero-scroll::before{height:32px}
-  .hero-center h1{line-height:.76}
-  .ritual-axis{right:6px;width:30px}
-  .axis-disc{width:10px;height:10px}
+  .hero::before{width:82px;height:82px;top:70%}
+  .ritual-axis{right:10px;width:54px}
+  .axis-disc{width:52px;height:52px}
+  .axis-disc::before{font-size:.39rem}
+  .ritual-sticky::after{top:70px;font-size:.44rem}
   .signature-grid{grid-template-columns:1fr}
   .signature-card,.signature-card:nth-child(2),.signature-card:nth-child(3){grid-column:auto;min-height:500px}
   .menu-item-dark{min-height:360px}
-  .visit-mark{max-width:250px}
 }
