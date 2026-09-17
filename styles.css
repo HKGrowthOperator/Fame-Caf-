@@ -434,3 +434,67 @@ body.nav-open{overflow:hidden}
      horizontal scrollbar. */
   .legal-page h1{font-size:clamp(2.4rem,11vw,3.6rem)}
 }
+
+/* ==========================================================================
+   Markenflächen hinter jedem Bild
+   --------------------------------------------------------------------------
+   Die Seite hängt an rund fünfzehn externen Fotos. Lädt eines davon nicht —
+   schwaches Netz, Stromsparmodus, Content-Blocker, Aussetzer beim Bilddienst —
+   blieb bisher eine leere oder schwarze Fläche stehen. Genau so sah die Seite
+   in einem Livetest aus.
+
+   background-color liegt unter background-image und greift auch dann, wenn
+   das Bild per Skript gesetzt wird (Hero-Karussell). Fällt ein Foto aus,
+   bleibt die FAME-Farbwelt stehen statt eines Lochs.
+   ========================================================================== */
+
+/* Heller gewählt als die übrigen Flächen: Über dem Hero und dem Ritual
+   liegt eine Abdunkelung von rund 70 Prozent. Dunkle Grundfarben kämen
+   darunter wieder als Schwarz heraus. */
+.hero-carousel{background:var(--ink)}
+.hero-carousel-panel:first-child{background-color:#8A5B3E}
+.hero-carousel-panel:last-child{background-color:#5A7A4A}
+
+.hero-image.coffee-image{background-color:#8A5B3E}
+.hero-image.matcha-image{background-color:#5A7A4A}
+
+.coffee-shot{background-color:#7A5037}
+.matcha-shot{background-color:#4E6B41}
+
+.card-coffee .card-image{background-color:#2A1D15}
+.card-matcha .card-image{background-color:#1B2A1D}
+.card-acai .card-image{background-color:#241021}
+
+.menu-photo{background-color:var(--cream,#EDE6DA)}
+.mp-coffee,.mp-latte,.mp-flat{background-color:#6B4732}
+.mp-matcha,.mp-matcha2,.mp-tea{background-color:#3C5540}
+.mp-acai{background-color:#5E2A4C}
+.mp-bakery{background-color:#C9A98D}
+
+.choice-inside .choice-image{background-color:#2A2520}
+.choice-outside .choice-image{background-color:#3C5540}
+
+.gallery-tile{background-color:#2A2520}
+.gallery-tile.g1,.gallery-tile.g3{background-color:#3C5540}
+.gallery-tile.g4{background-color:#5E2A4C}
+.gallery-tile.g6{background-color:#6B4732}
+
+.catering-image{background-color:#2A1D15}
+
+/* Ein ruhiger Kreis auf jeder Fläche, damit ein fehlendes Foto wie eine
+   gestaltete Fläche wirkt und nicht wie ein Ladefehler. Liegt unter dem
+   Foto und ist unsichtbar, sobald das Bild da ist. */
+.menu-photo::before,
+.gallery-tile::before{
+  content:"";
+  position:absolute;
+  left:50%;top:50%;
+  transform:translate(-50%,-50%);
+  width:38%;
+  aspect-ratio:1;
+  border:1px solid rgba(246,243,236,.28);
+  border-radius:50%;
+  z-index:0;
+}
+.menu-photo,.gallery-tile{position:relative}
+.gallery-tile span{position:relative;z-index:2}

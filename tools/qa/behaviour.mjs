@@ -139,6 +139,40 @@ for (const [label, pattern] of [
   await ctx.close();
 }
 
+/* --- Bildausfall ---------------------------------------------------------
+   Die Seite hängt an rund fünfzehn externen Fotos. Lädt eines nicht, darf
+   keine schwarze oder leere Fläche stehen bleiben, sondern eine Markenfläche.
+   Genau dieser Zustand war in einem Livetest zu sehen. */
+{
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await ctx.newPage();
+  await page.route('**://images.unsplash.com/**', r => r.abort());
+  await page.goto(`${site.base}/index.html`, { waitUntil: 'load' });
+  await page.waitForTimeout(2000);
+  await page.evaluate(async () => {
+    const h = document.documentElement.scrollHeight;
+    for (let y = 0; y < h; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 60)); }
+    window.scrollTo(0, 0);
+  });
+  await page.waitForTimeout(600);
+
+  const nackt = await page.evaluate(() => {
+    const sel = '.hero-carousel-panel,.hero-image,.ritual-shot,.card-image,.menu-photo,' +
+                '.choice-image,.gallery-tile,.catering-image';
+    const out = [];
+    document.querySelectorAll(sel).forEach(el => {
+      const bc = getComputedStyle(el).backgroundColor;
+      const m = bc.match(/rgba?\(([^)]+)\)/);
+      const transparent = !m || (m[1].split(',')[3] !== undefined && parseFloat(m[1].split(',')[3]) === 0);
+      if (transparent) out.push((el.className || '').toString().slice(0, 34));
+    });
+    return out;
+  });
+  check(nackt.length === 0,
+        `Bildausfall: ${nackt.length} Flächen ohne Markenfarbe — dort bliebe ein Loch (${nackt.slice(0, 3).join(', ')})`);
+  await ctx.close();
+}
+
 /* --- Reduced Motion ------------------------------------------------------ */
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
