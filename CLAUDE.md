@@ -80,6 +80,12 @@ muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
   Kommt etwas Neues dazu, gilt dieselbe Regel.
 - **`.reveal` wird nur ausgeblendet, wenn `<html>` die Klasse `.js` trägt.**
   Diese Regel nicht umdrehen. Ohne sie ist die Seite bei JS-Ausfall leer.
+- **Das Sicherheitsnetz steht inline im `<head>`, nicht in `script.js`.**
+  Es setzt die Klasse auf `no-js` zurück, wenn ein `<script>` scheitert oder
+  nach drei Sekunden nichts eingeblendet wurde. In `script.js` wäre es
+  wirkungslos, genau wenn es gebraucht wird — nämlich wenn diese Datei nicht
+  ankommt. Live ist daraus schon einmal eine komplett schwarze Seite
+  geworden.
 - **Jede Scroll-Choreografie braucht eine Textfassung.** Was nur beim
   Scrollen erscheint, muss bei `prefers-reduced-motion` und ohne JavaScript
   als Text vorhanden sein (Vorbild: `.ritual-steps`).

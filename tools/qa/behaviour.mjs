@@ -85,6 +85,33 @@ const check = (cond, label) => { checks++; if (!cond) failures.push(label); };
   await ctx.close();
 }
 
+/* --- Wenn script.js ausfällt ---------------------------------------------
+   Der gefährlichste Fall: Das HTML kommt an, das Skript nicht. Genau so
+   entstand live eine komplett leere Seite unter dem Header. Das Netz dagegen
+   steht inline im <head>; ein Handler in script.js wäre wirkungslos, weil
+   die Datei ja gerade fehlt. */
+for (const [label, setup] of [
+  ['Abbruch (404)', p => p.route('**/script.js*', r => r.abort())],
+  ['kaputter Code', p => p.route('**/script.js*', r => r.fulfill({
+    status: 200, contentType: 'text/javascript', body: 'kein gueltiges javascript {{{'
+  }))]
+]) {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
+  const page = await ctx.newPage();
+  await setup(page);
+  await page.goto(`${site.base}/index.html`, { waitUntil: 'load' });
+  await page.waitForTimeout(3600);
+  const hidden = await page.evaluate(() => {
+    let n = 0;
+    document.querySelectorAll('.reveal').forEach(e => { if (parseFloat(getComputedStyle(e).opacity) < 0.5) n++; });
+    return n;
+  });
+  check(hidden === 0, `script.js ${label}: ${hidden} unsichtbare Elemente — Seite bliebe leer`);
+  check(await page.evaluate(() => document.documentElement.classList.contains('no-js')),
+        `script.js ${label}: Seite fällt nicht auf die Fassung ohne JavaScript zurück`);
+  await ctx.close();
+}
+
 /* --- Reduced Motion ------------------------------------------------------ */
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });

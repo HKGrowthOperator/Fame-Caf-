@@ -27,10 +27,34 @@
   <link rel="stylesheet" href="styles.css?v=fame-v5-20260917" />
 
   <script>
-    /* Ohne diese Zeile ist die gesamte Seite unsichtbar, sobald JavaScript
-       nicht läuft: .reveal startet auf opacity:0 und wird nur per Skript
-       eingeblendet. Gemessen waren das 32 von 32 Elementen. */
-    document.documentElement.classList.replace('no-js', 'js');
+    /* .reveal startet auf opacity:0, sobald <html> die Klasse .js trägt —
+       eingeblendet wird erst per IntersectionObserver in script.js. Ohne
+       Absicherung bleibt die Seite damit in drei Fällen dauerhaft leer:
+       JavaScript aus, script.js kommt nicht an (404, abgebrochener Deploy,
+       Content-Blocker), oder script.js wirft beim Parsen.
+
+       Dieses Netz muss deshalb hier im <head> stehen und nicht in script.js
+       selbst: Ein Handler in einer Datei, die nie geladen wird, kann nicht
+       greifen. Fällt irgendetwas aus, geht die Klasse zurück auf no-js und
+       das Stylesheet zeigt den gesamten Inhalt ohne Einblendung. */
+    (function () {
+      var root = document.documentElement;
+      root.classList.replace('no-js', 'js');
+
+      function fallBackToPlainPage() {
+        if (root.classList.contains('js')) root.classList.replace('js', 'no-js');
+      }
+
+      // Ein fehlgeschlagener <script>-Abruf meldet sich in der Capture-Phase.
+      window.addEventListener('error', function (e) {
+        if (e.target && e.target.tagName === 'SCRIPT') fallBackToPlainPage();
+      }, true);
+
+      // Letzte Instanz: Hat nach drei Sekunden nichts eingeblendet, stimmt etwas nicht.
+      window.setTimeout(function () {
+        if (!document.querySelector('.reveal.in-view')) fallBackToPlainPage();
+      }, 3000);
+    })();
   </script>
   <script type="application/ld+json">
   {
