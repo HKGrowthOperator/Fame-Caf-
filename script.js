@@ -45,16 +45,9 @@ window.addEventListener('pageshow', function(){
   });
 }, {once:true});
 
-/* Sicherheitsnetz: .reveal startet auf opacity:0, sobald <html> die Klasse
-   .js trägt. Scheitert das Skript, bliebe die Seite ohne diese Zeilen leer. */
-function revealEverything(){
-  var n = document.querySelectorAll('.reveal');
-  for (var i = 0; i < n.length; i++) n[i].classList.add('in-view');
-}
-window.addEventListener('error', revealEverything);
-setTimeout(function(){
-  if (!document.querySelector('.reveal.in-view')) revealEverything();
-}, 2500);
+/* Das Sicherheitsnetz gegen eine leere Seite steht bewusst inline im <head>
+   von index.html. Hier wäre es wirkungslos, sobald diese Datei selbst nicht
+   geladen wird — und genau das ist der Fall, der abgesichert werden muss. */
 
 function setStep(index){
   const i = Math.max(0, Math.min(3, index));

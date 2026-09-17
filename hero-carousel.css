@@ -1,4 +1,9 @@
-.hero>.hero-half{opacity:0;pointer-events:none}
+/* Nur verstecken, wenn das Karussell tatsächlich existiert. Vorher hing
+   diese Regel allein am Stylesheet: Kam hero-carousel.css an und
+   hero-carousel.js nicht, war der Hero schwarz — die Bildhälften waren
+   ausgeblendet, das Karussell aber nie gebaut. Die Klasse setzt das
+   Skript erst, nachdem die Slides im DOM stehen. */
+.hero.has-carousel>.hero-half{opacity:0;pointer-events:none}
 .hero-carousel{position:absolute;inset:0;z-index:1;overflow:hidden;background:#111}
 .hero-carousel-slide{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;opacity:0;visibility:hidden;transition:opacity .72s ease,visibility .72s ease}
 .hero-carousel-slide.is-active{opacity:1;visibility:visible}
