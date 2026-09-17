@@ -1,18 +1,37 @@
 <!doctype html>
-<html lang="de">
+<html lang="de" class="no-js">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#F6F3EC" />
+  <meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#171412" media="(prefers-color-scheme: dark)" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="description" content="FAME CAFÉ Gummersbach — Matcha, Açaí-Bowls, Kaffee, Tee, Kuchen und Backwaren." />
   <meta property="og:title" content="FAME CAFÉ — Gummersbach" />
   <meta property="og:description" content="Coffee. Matcha. Açaí. FAME CAFÉ in Gummersbach." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="FAME CAFÉ" />
+  <meta property="og:image" content="assets/fame-og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="assets/fame-og.png" />
   <title>FAME CAFÉ — Gummersbach</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=fame-v4-20260917" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+  <link rel="manifest" href="site.webmanifest" />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/dm-serif-display-latin-400.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="assets/fonts/manrope-latin-variable.woff2" crossorigin />
+  <link rel="stylesheet" href="styles.css?v=fame-v5-20260917" />
+
+  <script>
+    /* Ohne diese Zeile ist die gesamte Seite unsichtbar, sobald JavaScript
+       nicht läuft: .reveal startet auf opacity:0 und wird nur per Skript
+       eingeblendet. Gemessen waren das 32 von 32 Elementen. */
+    document.documentElement.classList.replace('no-js', 'js');
+  </script>
   <script type="application/ld+json">
   {
     "@context":"https://schema.org",
@@ -21,11 +40,19 @@
     "legalName":"Fame Cafe ACH UG (haftungsbeschränkt)",
     "address":{"@type":"PostalAddress","streetAddress":"Gummersbacher Straße 12","postalCode":"51645","addressLocality":"Gummersbach","addressCountry":"DE"},
     "sameAs":["https://www.instagram.com/fame.cafe.gm/"],
-    "hasMap":"https://www.google.com/maps/search/?api=1&query=Gummersbacher+Stra%C3%9Fe+12%2C+51645+Gummersbach"
+    "hasMap":"https://www.google.com/maps/search/?api=1&query=Gummersbacher+Stra%C3%9Fe+12%2C+51645+Gummersbach",
+    "openingHoursSpecification":[{
+      "@type":"OpeningHoursSpecification",
+      "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
+      "opens":"07:00",
+      "closes":"17:00"
+    }]
   }
   </script>
 </head>
 <body>
+  <a class="skip-link" href="#intro">Zum Inhalt springen</a>
+
   <header class="site-header" id="siteHeader">
     <a class="brand" href="#top" aria-label="FAME CAFÉ Startseite">
       <span class="brand-main">FAME CAFÉ</span>
@@ -40,8 +67,38 @@
     <div class="header-actions">
       <a class="header-social" href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a class="header-cta" href="#visit"><span class="nav-dot" aria-hidden="true"></span>Besuchen</a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav">
+        <span class="nav-toggle-lines" aria-hidden="true"><i></i><i></i></span>
+        <span class="nav-toggle-label">Menü</span>
+      </button>
     </div>
   </header>
+
+  <!-- Unter 780px blendet das Stylesheet .desktop-nav aus. Ohne dieses
+       Overlay gäbe es dort keine Navigation — gemessen null erreichbare
+       Navigationselemente auf 390px. -->
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <nav aria-label="Navigation">
+      <ul class="mobile-nav-list">
+        <li><a href="#ritual"><span>01</span>Ritual</a></li>
+        <li><a href="#menu"><span>02</span>Menü</a></li>
+        <li><a href="#cafe"><span>03</span>Café</a></li>
+        <li><a href="#visit"><span>04</span>Besuchen</a></li>
+        <li><a href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer"><span>05</span>Instagram</a></li>
+      </ul>
+    </nav>
+    <div class="mobile-nav-foot">
+      <address>
+        <span>Gummersbacher Straße 12</span>
+        <span>51645 Gummersbach</span>
+        <span>Täglich 07:00–17:00 Uhr</span>
+      </address>
+      <div class="mobile-nav-legal">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+  </div>
 
   <main id="top">
     <section class="hero" aria-label="FAME CAFÉ — Coffee und Matcha">
@@ -101,6 +158,17 @@
           <div class="ritual-marker" id="axisDisc"><strong>01</strong><span>START</span></div>
         </div>
       </div>
+
+      <!-- Vollständige Sequenz als Text. Bei prefers-reduced-motion und ohne
+           JavaScript greift die Scroll-Choreografie nicht; ohne diese Liste
+           bliebe der Abschnitt auf Schritt 01 stehen und drei von vier
+           Schritten wären unerreichbar. -->
+      <ol class="ritual-steps">
+        <li><span>01</span><b>Grind · Ice</b><p>Frisch gemahlen — der erste Schritt, bevor Espresso, Textur und Pour zusammenkommen. Auf der Matcha-Seite kommt zuerst das Eis.</p></li>
+        <li><span>02</span><b>Extract · Base</b><p>Espresso läuft: Wärme, Druck und Timing. Die helle Basis schafft den Kontrast für das kräftige Matcha-Grün.</p></li>
+        <li><span>03</span><b>Texture · Matcha</b><p>Milch wird fein und glossy. Matcha übernimmt den Frame und macht die Produktwelt sofort erkennbar.</p></li>
+        <li><span>04</span><b>Pour · Straw</b><p>Espresso und Milch kommen zusammen. Deckel und Strohhalm schließen den Build ab.</p></li>
+      </ol>
     </section>
 
     <section class="signature" aria-labelledby="signatureTitle">
@@ -163,16 +231,33 @@
         <h2 id="visitTitle">See you<br>in Gummersbach.</h2>
         <div class="visit-block"><span>ADRESSE</span><strong>Gummersbacher Straße 12<br>51645 Gummersbach</strong></div>
         <div class="hours-card">
-          <div><span>ÖFFNUNGSZEITEN</span><strong>Opening soon</strong></div>
-          <ul><li><span>Mo–Fr</span><b>wird veröffentlicht</b></li><li><span>Sa–So</span><b>wird veröffentlicht</b></li></ul>
+          <div><span>ÖFFNUNGSZEITEN</span><strong>Täglich 07:00–17:00 Uhr</strong></div>
+          <ul>
+            <li><span>Montag–Freitag</span><b>07:00–17:00</b></li>
+            <li><span>Samstag–Sonntag</span><b>07:00–17:00</b></li>
+          </ul>
         </div>
         <div class="visit-buttons">
           <a href="https://www.google.com/maps/search/?api=1&query=Gummersbacher+Stra%C3%9Fe+12%2C+51645+Gummersbach" target="_blank" rel="noopener noreferrer">Google Maps</a>
           <a href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
       </div>
-      <div class="map-wrap reveal">
-        <iframe title="FAME CAFÉ auf Google Maps" loading="lazy" referrerpolicy="no-referrer-when-downgrade" src="https://www.google.com/maps?q=Gummersbacher%20Stra%C3%9Fe%2012%2C%2051645%20Gummersbach&output=embed"></iframe>
+      <!-- Die Karte wird bewusst erst auf Klick geladen. Eine direkt
+           eingebettete Google-Maps-iframe überträgt die IP-Adresse jedes
+           Besuchers an Google, bevor irgendjemand zugestimmt hat. Für einen
+           Betrieb in Deutschland ist das ein reales Abmahnrisiko, und der
+           Master-Prompt verlangt die Karte erst nach geklärter
+           Consent-Lösung. Der Button ersetzt sie durch dieselbe Karte,
+           sobald der Besucher sie selbst anfordert. -->
+      <div class="map-wrap reveal" id="mapWrap"
+           data-map-src="https://www.google.com/maps?q=Gummersbacher%20Stra%C3%9Fe%2012%2C%2051645%20Gummersbach&amp;output=embed">
+        <div class="map-consent" id="mapConsent">
+          <span class="map-consent-mark" aria-hidden="true"></span>
+          <p class="map-consent-title">Karte von Google Maps</p>
+          <p class="map-consent-text">Beim Laden werden Daten an Google übertragen, unter anderem deine IP-Adresse. Details stehen in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+          <button type="button" class="map-consent-button" id="mapConsentButton">Karte laden</button>
+          <a class="map-consent-alt" href="https://www.google.com/maps/search/?api=1&amp;query=Gummersbacher+Stra%C3%9Fe+12%2C+51645+Gummersbach" target="_blank" rel="noopener noreferrer">Stattdessen in Google Maps öffnen</a>
+        </div>
       </div>
     </section>
   </main>
@@ -184,6 +269,6 @@
     <p>GOOD DRINKS. BRIGHTER DAYS.</p>
   </footer>
 
-  <script src="script.js?v=fame-v4-20260917"></script>
+  <script src="script.js?v=fame-v5-20260917"></script>
 </body>
 </html>

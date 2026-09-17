@@ -1,10 +1,52 @@
 # FAME CAFÉ — Website
 
 Produktionsnahe Website-Grundlage für FAME CAFÉ Gummersbach.
+Statisches HTML, ein Stylesheet, ein Skript. Kein Build-Schritt, kein Framework.
 
 ## Design Lock
 
-Die bestehende FAME-Designrichtung bleibt geschützt: freigegebene Farbwelt, FAME-Wortmarke, Editorial-Serif/Sans-System, Coffee × Matcha Hero, Kreis-/Split-Sprache und Half/Half-Scrollmoment werden nicht ohne ausdrückliche Freigabe ersetzt.
+Die bestehende FAME-Designrichtung bleibt geschützt: freigegebene Farbwelt,
+FAME-Wortmarke, Editorial-Serif/Sans-System, Coffee × Matcha Hero, Kreis-/
+Split-Sprache und Half/Half-Scrollmoment werden nicht ohne ausdrückliche
+Freigabe ersetzt. Verbindlich ist `FAME_MASTER_EXECUTION_PROMPT.md`.
+
+## Dateien
+
+| Datei | Zweck |
+|---|---|
+| `index.html` | Startseite |
+| `impressum.html`, `datenschutz.html` | Rechtstexte |
+| `404.html` | Fehlerseite |
+| `styles.css` | vollständiges Stylesheet, in 20 nummerierte Abschnitte gegliedert |
+| `script.js` | Scroll, Ritual-Sequenz, Navigation |
+| `assets/fonts/` | lokal ausgelieferte Schriften (SIL OFL, siehe `LICENSE.md` dort) |
+| `assets/favicon.svg`, `assets/fame-og.png` | Markenzeichen und Social-Vorschau |
+| `assets/fame-og.source.html` | Vorlage, aus der `fame-og.png` gerendert wurde |
+| `site.webmanifest` | Web-App-Manifest |
+| `Dockerfile`, `deploy/coolify/` | Coolify-Build und nginx-Konfiguration |
+| `health.txt` | Deploy-Prüfpunkt |
+
+## Bilder tauschen
+
+Alle Bildquellen stehen als Custom Properties im `:root`-Block von `styles.css`
+unter „Bildslots". Für den Wechsel auf echte FAME-Fotografie werden nur diese
+Zeilen geändert — sonst nichts:
+
+```css
+--img-coffee:  url('...');   /* große Fassung  */
+--img-coffee-s:url('...');   /* mobile Fassung */
+--img-matcha: …  --img-acai: …  --img-space: …  --img-craft: …
+```
+
+Hinter jedem Foto liegt eine markenfarbige Fläche (`--fallback-*`). Fällt eine
+Bildquelle aus, bleibt die FAME-Farbwelt stehen statt einer schwarzen Fläche.
+
+## Echte Speisekarte ergänzen
+
+`index.html` enthält im Menü-Abschnitt einen Kommentar mit dem vorgesehenen
+Aufbau. Jede Kategorie bekommt ein `<ul class="menu-list">`; die Klassen
+`menu-list-name` und `menu-list-price` sind im Stylesheet vorbereitet.
+Bis bestätigte Produkte vorliegen, bleibt die Struktur leer.
 
 ## Inhaltlicher Stand
 
@@ -14,82 +56,68 @@ Verifiziert und deshalb verwendbar:
 - Gummersbacher Straße 12, 51645 Gummersbach
 - HRB 129225, Amtsgericht Köln
 - Geschäftsführer: Harisch Sivasoruban
-- Cafébetrieb
-- Matcha-Getränke
-- Açaí-Bowls
-- Kaffee
-- Teespezialitäten
-- Kuchen und Backwaren
-- Cateringdienstleistungen
-- Offizieller Instagram-Account: https://www.instagram.com/fame.cafe.gm/ (`@fame.cafe.gm`)
+- Cafébetrieb, Matcha-Getränke, Açaí-Bowls, Kaffee, Teespezialitäten,
+  Kuchen und Backwaren, Cateringdienstleistungen
+- Offizieller Instagram-Account: `@fame.cafe.gm`
+  (https://www.instagram.com/fame.cafe.gm/)
+- Öffnungszeiten: täglich (Mo–So) 07:00–17:00 Uhr
+- Sitzplätze drinnen und draußen
+- Produkte: Espresso, Cappuccino, Flat White, Iced Matcha, Matcha Latte,
+  Açaí Bowl, Tea Specials, Cake & Bakery (vom Betreiber bestätigt)
 
-Nicht erfinden bzw. vor Veröffentlichung noch bestätigen:
+Vor Veröffentlichung noch zu bestätigen — nicht erfinden:
 
-- Öffnungszeiten
 - Telefonnummer
 - öffentliche Café-E-Mail-Adresse
 - finale Domain
-- weitere Social-Media-Accounts
-- vollständige Speisekarte
-- Preise
-- konkrete Zutaten/Rezepturen
-- konkrete Rösterei/Bohnenherkunft
-- finale Fame-Produktfotos
+- Preise zu den bestätigten Produkten
+- Zutaten und Rezepturen
+- Rösterei bzw. Bohnenherkunft
+- finale FAME-Produktfotos
 
-## Bildstatus
+## Offene Punkte vor dem öffentlichen Launch
 
-Die aktuell eingebundenen externen Fotografien sind temporäre Entwicklungs-/Demo-Assets. Vor finalem Launch sollen sie durch konsistente echte FAME-Fotografie bzw. final freigegebene Assets ersetzt werden.
+1. **Bilder.** Die eingebundenen Unsplash-Fotos sind Entwicklungsassets.
+   Vor dem Launch durch echte FAME-Fotografie ersetzen, lokal ausliefern
+   und in modernen Formaten (AVIF/WebP) anbieten.
+2. **Domain.** Erst wenn die Produktionsdomain feststeht: `canonical` setzen,
+   `sitemap.xml` anlegen, in `robots.txt` verlinken und `og:image` von einem
+   relativen Pfad auf eine absolute URL umstellen. Social-Crawler lösen
+   relative Pfade nicht auf.
+3. **Kontakt.** Geschäftliche E-Mail-Adresse in Impressum und Datenschutz
+   ergänzen. Ohne elektronischen Kontaktweg ist das Impressum nicht vollständig.
+4. **Preise.** Die Karte zeigt bestätigte Produkte mit dem Platzhalter
+   „Preis folgt". Sobald die Preise vorliegen, ersetzen.
+5. **Karte.** Google Maps lädt erst auf Klick — die iframe entsteht erst,
+   wenn ein Besucher sie anfordert. Kommt später eine übergreifende
+   Consent-Lösung dazu, wird dieser Button darin aufgehen.
 
 ## Coolify — Redeploy Contract
 
-Das Repository ist so vorbereitet, dass Coolify direkt aus `main` bauen kann.
-
-Empfohlene Konfiguration:
-
 - Source: Git Repository `HKGrowthOperator/Fame-Caf-`
-- Branch: `main`
 - Build Pack: `Dockerfile`
 - Base Directory: `/`
 - Dockerfile Location: `/Dockerfile`
 - Exposed/Container Port: `3000`
 
-Kompatibilität: Falls die bestehende Coolify-App weiterhin `/deploy/coolify/Dockerfile` verwendet, ist auch dieser Dockerfile auf demselben Stand und kann ohne Umstellung weiterverwendet werden.
+`deploy/coolify/Dockerfile` ist inhaltsgleich, falls die bestehende App noch
+auf diesen Pfad zeigt. Beide kopieren den Site-Inhalt als Ganzes — neue
+Dateien müssen nicht mehr einzeln nachgetragen werden.
 
-Nach einem Redeploy muss `/health.txt` erreichbar sein. Der Endpunkt wird bewusst ohne Cache ausgeliefert und dient dazu zu prüfen, dass wirklich der neue Repository-Build läuft.
+Nach einem Redeploy muss `/health.txt` erreichbar sein; der Endpunkt wird
+ungecacht ausgeliefert. Für Quellcodeänderungen `Redeploy` verwenden, bei
+wiederverwendeten Layern `Force deploy (without cache)`.
 
-Für Quellcodeänderungen in Coolify `Redeploy` verwenden. Wenn ein alter Layer trotz neuem Commit wiederverwendet wird, `Force deploy (without cache)` verwenden.
+### Caching
 
-## Enthalten
-
-- Coffee × Matcha Hero
-- Half/Half Scroll Story
-- Coffee-/Matcha-Ritual
-- Coffee / Matcha / Açaí Produktwelten
-- Tea und Cake & Bakery Kategorien
-- Café Experience
-- Editorial Gallery
-- Catering
-- Visit mit verifizierter Adresse
-- Direkte Instagram-Verknüpfung zu `@fame.cafe.gm`
-- Google-Maps-Verknüpfung zur verifizierten Adresse
-- Impressum / Datenschutz als technischer Stand
-- Local SEO / strukturierte Daten nur mit bestätigten Angaben
-- Reduced Motion
-- responsive Desktop / Tablet / Mobile
-
-## Wichtige Dateien
-
-- `index.html` — Homepage
-- `styles.css` — ursprüngliches Basissystem
-- `premium-fixes.css` — freigegebene Premium-Designkorrekturen
-- `master-upgrade.css` — Ergänzungen des Master-Passes
-- `script.js` — Scroll-/Reveal-Logik sowie Social-/Maps-Verknüpfung
-- `Dockerfile` — bevorzugter Coolify-Build ab Repo-Root
-- `deploy/coolify/Dockerfile` — kompatibler bestehender Coolify-Build
-- `deploy/coolify/nginx.conf` — Runtime-Konfiguration
-- `health.txt` — Build-/Deploy-Prüfung
-- `FAME_MASTER_EXECUTION_PROMPT.md` — verbindlicher Design-/Content-Lock
+HTML und `health.txt` werden mit `no-store` ausgeliefert, damit ein Redeploy
+sofort sichtbar ist. CSS und JS tragen im Markup einen Versionsparameter
+(`?v=v5`) und werden eine Stunde gecacht; Schriften ein Jahr. **Nach einer
+Änderung an `styles.css` oder `script.js` den Parameter in allen vier
+HTML-Dateien hochzählen.**
 
 ## Grundregel
 
-Keine Fake-Daten. Keine erfundenen Preise, Öffnungszeiten, Bewertungen, Zutaten, Herkunftsangaben oder Social Handles. Fehlende Daten werden architektonisch vorbereitet, aber nicht als Fakten veröffentlicht.
+Keine Fake-Daten. Keine erfundenen Preise, Öffnungszeiten, Bewertungen,
+Zutaten, Herkunftsangaben oder Social Handles. Fehlende Daten werden
+architektonisch vorbereitet, aber nicht als Fakten veröffentlicht.

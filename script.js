@@ -31,12 +31,30 @@ let currentStep = -1;
 let ticking = false;
 
 // Safari/iPad soll die Seite nicht an einer alten Scrollposition öffnen.
+// Ein Sprungziel in der Adresse bleibt aber erhalten: Die frühere Fassung
+// hat den Hash per replaceState entfernt, damit landete jeder geteilte Link
+// auf /#menu stumm ganz oben.
 if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
-function forceTopOnFreshLoad(){
-  if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
-  window.scrollTo({top:0,left:0,behavior:'auto'});
+window.addEventListener('pageshow', function(){
+  requestAnimationFrame(function(){
+    if (window.location.hash) {
+      var target = document.getElementById(window.location.hash.slice(1));
+      if (target) { target.scrollIntoView(); return; }
+    }
+    window.scrollTo({top:0,left:0,behavior:'auto'});
+  });
+}, {once:true});
+
+/* Sicherheitsnetz: .reveal startet auf opacity:0, sobald <html> die Klasse
+   .js trägt. Scheitert das Skript, bliebe die Seite ohne diese Zeilen leer. */
+function revealEverything(){
+  var n = document.querySelectorAll('.reveal');
+  for (var i = 0; i < n.length; i++) n[i].classList.add('in-view');
 }
-window.addEventListener('pageshow', () => requestAnimationFrame(forceTopOnFreshLoad), {once:true});
+window.addEventListener('error', revealEverything);
+setTimeout(function(){
+  if (!document.querySelector('.reveal.in-view')) revealEverything();
+}, 2500);
 
 function setStep(index){
   const i = Math.max(0, Math.min(3, index));
@@ -93,3 +111,80 @@ const observer = new IntersectionObserver(entries=>{
   });
 },{threshold:.12,rootMargin:'0px 0px -5% 0px'});
 document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+
+/* ---- Mobile Navigation ----------------------------------------------------
+   .desktop-nav ist unter 780px ausgeblendet; ohne dieses Overlay gäbe es
+   dort keine Navigation. */
+
+const navToggle = document.getElementById('navToggle');
+const mobileNav = document.getElementById('mobileNav');
+let lastFocused = null;
+
+function focusableIn(el){
+  return Array.prototype.filter.call(
+    el.querySelectorAll('a[href], button:not([disabled])'),
+    n => n.offsetParent !== null
+  );
+}
+function navIsOpen(){ return !!mobileNav && !mobileNav.hidden; }
+function openNav(){
+  if(!mobileNav || !navToggle) return;
+  lastFocused = document.activeElement;
+  mobileNav.hidden = false;
+  navToggle.setAttribute('aria-expanded','true');
+  document.body.classList.add('nav-open');
+  const f = focusableIn(mobileNav);
+  if(f.length) f[0].focus();
+}
+function closeNav(returnFocus){
+  if(!mobileNav || !navToggle) return;
+  mobileNav.hidden = true;
+  navToggle.setAttribute('aria-expanded','false');
+  document.body.classList.remove('nav-open');
+  if(returnFocus && lastFocused && lastFocused.focus) lastFocused.focus();
+}
+
+if(navToggle && mobileNav){
+  navToggle.addEventListener('click', () => navIsOpen() ? closeNav(true) : openNav());
+  mobileNav.addEventListener('click', e => { if(e.target.closest && e.target.closest('a')) closeNav(false); });
+
+  document.addEventListener('keydown', e => {
+    if(!navIsOpen()) return;
+    if(e.key === 'Escape'){ closeNav(true); return; }
+    if(e.key !== 'Tab') return;
+    const f = focusableIn(mobileNav);
+    if(!f.length) return;
+    const first = f[0], last = f[f.length-1];
+    if(e.shiftKey && document.activeElement === first){ e.preventDefault(); last.focus(); }
+    else if(!e.shiftKey && document.activeElement === last){ e.preventDefault(); first.focus(); }
+  });
+
+  const desktopQuery = window.matchMedia('(min-width: 781px)');
+  const onDesktop = e => { if(e.matches && navIsOpen()) closeNav(false); };
+  desktopQuery.addEventListener ? desktopQuery.addEventListener('change', onDesktop)
+                                : desktopQuery.addListener(onDesktop);
+}
+
+/* ---- Karte erst auf Klick -------------------------------------------------
+   Eine direkt eingebettete Maps-iframe überträgt die IP jedes Besuchers an
+   Google, bevor jemand zugestimmt hat. Die iframe entsteht erst hier. */
+
+const mapWrap = document.getElementById('mapWrap');
+const mapConsentButton = document.getElementById('mapConsentButton');
+
+if(mapWrap && mapConsentButton){
+  mapConsentButton.addEventListener('click', () => {
+    const src = mapWrap.dataset.mapSrc;
+    if(!src) return;
+    const frame = document.createElement('iframe');
+    frame.title = 'FAME CAFÉ auf Google Maps';
+    frame.loading = 'lazy';
+    frame.referrerPolicy = 'no-referrer-when-downgrade';
+    frame.src = src;
+    const consent = document.getElementById('mapConsent');
+    if(consent) consent.remove();
+    mapWrap.appendChild(frame);
+    frame.focus();
+  });
+}

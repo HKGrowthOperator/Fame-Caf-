@@ -1,3 +1,33 @@
+/* ==========================================================================
+   FAME CAFÉ — Stylesheet
+   Basis ist der V4-Umbau. Ergänzt um die Punkte, die im Livetest gemessen
+   ausgefallen sind: Betrieb ohne JavaScript, mobile Navigation, horizontaler
+   Overflow, Sprungziele unter dem Header, lokale Schriften, Karten-Consent.
+   ========================================================================== */
+
+/* == Schriften ============================================================
+   Lokal statt über Google Fonts. Der externe Abruf baut bei jedem
+   Seitenaufruf eine Verbindung zu Google auf; die eigene
+   Datenschutzerklärung führt das als offenen Punkt.
+   Lizenz und Herkunft: assets/fonts/LICENSE.md
+   ========================================================================== */
+
+@font-face{
+  font-family:"DM Serif Display";font-style:normal;font-weight:400;font-display:swap;
+  src:url("assets/fonts/dm-serif-display-latin-400.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"DM Serif Display";font-style:italic;font-weight:400;font-display:swap;
+  src:url("assets/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Manrope";font-style:normal;font-weight:400 700;font-display:swap;
+  src:url("assets/fonts/manrope-latin-variable.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+
 :root{
   --paper:#F6F3EC;
   --ink:#171412;
@@ -49,9 +79,358 @@ img{max-width:100%;display:block}
 
 footer{min-height:150px;padding:34px var(--gutter);display:grid;grid-template-columns:1fr auto auto;grid-template-areas:"brand links legal" "brand slogan slogan";gap:18px 34px;align-items:center;border-top:1px solid var(--line)}.footer-brand{grid-area:brand}.footer-links{grid-area:links;display:flex;flex-wrap:wrap;gap:18px;font-size:.58rem}.footer-legal{grid-area:legal;display:flex;gap:14px;font-size:.55rem}.footer-legal+p,footer>p{grid-area:slogan;justify-self:end;margin:0;font-size:.48rem;letter-spacing:.16em}
 
-.reveal{opacity:0;transform:translateY(18px);transition:opacity .75s ease,transform .75s ease}.reveal.in-view{opacity:1;transform:none}
+/* Sichtbar per Default. Erst wenn das Skript die Klasse .js gesetzt hat,
+   wird ausgeblendet — sonst ist die Seite bei JS-Ausfall komplett leer. */
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .75s ease,transform .75s ease}
+.js .reveal.in-view{opacity:1;transform:none}
 
 @media(max-width:1080px){.desktop-nav{gap:20px}.header-social{display:none}.menu-grid{grid-template-columns:repeat(2,1fr)}.signature-card{min-height:500px}.gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:420px 280px 280px}.g1{grid-row:1/3}.g5{grid-column:1}.g6{grid-column:2}.visit{grid-template-columns:1fr}.map-wrap,.map-wrap iframe{min-height:58vh}}
 @media(max-width:780px){.site-header{grid-template-columns:1fr auto}.desktop-nav{display:none}.header-actions{grid-column:2}.hero{grid-template-columns:1fr 1fr}.hero-meta{display:none}.hero-center h1{font-size:clamp(4.6rem,18vw,7.5rem)}.intro{padding-left:20px;padding-right:20px}.ritual-sticky{grid-template-columns:1fr;top:60px;height:calc(100svh - 60px)}.ritual-side{position:absolute;inset:0}.ritual-coffee-side{clip-path:inset(0 50% 0 0)}.ritual-matcha-side{clip-path:inset(0 0 0 50%)}.ritual-copy{width:42%;bottom:7vh}.ritual-copy-left{left:18px}.ritual-copy-right{right:18px}.ritual-copy h2{font-size:clamp(3rem,11vw,5.5rem)}.ritual-copy p{font-size:.64rem}.ritual-topline{left:18px;max-width:40%;line-height:1.5}.ritual-topline-right{left:auto;right:18px}.ritual-rail{width:56px}.ritual-marker{width:48px;height:48px}.section-head{grid-template-columns:1fr;gap:18px}.signature-grid{grid-template-columns:1fr}.signature-card{min-height:65svh}.choice-grid{grid-template-columns:1fr}.choice-card{min-height:62svh}.gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:48svh 230px 230px}.g1{grid-column:1/-1;grid-row:1}.social-band{flex-direction:column;align-items:flex-start}.catering{grid-template-columns:1fr}.catering-image{min-height:55svh}.visit-info{padding-left:20px;padding-right:20px}footer{grid-template-columns:1fr;grid-template-areas:"brand" "links" "legal" "slogan"}.footer-legal+p,footer>p{justify-self:start}}
 @media(max-width:560px){:root{--gutter:18px}.site-header{height:64px}.site-header.scrolled{height:58px}.brand-main{font-size:1.28rem}.header-cta{padding:8px 11px;font-size:.55rem}.hero-centerline{opacity:.6}.hero-kicker{font-size:.45rem}.hero-city{font-size:.45rem}.hero-scroll{font-size:.42rem}.ritual{height:380vh}.ritual-sticky{top:58px;height:calc(100svh - 58px)}.ritual-copy h2{font-size:clamp(2.4rem,12vw,4.3rem)}.ritual-copy p{display:none}.ritual-label{gap:8px;font-size:.39rem}.ritual-label span{font-size:.8rem}.ritual-topline{font-size:.38rem}.menu-grid{grid-template-columns:1fr}.menu-photo{height:52svh}.gallery-grid{grid-template-columns:1fr;grid-template-rows:55svh repeat(5,260px)}.g1,.g2,.g3,.g4,.g5,.g6{grid-column:1;grid-row:auto}.social-band{margin-left:14px;margin-right:14px;border-radius:18px}.hours-card>div{align-items:flex-start;flex-direction:column}.map-wrap,.map-wrap iframe{min-height:52vh}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.ritual{height:auto}.ritual-sticky{position:relative;top:0;height:90vh}.ritual-shot{transition:none}.hero-image{transform:none!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none}.hero-bubbles{display:none}.ritual{height:auto}.ritual-sticky{position:relative;top:0;height:90vh}.ritual-shot{transition:none}.hero-image{transform:none!important}}
+
+/* ==========================================================================
+   Ergänzungen zum V4-Stand
+   Jede Regel hier behebt einen Punkt, der im Livetest gemessen ausgefallen
+   ist. Reihenfolge: Hilfsklassen, Sprungziele, Overflow, Navigation, Karte.
+   ========================================================================== */
+
+/* -- Hilfsklassen ---------------------------------------------------------- */
+
+.visually-hidden{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
+}
+
+.skip-link{
+  position:absolute;left:var(--gutter);top:-100px;z-index:200;
+  padding:12px 18px;background:var(--paper);color:var(--ink);
+  border:1px solid var(--line);border-radius:999px;
+  font-size:.62rem;letter-spacing:.12em;font-weight:600;
+  transition:top .25s ease;
+}
+.skip-link:focus,
+.skip-link:focus-visible{top:14px}
+
+a:focus-visible,
+button:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:4px}
+
+/* -- Sprungziele -----------------------------------------------------------
+   Der Header liegt fest über dem Inhalt. Ohne diesen Versatz verschwindet
+   der Anfang jedes Abschnitts darunter — gemessen 62 bis 72px, der
+   Abschnitts-Kicker war halb abgeschnitten. */
+
+main[id],
+section[id]{scroll-margin-top:92px}
+
+/* -- Horizontaler Overflow -------------------------------------------------
+   Auf 390px ragte die Seite 20px heraus. Ursache: Die Überschrift
+   "Gummersbach." erzwingt bei clamp-Minimum 3.8rem rund 370px Mindestbreite,
+   und ein Grid-Item hat standardmäßig min-width:auto — die Spalte wuchs
+   dadurch auf 410px. Beides wird hier abgestellt. */
+
+.visit{min-width:0}
+.visit-info,
+.map-wrap{min-width:0}
+
+/* "Gummersbach." ist das längste Wort der Seite. In der schmalen Textspalte
+   der Zweispalter-Ansicht passte es bei V4-Größe nicht und trieb die Spalte
+   auf. Ein Umbruch mitten im Wort wäre die falsche Lösung — die Überschrift
+   wird stattdessen auf die Spaltenbreite eingestellt. */
+.visit-info h2{font-size:clamp(2.6rem,4.4vw,6rem)}
+@media(max-width:1080px){
+  /* Ab hier steht der Text über die volle Breite und darf wieder groß sein. */
+  .visit-info h2{font-size:clamp(3rem,7vw,6.5rem)}
+}
+
+/* -- Mobile Navigation -----------------------------------------------------
+   .desktop-nav ist unter 780px ausgeblendet, ein Ersatz fehlte. */
+
+.nav-toggle{
+  display:none;align-items:center;gap:9px;
+  padding:9px 14px 9px 12px;border:0;border-radius:999px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  color:inherit;font-family:var(--sans);
+  font-size:.6rem;font-weight:500;letter-spacing:.08em;cursor:pointer;
+}
+.site-header.scrolled .nav-toggle{background:rgba(38,56,41,.08)}
+.nav-toggle-lines{display:flex;flex-direction:column;justify-content:center;gap:4px;width:15px;height:10px}
+.nav-toggle-lines i{display:block;height:1px;background:currentColor;transition:transform .3s ease}
+.nav-toggle[aria-expanded="true"] .nav-toggle-lines i:first-child{transform:translateY(2.5px) rotate(45deg)}
+.nav-toggle[aria-expanded="true"] .nav-toggle-lines i:last-child{transform:translateY(-2.5px) rotate(-45deg)}
+
+.mobile-nav{
+  position:fixed;inset:0;z-index:99;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:calc(72px + clamp(30px,7vh,68px)) var(--gutter) clamp(28px,6vh,52px);
+  background:var(--ink);color:#fff;overflow-y:auto;overscroll-behavior:contain;
+}
+.mobile-nav[hidden]{display:none}
+.mobile-nav::before{
+  content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(circle at 76% 16%,rgba(137,168,107,.15) 0 13%,transparent 13.4%),
+    radial-gradient(circle at 16% 92%,rgba(104,46,84,.16) 0 16%,transparent 16.4%);
+}
+.js .mobile-nav{animation:navIn .3s ease both}
+@keyframes navIn{from{opacity:0}to{opacity:1}}
+
+.mobile-nav-list{position:relative;list-style:none;margin:0;padding:0}
+.mobile-nav-list li{border-top:1px solid rgba(255,255,255,.13)}
+.mobile-nav-list li:last-child{border-bottom:1px solid rgba(255,255,255,.13)}
+.mobile-nav-list a{
+  display:flex;align-items:baseline;gap:16px;
+  padding:clamp(13px,2.3vh,21px) 0;
+  font-family:var(--serif);font-size:clamp(2.1rem,10vw,3.2rem);
+  line-height:1;letter-spacing:-.02em;
+}
+.mobile-nav-list a span{font-family:var(--sans);font-size:.44rem;font-weight:500;letter-spacing:.2em;opacity:.5}
+
+.mobile-nav-foot{
+  position:relative;display:flex;flex-wrap:wrap;
+  justify-content:space-between;align-items:flex-end;gap:18px;
+  margin-top:clamp(26px,5vh,48px);
+}
+.mobile-nav-foot address{display:flex;flex-direction:column;gap:3px;font-style:normal;font-size:.6rem;line-height:1.5;opacity:.7}
+.mobile-nav-legal{display:flex;gap:16px;font-size:.54rem;letter-spacing:.1em;opacity:.7}
+
+body.nav-open{overflow:hidden}
+
+@media(min-width:781px){
+  .mobile-nav{display:none!important}
+}
+@media(max-width:780px){
+  .nav-toggle{display:inline-flex}
+  .header-actions{display:flex;align-items:center;gap:10px}
+}
+@media(max-width:430px){
+  /* Platz wird knapp — "Besuchen" steht als Punkt 04 im Overlay. */
+  .header-cta{display:none}
+}
+
+/* -- Karte erst auf Klick --------------------------------------------------
+   Die Vorschaufläche trägt die FAME-Farbwelt, damit die Stelle nicht wie
+   ein Ladefehler aussieht. */
+
+.map-wrap{position:relative}
+.map-consent{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;padding:clamp(24px,4vw,48px);text-align:center;
+  background:
+    radial-gradient(circle at 64% 32%,rgba(137,168,107,.22),transparent 58%),
+    radial-gradient(circle at 32% 76%,rgba(104,46,84,.18),transparent 62%),
+    linear-gradient(150deg,#1B2A1D 0%,#263829 58%,#3C5540 100%);
+  color:#fff;
+}
+.map-consent-mark{
+  width:54px;height:54px;border-radius:50%;
+  border:1px solid rgba(246,243,236,.45);
+  margin-bottom:4px;flex:0 0 auto;
+}
+.map-consent-title{margin:0;font-family:var(--serif);font-size:clamp(1.4rem,2.4vw,2rem);font-weight:400}
+.map-consent-text{margin:0;max-width:420px;font-size:.72rem;line-height:1.7;opacity:.82}
+.map-consent-text a{border-bottom:1px solid currentColor}
+.map-consent-button{
+  margin-top:6px;padding:12px 20px;border:1px solid rgba(246,243,236,.6);
+  border-radius:999px;background:transparent;color:inherit;
+  font-family:var(--sans);font-size:.64rem;letter-spacing:.12em;font-weight:500;cursor:pointer;
+  transition:background .25s ease;
+}
+.map-consent-button:hover,
+.map-consent-button:focus-visible{background:rgba(246,243,236,.14)}
+.map-consent-alt{font-size:.58rem;letter-spacing:.1em;opacity:.72;border-bottom:1px solid currentColor}
+.map-wrap iframe{display:block;width:100%;height:100%;min-height:inherit;border:0}
+
+/* -- Ritual als Text -------------------------------------------------------
+   Bei prefers-reduced-motion kürzt V4 den Abschnitt auf eine Bildschirmhöhe;
+   die Sequenz bleibt dann auf Schritt 01 stehen. Diese Liste macht alle vier
+   Schritte erreichbar — auch ohne JavaScript. */
+
+.ritual-steps{
+  display:none;list-style:none;margin:0;
+  padding:clamp(56px,7vw,92px) var(--gutter) clamp(60px,8vw,100px);
+  color:#fff;
+}
+.ritual-steps li{
+  display:grid;grid-template-columns:auto 1fr;
+  column-gap:clamp(16px,3vw,36px);row-gap:4px;
+  padding:20px 0;border-top:1px solid rgba(255,255,255,.14);max-width:900px;
+}
+.ritual-steps li:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
+.ritual-steps span{grid-row:1/3;font-size:.5rem;letter-spacing:.2em;font-weight:500;opacity:.5;padding-top:6px}
+.ritual-steps b{font-family:var(--serif);font-size:clamp(1.4rem,2.8vw,2.2rem);font-weight:400;letter-spacing:-.015em}
+.ritual-steps p{margin:0;font-size:.76rem;line-height:1.7;opacity:.74;max-width:560px}
+
+.no-js .ritual-steps{display:block}
+.no-js .ritual{height:auto}
+.no-js .ritual-sticky{position:relative;height:100svh}
+.no-js .ritual-rail{display:none}
+
+@media(prefers-reduced-motion:reduce){
+  .ritual-steps{display:block!important}
+  .ritual-rail{display:none!important}
+}
+
+/* -- Sehr schmale Geräte ---------------------------------------------------
+   Auf 320px ragte die Seite 45px heraus. Ursache: Der Instagram-Handle
+   "@fame.cafe.gm" steht bei clamp-Minimum 2.8rem rund 300px breit in einem
+   292px-Kasten. Kleinere Mindestgröße und weniger Innenabstand lösen das,
+   ohne die Komposition auf größeren Schirmen anzufassen. */
+
+@media(max-width:400px){
+  .social-band{padding:clamp(26px,7vw,42px)}
+  .social-band h2{font-size:clamp(1.8rem,9vw,2.8rem)}
+  .social-band p{font-size:.7rem}
+  .visit-info h2{font-size:clamp(2.6rem,12vw,4.4rem)}
+}
+
+/* -- Rechtstexte und Fehlerseite -------------------------------------------
+   Beim Übernehmen des V4-Stands sind diese Regeln verlorengegangen; Impressum,
+   Datenschutz und 404 wären ohne Gestaltung ausgeliefert worden. */
+
+.legal-page{
+  min-height:100svh;
+  padding:clamp(110px,13vw,170px) var(--gutter) 90px;
+  background:var(--paper);
+}
+.legal-inner{max-width:860px;margin:0 auto}
+.legal-kicker{font-size:.55rem;letter-spacing:.22em;font-weight:600}
+.legal-page h1{
+  margin:18px 0 42px;
+  font-family:var(--serif);
+  font-size:clamp(3.6rem,7vw,7.4rem);
+  line-height:.84;
+  font-weight:400;
+}
+.legal-page h2{
+  margin:38px 0 12px;
+  font-family:var(--serif);
+  font-size:clamp(1.7rem,3vw,2.6rem);
+  font-weight:400;
+}
+.legal-page p,
+.legal-page li,
+.legal-page address{
+  font-size:.88rem;
+  line-height:1.75;
+  color:rgba(23,20,18,.76);
+  font-style:normal;
+  overflow-wrap:break-word;
+}
+.legal-page ul{padding-left:20px}
+.legal-status{
+  margin-bottom:32px;
+  padding:14px 16px;
+  border:1px solid var(--hairline);
+  border-radius:12px;
+  font-size:.72rem;
+  line-height:1.6;
+  color:rgba(23,20,18,.68);
+}
+.legal-back{
+  display:inline-flex;
+  margin-top:44px;
+  padding-bottom:6px;
+  border-bottom:1px solid currentColor;
+  font-size:.58rem;
+  letter-spacing:.14em;
+  font-weight:600;
+}
+
+
+.notfound{
+  position:relative;
+  min-height:100svh;
+  display:flex;
+  align-items:center;
+  padding:clamp(80px,10vw,140px) var(--gutter);
+  background:var(--ink);
+  color:#fff;
+  overflow:hidden;
+}
+.notfound::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:
+    radial-gradient(circle at 74% 18%,rgba(137,168,107,.15) 0 13%,transparent 13.4%),
+    radial-gradient(circle at 18% 92%,rgba(122,80,55,.18) 0 16%,transparent 16.4%);
+  pointer-events:none;
+}
+.notfound-inner{position:relative;max-width:660px}
+.notfound-code{
+  margin:14px 0 0;
+  font-family:var(--serif);
+  font-size:clamp(3rem,7vw,5.4rem);
+  line-height:1;
+  opacity:.28;
+}
+.notfound h1{
+  margin:6px 0 22px;
+  font-family:var(--serif);
+  font-size:clamp(3.4rem,8vw,7rem);
+  line-height:.82;
+  font-weight:400;
+  letter-spacing:-.02em;
+}
+.notfound-copy{
+  margin:0;
+  max-width:460px;
+  font-size:.84rem;
+  line-height:1.7;
+  opacity:.78;
+}
+.notfound-links{
+  list-style:none;
+  margin:34px 0 0;
+  padding:0;
+  max-width:420px;
+}
+.notfound-links li{border-top:1px solid rgba(255,255,255,.14)}
+.notfound-links li:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
+.notfound-links a{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  padding:15px 0;
+  font-family:var(--serif);
+  font-size:clamp(1.5rem,3.4vw,2.1rem);
+  line-height:1;
+}
+.notfound-links a span{
+  font-family:var(--sans);
+  font-size:.44rem;
+  font-weight:500;
+  letter-spacing:.2em;
+  opacity:.5;
+}
+.notfound-mark{
+  position:absolute;
+  right:clamp(24px,7vw,120px);
+  top:50%;
+  transform:translateY(-50%);
+  width:clamp(120px,17vw,210px);
+  aspect-ratio:1;
+  border:1px solid rgba(255,255,255,.22);
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  align-content:center;
+  text-align:center;
+  font-size:.5rem;
+  letter-spacing:.2em;
+  line-height:2.1;
+  opacity:.7;
+}
+@media (max-width:860px){
+  .notfound-mark{display:none}
+}
+
+
+@media(max-width:520px){
+  /* "Datenschutz." sprengte bei 3.6rem die Zeile und machte die Seite
+     horizontal scrollbar. */
+  .legal-page h1{font-size:clamp(2.4rem,11vw,3.6rem)}
+}

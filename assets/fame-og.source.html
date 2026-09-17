@@ -1,0 +1,26 @@
+<!doctype html><html lang="de"><head><meta charset="utf-8">
+<style>
+@font-face{font-family:"DM Serif Display";src:url("assets/fonts/dm-serif-display-latin-400.woff2") format("woff2");font-weight:400;font-style:normal}
+@font-face{font-family:"DM Serif Display";src:url("assets/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2");font-weight:400;font-style:italic}
+@font-face{font-family:"Manrope";src:url("assets/fonts/manrope-latin-variable.woff2") format("woff2");font-weight:400 700}
+*{margin:0;box-sizing:border-box}
+body{width:1200px;height:630px;background:#171412;color:#fff;font-family:"Manrope",sans-serif;position:relative;overflow:hidden}
+.l,.r{position:absolute;top:0;bottom:0;width:50%}
+.l{left:0;background:linear-gradient(160deg,#2A1D15,#7A5037)}
+.r{right:0;background:linear-gradient(200deg,#1B2A1D,#89A86B)}
+.l:after,.r:after{content:"";position:absolute;inset:0;background:rgba(23,20,18,.56)}
+.axis{position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(255,255,255,.42)}
+.c{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.k{font-size:15px;letter-spacing:.34em;font-weight:600;margin-bottom:26px}
+h1{font-family:"DM Serif Display",serif;font-weight:400;font-size:148px;line-height:.74;letter-spacing:-.02em}
+h1 em{font-style:italic}
+.city{font-size:14px;letter-spacing:.5em;font-weight:600;margin-top:34px}
+.orb{position:absolute;left:50%;top:87%;transform:translate(-50%,-50%);width:82px;height:82px;border:1px solid rgba(255,255,255,.3);border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:9px;letter-spacing:.14em;line-height:1.5}
+.side{position:absolute;bottom:40px;font-size:12px;letter-spacing:.2em;font-weight:600;opacity:.8}
+.side.a{left:56px}.side.b{right:56px}
+</style></head><body>
+<div class="l"></div><div class="r"></div><div class="axis"></div>
+<div class="c"><div class="k">COFFEE · MATCHA · AÇAÍ</div><h1>FAME<br><em>CAFÉ</em></h1><div class="city">GUMMERSBACH</div></div>
+<div class="orb"><span>COFFEE</span><span>×</span><span>MATCHA</span></div>
+<div class="side a">COFFEE</div><div class="side b">MATCHA</div>
+</body></html>
