@@ -28,6 +28,12 @@ Amtsgericht Köln, Geschäftsführer Harisch Sivasoruban, sowie die
 Produktbereiche Kaffee, Matcha-Getränke, Açaí-Bowls, Teespezialitäten,
 Kuchen und Backwaren, Catering.
 
+Vom Betreiber zusätzlich bestätigt: Instagram `@fame.cafe.gm`, Öffnungszeiten
+täglich 07:00–17:00 Uhr, Sitzplätze drinnen und draußen, sowie die Produkte
+Espresso, Cappuccino, Flat White, Iced Matcha, Matcha Latte, Açaí Bowl,
+Tea Specials und Cake & Bakery. Preise fehlen weiterhin und werden nicht
+erfunden.
+
 ## Befehle
 
 ```bash
@@ -48,7 +54,7 @@ node tools/qa/styles.mjs snapshot nachher
 node tools/qa/styles.mjs diff vorher nachher
 ```
 
-Der Diff vergleicht rund 145 Selektoren mit je 52 berechneten Eigenschaften
+Der Diff vergleicht alle im Dokument vorkommenden Klassen mit je 52 berechneten Eigenschaften
 über 11 Viewportbreiten. Ein Refactoring, das nichts am Aussehen ändern soll,
 muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
 
@@ -58,23 +64,20 @@ muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
 |---|---|
 | `index.html` | Startseite, Abschnittsreihenfolge laut Master-Prompt |
 | `impressum.html`, `datenschutz.html`, `404.html` | Rechtstexte und Fehlerseite |
-| `styles.css` | vollständiges Stylesheet, 20 nummerierte Abschnitte |
+| `styles.css` | vollständiges Stylesheet |
 | `script.js` | Scroll, Ritual-Sequenz, Navigation |
 | `tools/qa/` | Prüfwerkzeuge (nicht Teil der ausgelieferten Seite) |
 | `deploy/coolify/nginx.conf` | Routing, Caching, Header |
 
 ## Konventionen
 
-- **Bildquellen nur im `:root`.** Alle Fotos hängen an Custom Properties
-  (`--img-*`) mit markenfarbigem Fallback (`--fallback-*`). Niemals eine
-  Bild-URL direkt in eine Regel schreiben — genau das war vorher an elf
-  Stellen verteilt.
-- **Eine Quelle pro Wert.** Das Skript setzt nur CSS-Variablen (`--p`,
-  `--shift`); das Aussehen steht vollständig im Stylesheet. Keine
-  Inline-Styles für Optik.
-- **Nur `transform` und `opacity` animieren.** Ausnahme ist die
-  Header-Höhe; dort ist im Stylesheet dokumentiert, warum (gemessen
-  0,22 ms pro Umschaltung, Element liegt außerhalb des Dokumentflusses).
+- **Nur `transform` und `opacity` animieren.** Ausnahme ist die Header-Höhe;
+  gemessen 0,22 ms pro Umschaltung bei einem Element außerhalb des
+  Dokumentflusses, also unkritisch.
+- **Keine externen Ressourcen ohne Zustimmung.** Schriften liegen lokal.
+  Google Maps lädt erst, wenn ein Besucher den Button drückt — eine direkt
+  eingebettete iframe überträgt die IP-Adresse vor jeder Zustimmung.
+  Kommt etwas Neues dazu, gilt dieselbe Regel.
 - **`.reveal` wird nur ausgeblendet, wenn `<html>` die Klasse `.js` trägt.**
   Diese Regel nicht umdrehen. Ohne sie ist die Seite bei JS-Ausfall leer.
 - **Jede Scroll-Choreografie braucht eine Textfassung.** Was nur beim

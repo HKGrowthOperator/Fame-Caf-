@@ -60,14 +60,18 @@ Verifiziert und deshalb verwendbar:
   Kuchen und Backwaren, Cateringdienstleistungen
 - Offizieller Instagram-Account: `@fame.cafe.gm`
   (https://www.instagram.com/fame.cafe.gm/)
+- Öffnungszeiten: täglich (Mo–So) 07:00–17:00 Uhr
+- Sitzplätze drinnen und draußen
+- Produkte: Espresso, Cappuccino, Flat White, Iced Matcha, Matcha Latte,
+  Açaí Bowl, Tea Specials, Cake & Bakery (vom Betreiber bestätigt)
 
 Vor Veröffentlichung noch zu bestätigen — nicht erfinden:
 
-- Öffnungszeiten
 - Telefonnummer
 - öffentliche Café-E-Mail-Adresse
 - finale Domain
-- vollständige Speisekarte, Preise, Zutaten, Rezepturen
+- Preise zu den bestätigten Produkten
+- Zutaten und Rezepturen
 - Rösterei bzw. Bohnenherkunft
 - finale FAME-Produktfotos
 
@@ -82,9 +86,11 @@ Vor Veröffentlichung noch zu bestätigen — nicht erfinden:
    relative Pfade nicht auf.
 3. **Kontakt.** Geschäftliche E-Mail-Adresse in Impressum und Datenschutz
    ergänzen. Ohne elektronischen Kontaktweg ist das Impressum nicht vollständig.
-4. **Öffnungszeiten.** Sobald bestätigt: im Visit-Abschnitt ergänzen und als
-   `openingHoursSpecification` in die strukturierten Daten aufnehmen.
-5. **Karte.** Erst einbinden, wenn die Consent-Lösung entschieden ist.
+4. **Preise.** Die Karte zeigt bestätigte Produkte mit dem Platzhalter
+   „Preis folgt". Sobald die Preise vorliegen, ersetzen.
+5. **Karte.** Google Maps lädt erst auf Klick — die iframe entsteht erst,
+   wenn ein Besucher sie anfordert. Kommt später eine übergreifende
+   Consent-Lösung dazu, wird dieser Button darin aufgehen.
 
 ## Coolify — Redeploy Contract
 

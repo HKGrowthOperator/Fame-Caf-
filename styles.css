@@ -1,40 +1,34 @@
 /* ==========================================================================
    FAME CAFÉ — Stylesheet
-   --------------------------------------------------------------------------
-   Eine Datei statt drei. Die frühere Aufteilung in styles.css /
-   premium-fixes.css / master-upgrade.css hat dieselben Selektoren bis zu
-   dreimal mit unterschiedlichen Werten definiert. Hier steht pro Eigenschaft
-   nur noch der Wert, der vorher am Ende der Kaskade tatsächlich gewonnen hat.
-   Design-Lock: Farbwelt, Typografie, Wortmarke, Hero, Half/Half und
-   Kreis-Sprache sind unverändert.
-
-   Gliederung
-   01 Tokens
-   02 Schriften
-   03 Basis
-   04 Bausteine
-   05 Header + Navigation
-   06 Hero
-   07 Intro
-   08 Ritual (Half/Half)
-   09 Signature
-   10 Açaí
-   11 Café Experience
-   12 Menü
-   13 Coffee Craft
-   14 Gallery
-   15 Catering
-   16 Visit
-   17 Footer
-   18 Rechtstexte
-   19 Breakpoints
-   20 Reduced Motion
+   Basis ist der V4-Umbau. Ergänzt um die Punkte, die im Livetest gemessen
+   ausgefallen sind: Betrieb ohne JavaScript, mobile Navigation, horizontaler
+   Overflow, Sprungziele unter dem Header, lokale Schriften, Karten-Consent.
    ========================================================================== */
 
-/* == 01 Tokens ============================================================ */
+/* == Schriften ============================================================
+   Lokal statt über Google Fonts. Der externe Abruf baut bei jedem
+   Seitenaufruf eine Verbindung zu Google auf; die eigene
+   Datenschutzerklärung führt das als offenen Punkt.
+   Lizenz und Herkunft: assets/fonts/LICENSE.md
+   ========================================================================== */
+
+@font-face{
+  font-family:"DM Serif Display";font-style:normal;font-weight:400;font-display:swap;
+  src:url("assets/fonts/dm-serif-display-latin-400.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"DM Serif Display";font-style:italic;font-weight:400;font-display:swap;
+  src:url("assets/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:"Manrope";font-style:normal;font-weight:400 700;font-display:swap;
+  src:url("assets/fonts/manrope-latin-variable.woff2") format("woff2");
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
 
 :root{
-  /* Markenfarben — nicht erweitern. */
   --paper:#F6F3EC;
   --ink:#171412;
   --matcha:#89A86B;
@@ -42,1423 +36,259 @@
   --berry:#682E54;
   --roast:#7A5037;
   --cream:#EDE6DA;
-  --white:#FBFAF6;
-
-  --line:rgba(23,20,18,.16);
-  --hairline:rgba(23,20,18,.12);
-
+  --line:rgba(23,20,18,.14);
   --serif:"DM Serif Display",Georgia,serif;
   --sans:"Manrope",Arial,sans-serif;
-
-  /* Bildslots — eine Stelle für alle Fotos.
-     Beim Austausch gegen echte FAME-Fotografie nur diese sieben Zeilen
-     ändern; vorher standen dieselben vier URLs an elf Stellen in zwei
-     Dateien. --img-*-fallback greift, wenn eine Bildquelle nicht lädt. */
-  --img-coffee:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=86&w=2200');
-  --img-coffee-s:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=80&w=1000');
-  --img-matcha:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=86&w=2200');
-  --img-matcha-s:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=80&w=1000');
-  --img-acai:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=86&w=2000');
-  --img-acai-s:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=80&w=1000');
-  --img-space:url('https://images.unsplash.com/photo-1769184613600-1a309a70196b?auto=format&fit=crop&fm=jpg&q=86&w=2200');
-  --img-space-s:url('https://images.unsplash.com/photo-1769184613600-1a309a70196b?auto=format&fit=crop&fm=jpg&q=80&w=1000');
-  /* ACHTUNG, offener Punkt: Dieses Motiv zeigt die Leuchtschrift eines
-     anderen Cafés und eine Tafel mit fremden Preisen. Auf einer Seite, die
-     bewusst keine Preise nennt, kann ein Besucher diese Zahlen als
-     FAME-Preise lesen. Es bleibt vorerst stehen, weil ein Austausch gegen
-     ein bereits verwendetes Motiv die Wiederholung verstärken würde — und
-     zu wenig Abwechslung war ausdrücklich ein Kritikpunkt. Ersetzen, sobald
-     ein eigenes Craft-Motiv aus dem FAME-Shooting vorliegt. */
-  --img-craft:url('https://images.unsplash.com/photo-1770012117402-853655541b9b?auto=format&fit=crop&fm=jpg&q=86&w=2000');
-
-  /* Markenfarbige Flächen hinter jedem Foto. Fällt eine Bildquelle aus,
-     bleibt eine FAME-Fläche stehen statt eines schwarzen Kastens. */
-  --fallback-coffee:linear-gradient(150deg,#2A1D15 0%,#7A5037 58%,#C9A98D 100%);
-  --fallback-matcha:linear-gradient(150deg,#1B2A1D 0%,#263829 46%,#89A86B 100%);
-  --fallback-acai:linear-gradient(150deg,#241021 0%,#682E54 52%,#8A5875 100%);
-  --fallback-space:linear-gradient(150deg,#171412 0%,#3A322A 55%,#EDE6DA 100%);
-
-  --gutter:clamp(22px,4vw,68px);
-  --header-gutter:clamp(26px,4vw,64px);
-  --radius:18px;
-
-  /* Der Header liegt fest über dem Inhalt. Ohne diesen Versatz verschwindet
-     der Anfang jedes Abschnitts beim Ankersprung darunter — gemessen waren
-     es 58 bis 60px, der Abschnitts-Kicker war halb abgeschnitten. */
-  --anchor-offset:86px;
-
-  --ease:cubic-bezier(.2,.7,.2,1);
+  --gutter:clamp(22px,4.2vw,72px);
 }
-
-/* == 02 Schriften =========================================================
-   Lokal ausgeliefert statt über Google Fonts. Der Abruf von fonts.googleapis.com
-   baut beim Seitenaufruf eine Verbindung zu Google auf; die Datenschutzerklärung
-   hat das bisher als offenen Punkt geführt. Lizenz und Herkunft der Dateien
-   stehen in assets/fonts/LICENSE.md.
-   ========================================================================== */
-
-@font-face{
-  font-family:"DM Serif Display";
-  font-style:normal;
-  font-weight:400;
-  font-display:swap;
-  src:url("assets/fonts/dm-serif-display-latin-400.woff2") format("woff2");
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-@font-face{
-  font-family:"DM Serif Display";
-  font-style:italic;
-  font-weight:400;
-  font-display:swap;
-  src:url("assets/fonts/dm-serif-display-latin-400-italic.woff2") format("woff2");
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-@font-face{
-  font-family:"Manrope";
-  font-style:normal;
-  font-weight:400 700;
-  font-display:swap;
-  src:url("assets/fonts/manrope-latin-variable.woff2") format("woff2");
-  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
-}
-
-/* == 03 Basis ============================================================= */
-
 *{box-sizing:border-box}
-html{scroll-behavior:smooth}
-
-main[id],
-section[id]{scroll-margin-top:var(--anchor-offset)}
-
-body{
-  margin:0;
-  background:var(--paper);
-  color:var(--ink);
-  font-family:var(--sans);
-  font-weight:400;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  text-rendering:optimizeLegibility;
-}
-
+html{scroll-behavior:smooth;background:var(--paper)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-weight:400;overflow-x:hidden;-webkit-font-smoothing:antialiased}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
 ::selection{background:var(--matcha);color:var(--ink)}
 
-.page-shell{width:100%;overflow:hidden}
+.site-header{position:fixed;inset:0 0 auto 0;height:72px;padding:0 var(--gutter);display:grid;grid-template-columns:1fr auto 1fr;align-items:center;z-index:100;color:#fff;border-bottom:1px solid rgba(255,255,255,.18);transition:.3s ease}
+.site-header.scrolled{height:62px;background:rgba(246,243,236,.94);color:var(--ink);border-color:var(--line);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px)}
+.brand{display:inline-flex;flex-direction:column;width:max-content;line-height:1}.brand-main{font-family:var(--serif);font-size:1.58rem;font-weight:400}.brand-sub{font-size:.42rem;letter-spacing:.38em;margin-top:5px;font-weight:500}.desktop-nav{display:flex;gap:30px;font-size:.7rem;font-weight:500}.desktop-nav a{position:relative}.desktop-nav a::after{content:"";position:absolute;left:0;bottom:-8px;width:0;height:1px;background:currentColor;transition:.25s}.desktop-nav a:hover::after{width:100%}
+.header-actions{justify-self:end;display:flex;align-items:center;gap:12px}.header-social{font-size:.61rem;letter-spacing:.08em;opacity:.84}.header-cta{display:inline-flex;align-items:center;gap:9px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.13);font-size:.62rem;font-weight:500;backdrop-filter:blur(10px)}.site-header.scrolled .header-cta{background:rgba(38,56,41,.08)}.nav-dot,.social-dot{width:6px;height:6px;border-radius:50%;background:var(--matcha);display:inline-block}
 
-/* == 04 Bausteine ========================================================= */
+.hero{position:relative;min-height:100svh;display:grid;grid-template-columns:1fr 1fr;background:#111;overflow:hidden}.hero-half{position:relative;min-height:100svh;overflow:hidden}.hero-image{position:absolute;inset:-3%;background-size:cover;background-position:center;transform:scale(1.04);will-change:transform}.coffee-image{background-image:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=88&w=2200')}.matcha-image{background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=88&w=2200')}.hero-shade{position:absolute;inset:0}.coffee-shade{background:linear-gradient(90deg,rgba(16,10,8,.72),rgba(16,10,8,.12))}.matcha-shade{background:linear-gradient(270deg,rgba(14,32,18,.64),rgba(14,32,18,.06))}.hero-centerline{position:absolute;left:50%;top:0;bottom:0;width:1px;background:rgba(255,255,255,.35);z-index:5}.hero-meta{position:absolute;z-index:7;bottom:6.8vh;color:#fff}.hero-meta-left{left:var(--gutter)}.hero-meta-right{right:var(--gutter);text-align:right}.hero-meta span{font-size:.52rem;letter-spacing:.22em;font-weight:500}.hero-meta p{margin:8px 0 0;font-size:.76rem;opacity:.76}.hero-center{position:absolute;inset:0;z-index:8;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;pointer-events:none}.hero-kicker{font-size:.56rem;letter-spacing:.3em;margin:0 0 16px}.hero-center h1{font-family:var(--serif);font-size:clamp(5.5rem,10vw,10.5rem);font-weight:400;line-height:.72;letter-spacing:-.03em;margin:0}.hero-center h1 em{font-weight:400}.hero-city{font-size:.54rem;letter-spacing:.5em;margin:22px 0 0}.hero-scroll{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:11px;font-size:.5rem;letter-spacing:.18em;pointer-events:auto}.hero-scroll i{width:22px;height:1px;background:#fff;position:relative}.hero-scroll i::after{content:"";position:absolute;right:0;top:50%;width:5px;height:5px;border-right:1px solid #fff;border-bottom:1px solid #fff;transform:translateY(-50%) rotate(45deg)}
 
-.section-kicker,
-.intro-eyebrow{
-  font-size:.59rem;
-  letter-spacing:.25em;
-  font-weight:500;
-}
+.intro{padding:clamp(90px,11vw,160px) var(--gutter);text-align:center}.eyebrow{font-size:.56rem;letter-spacing:.22em;font-weight:500}.display-title{font-family:var(--serif);font-size:clamp(3.5rem,6.6vw,7.4rem);font-weight:400;line-height:.88;letter-spacing:-.025em;margin:22px auto 24px}.display-title em{font-weight:400;color:var(--forest)}.lead{max-width:700px;margin:0 auto;font-size:clamp(.92rem,1.2vw,1.08rem);line-height:1.75;color:rgba(23,20,18,.68)}.pill-row{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:34px}.pill-row span{padding:9px 13px;border:1px solid var(--line);border-radius:999px;font-size:.6rem;letter-spacing:.05em}
 
-.light{color:#fff}
-.berry{color:var(--berry)}
+.ritual{height:420vh;position:relative;background:var(--ink)}.ritual-sticky{position:sticky;top:62px;height:calc(100svh - 62px);display:grid;grid-template-columns:1fr 1fr;overflow:hidden;background:var(--ink)}.ritual-side{position:relative;overflow:hidden;color:#fff}.ritual-shot{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transform:scale(1.055);transition:opacity .55s ease,transform 1.2s cubic-bezier(.2,.7,.2,1);will-change:opacity,transform}.ritual-shot.is-active{opacity:1;transform:scale(1.015)}
+.coffee-shot.shot-1{background-image:url('https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=86&w=1800')}.coffee-shot.shot-2{background-image:url('https://images.unsplash.com/photo-1783936296983-17a6e99fb862?auto=format&fit=crop&fm=jpg&q=86&w=1800')}.coffee-shot.shot-3{background-image:url('https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=86&w=1800')}.coffee-shot.shot-4{background-image:url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&fm=jpg&q=86&w=1800')}
+.matcha-shot.shot-1{background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=86&w=1800')}.matcha-shot.shot-2{background-image:url('https://images.unsplash.com/photo-1773753563088-e3ea21f9a992?auto=format&fit=crop&fm=jpg&q=86&w=1800')}.matcha-shot.shot-3{background-image:url('https://images.unsplash.com/photo-1771252399544-bc5e34ebdcd7?auto=format&fit=crop&fm=jpg&q=86&w=1800')}.matcha-shot.shot-4{background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=86&w=1800');background-position:center 68%}
+.ritual-overlay{position:absolute;inset:0;background:linear-gradient(180deg,rgba(8,8,7,.12),rgba(8,8,7,.12) 45%,rgba(8,8,7,.7))}.ritual-topline{position:absolute;z-index:4;top:32px;left:var(--gutter);font-size:.48rem;letter-spacing:.18em;opacity:.75}.ritual-topline-right{left:auto;right:var(--gutter);text-align:right}.ritual-copy{position:absolute;z-index:5;bottom:7vh;width:min(490px,74%)}.ritual-copy-left{left:var(--gutter)}.ritual-copy-right{right:var(--gutter);text-align:right}.ritual-label{display:flex;gap:16px;align-items:center;font-size:.5rem;letter-spacing:.2em}.ritual-copy-right .ritual-label{justify-content:flex-end}.ritual-label span{font-family:var(--serif);font-size:1.1rem;letter-spacing:0}.ritual-label b{font-weight:500}.ritual-copy h2{font-family:var(--serif);font-size:clamp(4rem,7.5vw,8rem);line-height:.82;font-weight:400;letter-spacing:-.025em;margin:16px 0 18px}.ritual-copy p{max-width:390px;margin:0;font-size:.76rem;line-height:1.7;opacity:.88}.ritual-copy-right p{margin-left:auto}
+.ritual-rail{position:absolute;z-index:10;left:50%;top:0;bottom:0;width:72px;transform:translateX(-50%);pointer-events:none}.rail-track,.rail-progress{position:absolute;left:50%;top:0;width:1px;height:100%;background:rgba(255,255,255,.34);transform:translateX(-50%)}.rail-progress{height:0;background:var(--matcha);width:2px}.rail-step{position:absolute;left:50%;width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.72);transform:translate(-50%,-50%)}.r1{top:12%}.r2{top:38%}.r3{top:64%}.r4{top:90%}.ritual-marker{position:absolute;left:50%;top:12%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:var(--paper);color:var(--ink);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 14px 34px rgba(0,0,0,.18);transition:top .2s linear}.ritual-marker strong{font-family:var(--serif);font-size:1rem;font-weight:400;line-height:1}.ritual-marker span{font-size:.34rem;letter-spacing:.12em;margin-top:4px}
 
-.line-link{
-  width:max-content;
-  margin-top:20px;
-  padding-bottom:8px;
-  border-bottom:1px solid currentColor;
-  font-size:.56rem;
-  letter-spacing:.12em;
-  font-weight:700;
-}
+.signature,.menu,.gallery{padding:clamp(90px,9vw,140px) var(--gutter)}.section-head{display:grid;grid-template-columns:1fr .9fr;gap:clamp(36px,6vw,90px);align-items:end;margin-bottom:38px}.section-head h2{font-family:var(--serif);font-size:clamp(3.2rem,5.5vw,6rem);font-weight:400;line-height:.88;letter-spacing:-.025em;margin:16px 0 0}.section-head p{max-width:520px;margin:0 0 6px;font-size:.82rem;line-height:1.7;color:rgba(23,20,18,.66)}.signature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.signature-card{position:relative;min-height:560px;overflow:hidden;border-radius:20px}.card-image{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .7s ease}.signature-card:hover .card-image{transform:scale(1.035)}.card-coffee .card-image{background-image:url('https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=84&w=1500')}.card-matcha .card-image{background-image:url('https://images.unsplash.com/photo-1773753563088-e3ea21f9a992?auto=format&fit=crop&fm=jpg&q=84&w=1500')}.card-acai .card-image{background-image:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=84&w=1500')}.card-shade{position:absolute;inset:0;background:linear-gradient(180deg,transparent 50%,rgba(10,9,8,.72))}.card-copy{position:absolute;left:24px;right:24px;bottom:22px;color:#fff}.card-copy span{font-size:.48rem;letter-spacing:.16em}.card-copy h3{font-family:var(--serif);font-size:clamp(3rem,4.5vw,5rem);font-weight:400;line-height:.9;margin:8px 0 10px}.card-copy p{margin:0;font-size:.58rem;letter-spacing:.09em;text-transform:uppercase;opacity:.75}
 
-/* Sichtbar per Default. Erst wenn JavaScript die Klasse .js gesetzt hat,
-   wird ausgeblendet — sonst bleibt bei JS-Ausfall die ganze Seite leer. */
-.js .reveal{
-  opacity:0;
-  transform:translateY(24px);
-  transition:opacity .9s var(--ease),transform .9s var(--ease);
-}
+.menu{border-top:1px solid var(--line)}.menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:13px}.menu-card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:rgba(255,255,255,.18)}.menu-photo{height:290px;background-size:cover;background-position:center}.mp-coffee{background-image:url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&fm=jpg&q=82&w=1000')}.mp-latte{background-image:url('https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=82&w=1000')}.mp-flat{background-image:url('https://images.unsplash.com/photo-1783936296983-17a6e99fb862?auto=format&fit=crop&fm=jpg&q=82&w=1000')}.mp-matcha{background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=82&w=1000')}.mp-matcha2{background-image:url('https://images.unsplash.com/photo-1773753563088-e3ea21f9a992?auto=format&fit=crop&fm=jpg&q=82&w=1000')}.mp-acai{background-image:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=82&w=1000')}.mp-tea{background:linear-gradient(145deg,#263829,#89A86B 60%,#EDE6DA)}.mp-bakery{background:linear-gradient(145deg,#EDE6DA,#C9A98D 55%,#7A5037)}.menu-info{padding:18px 18px 20px}.menu-info>span{font-size:.45rem;letter-spacing:.16em;color:rgba(23,20,18,.58)}.menu-info h3{font-family:var(--serif);font-size:1.55rem;font-weight:400;margin:7px 0 18px}.menu-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:14px}.menu-bottom p{margin:0;font-size:.64rem;color:rgba(23,20,18,.56)}.menu-bottom b{font-size:.56rem;font-weight:500;white-space:nowrap}
+
+.cafe-choice{padding:clamp(90px,9vw,140px) var(--gutter);background:var(--forest);color:#fff}.section-head-light p{color:rgba(255,255,255,.7)}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.choice-card{position:relative;min-height:72vh;overflow:hidden;border-radius:20px}.choice-image{position:absolute;inset:0;background-size:cover;background-position:center;transition:transform .8s ease}.choice-card:hover .choice-image{transform:scale(1.025)}.choice-inside .choice-image{background-image:url('https://images.unsplash.com/photo-1761023717444-88fb2f7973eb?auto=format&fit=crop&fm=jpg&q=86&w=1800')}.choice-outside .choice-image{background-image:url('https://images.unsplash.com/photo-1773092984066-69ee15920b94?auto=format&fit=crop&fm=jpg&q=86&w=1800')}.choice-shade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,10,9,.02),rgba(10,10,9,.62))}.choice-copy{position:absolute;left:28px;right:28px;bottom:26px}.choice-copy span{font-size:.5rem;letter-spacing:.18em}.choice-copy h3{font-family:var(--serif);font-size:clamp(2.7rem,4.5vw,5.2rem);font-weight:400;line-height:.9;margin:10px 0 12px}.choice-copy p{margin:0;font-size:.72rem;opacity:.8}
+
+.gallery{border-top:1px solid var(--line)}.gallery-grid{display:grid;grid-template-columns:1.15fr .85fr 1fr;grid-template-rows:360px 300px;gap:12px}.gallery-tile{position:relative;border-radius:18px;overflow:hidden;background-size:cover;background-position:center}.gallery-tile span{position:absolute;left:16px;bottom:14px;color:#fff;font-size:.46rem;letter-spacing:.16em;z-index:2}.gallery-tile::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 60%,rgba(0,0,0,.3))}.g1{grid-row:1/3;background-image:url('https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=84&w=1600')}.g2{background-image:url('https://images.unsplash.com/photo-1783936296983-17a6e99fb862?auto=format&fit=crop&fm=jpg&q=84&w=1400')}.g3{background-image:url('https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=84&w=1400')}.g4{background-image:url('https://images.unsplash.com/photo-1761023717444-88fb2f7973eb?auto=format&fit=crop&fm=jpg&q=84&w=1400')}.g5{background-image:url('https://images.unsplash.com/photo-1773092984066-69ee15920b94?auto=format&fit=crop&fm=jpg&q=84&w=1400')}.g6{background-image:url('https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=84&w=1400')}
+
+.social-band{margin:0 var(--gutter) clamp(90px,9vw,140px);padding:clamp(42px,5vw,72px);background:var(--berry);color:#fff;border-radius:22px;display:flex;justify-content:space-between;align-items:center;gap:30px}.social-band h2{font-family:var(--serif);font-size:clamp(2.8rem,5vw,5.2rem);font-weight:400;margin:10px 0 8px}.social-band p{margin:0;font-size:.76rem;opacity:.8}.social-button{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border:1px solid rgba(255,255,255,.35);border-radius:999px;font-size:.62rem;white-space:nowrap}.social-button .social-dot{background:#fff}
+
+.catering{min-height:76vh;display:grid;grid-template-columns:1.1fr .9fr;background:var(--ink);color:#fff}.catering-image{background:url('https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=84&w=1800') center/cover no-repeat}.catering-copy{padding:clamp(70px,8vw,120px) var(--gutter);display:flex;flex-direction:column;justify-content:center}.light{color:#fff}.catering-copy h2{font-family:var(--serif);font-size:clamp(4rem,7vw,7.7rem);font-weight:400;line-height:.82;margin:18px 0 22px}.catering-copy p{max-width:500px;font-size:.8rem;line-height:1.75;color:rgba(255,255,255,.72)}
+
+.visit{display:grid;grid-template-columns:.88fr 1.12fr;min-height:82vh;border-top:1px solid var(--line)}.visit-info{padding:clamp(80px,8vw,120px) var(--gutter);display:flex;flex-direction:column;justify-content:center}.visit-info h2{font-family:var(--serif);font-size:clamp(3.8rem,6.5vw,7.2rem);font-weight:400;line-height:.82;margin:18px 0 34px}.visit-block{display:flex;flex-direction:column;gap:8px;margin-bottom:24px}.visit-block span,.hours-card>div span{font-size:.48rem;letter-spacing:.17em;color:rgba(23,20,18,.55)}.visit-block strong,.hours-card>div strong{font-family:var(--serif);font-size:1.35rem;font-weight:400;line-height:1.35}.hours-card{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:18px 0;margin-bottom:24px}.hours-card>div{display:flex;justify-content:space-between;align-items:end;gap:18px}.hours-card ul{list-style:none;padding:14px 0 0;margin:0}.hours-card li{display:flex;justify-content:space-between;gap:16px;padding:7px 0;font-size:.68rem}.hours-card li b{font-weight:500}.visit-buttons{display:flex;gap:10px;flex-wrap:wrap}.visit-buttons a{padding:11px 15px;border:1px solid var(--line);border-radius:999px;font-size:.61rem}.map-wrap{min-height:82vh}.map-wrap iframe{display:block;width:100%;height:100%;min-height:82vh;border:0;filter:saturate(.75) contrast(.96)}
+
+footer{min-height:150px;padding:34px var(--gutter);display:grid;grid-template-columns:1fr auto auto;grid-template-areas:"brand links legal" "brand slogan slogan";gap:18px 34px;align-items:center;border-top:1px solid var(--line)}.footer-brand{grid-area:brand}.footer-links{grid-area:links;display:flex;flex-wrap:wrap;gap:18px;font-size:.58rem}.footer-legal{grid-area:legal;display:flex;gap:14px;font-size:.55rem}.footer-legal+p,footer>p{grid-area:slogan;justify-self:end;margin:0;font-size:.48rem;letter-spacing:.16em}
+
+/* Sichtbar per Default. Erst wenn das Skript die Klasse .js gesetzt hat,
+   wird ausgeblendet — sonst ist die Seite bei JS-Ausfall komplett leer. */
+.js .reveal{opacity:0;transform:translateY(18px);transition:opacity .75s ease,transform .75s ease}
 .js .reveal.in-view{opacity:1;transform:none}
 
+@media(max-width:1080px){.desktop-nav{gap:20px}.header-social{display:none}.menu-grid{grid-template-columns:repeat(2,1fr)}.signature-card{min-height:500px}.gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:420px 280px 280px}.g1{grid-row:1/3}.g5{grid-column:1}.g6{grid-column:2}.visit{grid-template-columns:1fr}.map-wrap,.map-wrap iframe{min-height:58vh}}
+@media(max-width:780px){.site-header{grid-template-columns:1fr auto}.desktop-nav{display:none}.header-actions{grid-column:2}.hero{grid-template-columns:1fr 1fr}.hero-meta{display:none}.hero-center h1{font-size:clamp(4.6rem,18vw,7.5rem)}.intro{padding-left:20px;padding-right:20px}.ritual-sticky{grid-template-columns:1fr;top:60px;height:calc(100svh - 60px)}.ritual-side{position:absolute;inset:0}.ritual-coffee-side{clip-path:inset(0 50% 0 0)}.ritual-matcha-side{clip-path:inset(0 0 0 50%)}.ritual-copy{width:42%;bottom:7vh}.ritual-copy-left{left:18px}.ritual-copy-right{right:18px}.ritual-copy h2{font-size:clamp(3rem,11vw,5.5rem)}.ritual-copy p{font-size:.64rem}.ritual-topline{left:18px;max-width:40%;line-height:1.5}.ritual-topline-right{left:auto;right:18px}.ritual-rail{width:56px}.ritual-marker{width:48px;height:48px}.section-head{grid-template-columns:1fr;gap:18px}.signature-grid{grid-template-columns:1fr}.signature-card{min-height:65svh}.choice-grid{grid-template-columns:1fr}.choice-card{min-height:62svh}.gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:48svh 230px 230px}.g1{grid-column:1/-1;grid-row:1}.social-band{flex-direction:column;align-items:flex-start}.catering{grid-template-columns:1fr}.catering-image{min-height:55svh}.visit-info{padding-left:20px;padding-right:20px}footer{grid-template-columns:1fr;grid-template-areas:"brand" "links" "legal" "slogan"}.footer-legal+p,footer>p{justify-self:start}}
+@media(max-width:560px){:root{--gutter:18px}.site-header{height:64px}.site-header.scrolled{height:58px}.brand-main{font-size:1.28rem}.header-cta{padding:8px 11px;font-size:.55rem}.hero-centerline{opacity:.6}.hero-kicker{font-size:.45rem}.hero-city{font-size:.45rem}.hero-scroll{font-size:.42rem}.ritual{height:380vh}.ritual-sticky{top:58px;height:calc(100svh - 58px)}.ritual-copy h2{font-size:clamp(2.4rem,12vw,4.3rem)}.ritual-copy p{display:none}.ritual-label{gap:8px;font-size:.39rem}.ritual-label span{font-size:.8rem}.ritual-topline{font-size:.38rem}.menu-grid{grid-template-columns:1fr}.menu-photo{height:52svh}.gallery-grid{grid-template-columns:1fr;grid-template-rows:55svh repeat(5,260px)}.g1,.g2,.g3,.g4,.g5,.g6{grid-column:1;grid-row:auto}.social-band{margin-left:14px;margin-right:14px;border-radius:18px}.hours-card>div{align-items:flex-start;flex-direction:column}.map-wrap,.map-wrap iframe{min-height:52vh}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal,.js .reveal{opacity:1!important;transform:none!important;transition:none}.hero-bubbles{display:none}.ritual{height:auto}.ritual-sticky{position:relative;top:0;height:90vh}.ritual-shot{transition:none}.hero-image{transform:none!important}}
+
+/* ==========================================================================
+   Ergänzungen zum V4-Stand
+   Jede Regel hier behebt einen Punkt, der im Livetest gemessen ausgefallen
+   ist. Reihenfolge: Hilfsklassen, Sprungziele, Overflow, Navigation, Karte.
+   ========================================================================== */
+
+/* -- Hilfsklassen ---------------------------------------------------------- */
+
 .visually-hidden{
-  position:absolute;
-  width:1px;height:1px;
-  margin:-1px;padding:0;
-  overflow:hidden;
-  clip-path:inset(50%);
-  white-space:nowrap;
-  border:0;
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0;
 }
 
 .skip-link{
-  position:absolute;
-  left:var(--gutter);
-  top:-100px;
-  z-index:200;
-  padding:12px 18px;
-  background:var(--paper);
-  color:var(--ink);
-  border:1px solid var(--line);
-  border-radius:999px;
-  font-size:.62rem;
-  letter-spacing:.12em;
-  font-weight:600;
-  transition:top .25s var(--ease);
+  position:absolute;left:var(--gutter);top:-100px;z-index:200;
+  padding:12px 18px;background:var(--paper);color:var(--ink);
+  border:1px solid var(--line);border-radius:999px;
+  font-size:.62rem;letter-spacing:.12em;font-weight:600;
+  transition:top .25s ease;
 }
 .skip-link:focus,
 .skip-link:focus-visible{top:14px}
 
 a:focus-visible,
-button:focus-visible{
-  outline:2px solid currentColor;
-  outline-offset:4px;
-  border-radius:4px;
+button:focus-visible{outline:2px solid currentColor;outline-offset:3px;border-radius:4px}
+
+/* -- Sprungziele -----------------------------------------------------------
+   Der Header liegt fest über dem Inhalt. Ohne diesen Versatz verschwindet
+   der Anfang jedes Abschnitts darunter — gemessen 62 bis 72px, der
+   Abschnitts-Kicker war halb abgeschnitten. */
+
+main[id],
+section[id]{scroll-margin-top:92px}
+
+/* -- Horizontaler Overflow -------------------------------------------------
+   Auf 390px ragte die Seite 20px heraus. Ursache: Die Überschrift
+   "Gummersbach." erzwingt bei clamp-Minimum 3.8rem rund 370px Mindestbreite,
+   und ein Grid-Item hat standardmäßig min-width:auto — die Spalte wuchs
+   dadurch auf 410px. Beides wird hier abgestellt. */
+
+.visit{min-width:0}
+.visit-info,
+.map-wrap{min-width:0}
+
+/* "Gummersbach." ist das längste Wort der Seite. In der schmalen Textspalte
+   der Zweispalter-Ansicht passte es bei V4-Größe nicht und trieb die Spalte
+   auf. Ein Umbruch mitten im Wort wäre die falsche Lösung — die Überschrift
+   wird stattdessen auf die Spaltenbreite eingestellt. */
+.visit-info h2{font-size:clamp(2.6rem,4.4vw,6rem)}
+@media(max-width:1080px){
+  /* Ab hier steht der Text über die volle Breite und darf wieder groß sein. */
+  .visit-info h2{font-size:clamp(3rem,7vw,6.5rem)}
 }
 
-/* == 05 Header + Navigation =============================================== */
+/* -- Mobile Navigation -----------------------------------------------------
+   .desktop-nav ist unter 780px ausgeblendet, ein Ersatz fehlte. */
 
-.site-header{
-  position:fixed;
-  top:0;left:0;right:0;
-  height:70px;
-  padding:0 var(--header-gutter);
-  display:grid;
-  grid-template-columns:1fr auto 1fr;
-  align-items:center;
-  z-index:100;
-  color:#fff;
-  border-bottom:1px solid rgba(255,255,255,.14);
-  /* height wird bewusst animiert. Der Scanner meldet das als
-     Layout-Animation; gemessen sind es 0,22 ms pro Umschaltung bei 16
-     Elementen in einem position:fixed-Element, das nicht im Dokumentfluss
-     liegt. Kein messbares Problem, deshalb bleibt die Komposition. */
-  transition:height .35s ease,background .35s ease,color .35s ease,border .35s ease,backdrop-filter .35s ease;
-}
-.site-header.scrolled{
-  height:60px;
-  background:rgba(246,243,236,.92);
-  backdrop-filter:blur(18px);
-  -webkit-backdrop-filter:blur(18px);
-  color:var(--ink);
-  border-color:var(--hairline);
-  box-shadow:0 10px 30px rgba(23,20,18,.035);
-}
-
-.brand{display:inline-flex;flex-direction:column;line-height:1;width:max-content}
-.brand-main{font-family:var(--serif);font-size:1.48rem;font-weight:400;letter-spacing:.01em}
-.brand-sub{font-size:.40rem;letter-spacing:.38em;font-weight:500;margin-top:5px}
-
-.desktop-nav{display:flex;gap:32px;font-size:.69rem;font-weight:500}
-.desktop-nav a{position:relative}
-.desktop-nav a:after{
-  content:"";
-  position:absolute;left:0;bottom:-8px;
-  width:100%;height:1px;
-  background:currentColor;
-  /* transform statt width: Eine Breitenanimation erzwingt pro Frame ein
-     Layout, scaleX läuft auf dem Compositor. Optisch identisch.
-     Gefunden von `npm run scan`. */
-  transform:scaleX(0);
-  transform-origin:left center;
-  transition:transform .28s ease;
-}
-.desktop-nav a:hover:after,
-.desktop-nav a:focus-visible:after{transform:scaleX(1)}
-
-.header-cta{
-  justify-self:end;
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  border:0;
-  padding:10px 15px;
-  border-radius:999px;
-  background:rgba(255,255,255,.11);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  font-size:.61rem;
-  font-weight:500;
-  letter-spacing:.08em;
-}
-.site-header.scrolled .header-cta{background:rgba(38,56,41,.07)}
-.header-cta .nav-dot{
-  width:6px;height:6px;margin:0;
-  border-radius:50%;
-  background:var(--matcha);
-  flex:0 0 auto;
-}
-
-.header-actions{
-  justify-self:end;
-  display:flex;
-  align-items:center;
-  gap:10px;
-}
-
-/* Reduzierter Zwei-Linien-Marker statt UI-Kit-Burger. */
 .nav-toggle{
-  display:none;
-  align-items:center;
-  gap:9px;
-  padding:9px 14px 9px 12px;
-  border:0;
-  border-radius:999px;
-  background:rgba(255,255,255,.11);
-  backdrop-filter:blur(12px);
-  -webkit-backdrop-filter:blur(12px);
-  color:inherit;
-  font-family:var(--sans);
-  font-size:.61rem;
-  font-weight:500;
-  letter-spacing:.08em;
-  cursor:pointer;
+  display:none;align-items:center;gap:9px;
+  padding:9px 14px 9px 12px;border:0;border-radius:999px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  color:inherit;font-family:var(--sans);
+  font-size:.6rem;font-weight:500;letter-spacing:.08em;cursor:pointer;
 }
-.site-header.scrolled .nav-toggle{background:rgba(38,56,41,.07)}
-.nav-toggle-lines{
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  gap:4px;
-  width:15px;height:10px;
-}
-.nav-toggle-lines i{
-  display:block;
-  height:1px;
-  background:currentColor;
-  transition:transform .3s var(--ease),opacity .2s ease;
-}
+.site-header.scrolled .nav-toggle{background:rgba(38,56,41,.08)}
+.nav-toggle-lines{display:flex;flex-direction:column;justify-content:center;gap:4px;width:15px;height:10px}
+.nav-toggle-lines i{display:block;height:1px;background:currentColor;transition:transform .3s ease}
 .nav-toggle[aria-expanded="true"] .nav-toggle-lines i:first-child{transform:translateY(2.5px) rotate(45deg)}
 .nav-toggle[aria-expanded="true"] .nav-toggle-lines i:last-child{transform:translateY(-2.5px) rotate(-45deg)}
 
 .mobile-nav{
-  position:fixed;
-  inset:0;
-  z-index:99;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  padding:calc(70px + clamp(34px,8vh,74px)) var(--gutter) clamp(30px,6vh,54px);
-  background:var(--ink);
-  color:#fff;
-  overflow-y:auto;
-  overscroll-behavior:contain;
+  position:fixed;inset:0;z-index:99;
+  display:flex;flex-direction:column;justify-content:space-between;
+  padding:calc(72px + clamp(30px,7vh,68px)) var(--gutter) clamp(28px,6vh,52px);
+  background:var(--ink);color:#fff;overflow-y:auto;overscroll-behavior:contain;
 }
 .mobile-nav[hidden]{display:none}
 .mobile-nav::before{
-  content:"";
-  position:absolute;
-  inset:0;
+  content:"";position:absolute;inset:0;pointer-events:none;
   background:
-    radial-gradient(circle at 80% 16%,rgba(137,168,107,.14) 0 24%,transparent 24.6%),
-    radial-gradient(circle at 10% 86%,rgba(104,46,84,.13) 0 19%,transparent 19.6%);
-  pointer-events:none;
+    radial-gradient(circle at 76% 16%,rgba(137,168,107,.15) 0 13%,transparent 13.4%),
+    radial-gradient(circle at 16% 92%,rgba(104,46,84,.16) 0 16%,transparent 16.4%);
 }
-.js .mobile-nav{animation:navIn .34s var(--ease) both}
+.js .mobile-nav{animation:navIn .3s ease both}
 @keyframes navIn{from{opacity:0}to{opacity:1}}
 
-.mobile-nav-list{
-  position:relative;
-  list-style:none;
-  margin:0;padding:0;
-}
-.mobile-nav-list li{border-top:1px solid rgba(255,255,255,.12)}
-.mobile-nav-list li:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
+.mobile-nav-list{position:relative;list-style:none;margin:0;padding:0}
+.mobile-nav-list li{border-top:1px solid rgba(255,255,255,.13)}
+.mobile-nav-list li:last-child{border-bottom:1px solid rgba(255,255,255,.13)}
 .mobile-nav-list a{
-  display:flex;
-  align-items:baseline;
-  gap:16px;
-  padding:clamp(14px,2.4vh,22px) 0;
-  font-family:var(--serif);
-  font-size:clamp(2.2rem,11vw,3.4rem);
-  line-height:1;
-  letter-spacing:-.02em;
+  display:flex;align-items:baseline;gap:16px;
+  padding:clamp(13px,2.3vh,21px) 0;
+  font-family:var(--serif);font-size:clamp(2.1rem,10vw,3.2rem);
+  line-height:1;letter-spacing:-.02em;
 }
-.mobile-nav-list a span{
-  font-family:var(--sans);
-  font-size:.46rem;
-  font-weight:500;
-  letter-spacing:.2em;
-  opacity:.5;
-}
-.js .mobile-nav-list li{animation:navItem .42s var(--ease) both}
-.js .mobile-nav-list li:nth-child(1){animation-delay:.05s}
-.js .mobile-nav-list li:nth-child(2){animation-delay:.09s}
-.js .mobile-nav-list li:nth-child(3){animation-delay:.13s}
-.js .mobile-nav-list li:nth-child(4){animation-delay:.17s}
-.js .mobile-nav-list li:nth-child(5){animation-delay:.21s}
-@keyframes navItem{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.mobile-nav-list a span{font-family:var(--sans);font-size:.44rem;font-weight:500;letter-spacing:.2em;opacity:.5}
 
 .mobile-nav-foot{
-  position:relative;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:space-between;
-  align-items:flex-end;
-  gap:18px;
-  margin-top:clamp(28px,5vh,52px);
+  position:relative;display:flex;flex-wrap:wrap;
+  justify-content:space-between;align-items:flex-end;gap:18px;
+  margin-top:clamp(26px,5vh,48px);
 }
-.mobile-nav-foot address{
-  display:flex;
-  flex-direction:column;
-  gap:3px;
-  font-style:normal;
-  font-size:.62rem;
-  line-height:1.5;
-  opacity:.68;
-}
-.mobile-nav-legal{display:flex;gap:16px;font-size:.55rem;letter-spacing:.1em;opacity:.68}
-.mobile-nav-legal a{border-bottom:1px solid transparent}
-.mobile-nav-legal a:hover,
-.mobile-nav-legal a:focus-visible{border-color:currentColor}
+.mobile-nav-foot address{display:flex;flex-direction:column;gap:3px;font-style:normal;font-size:.6rem;line-height:1.5;opacity:.7}
+.mobile-nav-legal{display:flex;gap:16px;font-size:.54rem;letter-spacing:.1em;opacity:.7}
 
-/* Scroll sperren, solange das Overlay offen ist. */
 body.nav-open{overflow:hidden}
 
-/* == 06 Hero ============================================================== */
-
-.hero{
-  min-height:100svh;
-  position:relative;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  background:var(--ink);
-  overflow:hidden;
+@media(min-width:781px){
+  .mobile-nav{display:none!important}
 }
-.hero-half{position:relative;min-height:100svh;overflow:hidden}
-.hero-image{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  /* --shift wird beim Scrollen gesetzt (leichte Parallax, gegenläufig je
-     Hälfte). Der Versatz bleibt innerhalb der Überdeckung aus scale(1.035),
-     deshalb entsteht an den Kanten keine Lücke. */
-  transform:translate3d(0,var(--shift,0%),0) scale(1.035);
-  will-change:transform;
+@media(max-width:780px){
+  .nav-toggle{display:inline-flex}
+  .header-actions{display:flex;align-items:center;gap:10px}
 }
-.coffee-image{
-  background-image:var(--img-coffee),var(--fallback-coffee);
-  background-position:center 50%;
-}
-.matcha-image{
-  background-image:var(--img-matcha),var(--fallback-matcha);
-  background-position:center 52%;
-}
-.hero-shade{position:absolute;inset:0}
-.coffee-shade{background:linear-gradient(90deg,rgba(18,12,8,.68),rgba(18,12,8,.15) 65%,rgba(18,12,8,.22))}
-.matcha-shade{background:linear-gradient(270deg,rgba(18,35,22,.64),rgba(18,35,22,.08) 70%,rgba(18,35,22,.25))}
-
-.hero-centerline{
-  position:absolute;left:50%;top:0;bottom:0;
-  width:1px;
-  background:rgba(255,255,255,.24);
-  z-index:5;
+@media(max-width:430px){
+  /* Platz wird knapp — "Besuchen" steht als Punkt 04 im Overlay. */
+  .header-cta{display:none}
 }
 
-.hero-meta{
-  position:absolute;
-  z-index:7;
-  bottom:6.5vh;
+/* -- Karte erst auf Klick --------------------------------------------------
+   Die Vorschaufläche trägt die FAME-Farbwelt, damit die Stelle nicht wie
+   ein Ladefehler aussieht. */
+
+.map-wrap{position:relative}
+.map-consent{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:12px;padding:clamp(24px,4vw,48px);text-align:center;
+  background:
+    radial-gradient(circle at 64% 32%,rgba(137,168,107,.22),transparent 58%),
+    radial-gradient(circle at 32% 76%,rgba(104,46,84,.18),transparent 62%),
+    linear-gradient(150deg,#1B2A1D 0%,#263829 58%,#3C5540 100%);
   color:#fff;
-  width:min(260px,31vw);
 }
-.hero-meta-left{left:var(--gutter)}
-.hero-meta-right{right:var(--gutter);text-align:right}
-.hero-meta span{font-size:.49rem;letter-spacing:.20em;font-weight:700}
-.hero-meta p{
-  margin:8px 0 0;
-  font-family:var(--sans);
-  font-size:.66rem;
-  line-height:1.55;
-  letter-spacing:.05em;
-  opacity:.78;
+.map-consent-mark{
+  width:54px;height:54px;border-radius:50%;
+  border:1px solid rgba(246,243,236,.45);
+  margin-bottom:4px;flex:0 0 auto;
 }
+.map-consent-title{margin:0;font-family:var(--serif);font-size:clamp(1.4rem,2.4vw,2rem);font-weight:400}
+.map-consent-text{margin:0;max-width:420px;font-size:.72rem;line-height:1.7;opacity:.82}
+.map-consent-text a{border-bottom:1px solid currentColor}
+.map-consent-button{
+  margin-top:6px;padding:12px 20px;border:1px solid rgba(246,243,236,.6);
+  border-radius:999px;background:transparent;color:inherit;
+  font-family:var(--sans);font-size:.64rem;letter-spacing:.12em;font-weight:500;cursor:pointer;
+  transition:background .25s ease;
+}
+.map-consent-button:hover,
+.map-consent-button:focus-visible{background:rgba(246,243,236,.14)}
+.map-consent-alt{font-size:.58rem;letter-spacing:.1em;opacity:.72;border-bottom:1px solid currentColor}
+.map-wrap iframe{display:block;width:100%;height:100%;min-height:inherit;border:0}
 
-.hero-center{
-  position:absolute;
-  inset:0;
-  z-index:8;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  color:#fff;
-  text-align:center;
-  pointer-events:none;
-}
-.hero-kicker{font-size:.54rem;letter-spacing:.30em;font-weight:700;margin:0 0 16px}
-.hero-center h1{
-  font-family:var(--serif);
-  font-weight:400;
-  font-size:clamp(5rem,9vw,9.4rem);
-  line-height:.74;
-  letter-spacing:-.02em;
-  margin:0;
-  text-shadow:0 18px 44px rgba(0,0,0,.14);
-}
-.hero-center h1 em{font-style:italic;font-weight:400}
-.hero-city{font-size:.52rem;letter-spacing:.46em;font-weight:700;margin:20px 0 0}
+/* -- Ritual als Text -------------------------------------------------------
+   Bei prefers-reduced-motion kürzt V4 den Abschnitt auf eine Bildschirmhöhe;
+   die Sequenz bleibt dann auf Schritt 01 stehen. Diese Liste macht alle vier
+   Schritte erreichbar — auch ohne JavaScript. */
 
-.hero-scroll{
-  position:absolute;
-  bottom:24px;
-  display:flex;
-  gap:9px;
-  align-items:center;
-  font-size:.50rem;
-  letter-spacing:.20em;
-  font-weight:500;
-  pointer-events:auto;
-}
-
-.hero-scroll .scroll-dot{
-  display:block;
-  width:5px;height:5px;
-  border-radius:50%;
-  background:rgba(255,255,255,.88);
-}
-
-/* Kreis-Sprache: Coffee × Matcha Marker unter der Wortmarke.
-   Zweimal geändert: früher über CSS-content erzeugt (nicht übersetzbar),
-   dann absolut bei 66% der Heroheighe positioniert — dort lag er ab 1024px
-   Breite auf "GUMMERSBACH". Als Flusselement der Mittelspalte sitzt er
-   bei jeder Größe sauber darunter. */
-.hero-orbit{
-  margin:clamp(22px,3.4vh,44px) 0 0;
-  flex:0 0 auto;
-  width:76px;
-  height:76px;
-  border:1px solid rgba(255,255,255,.27);
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  align-content:center;
-  color:#fff;
-  font-size:.37rem;
-  letter-spacing:.14em;
-  line-height:1.45;
-  text-align:center;
-  backdrop-filter:blur(8px);
-  -webkit-backdrop-filter:blur(8px);
-  pointer-events:none;
-  opacity:.82;
-}
-.hero-orbit span,
-.hero-orbit b{display:block;font-weight:inherit}
-
-/* Matcha-Seite: aufsteigende Kreise als Markentextur, nicht als Effekt.
-   Nur transform/opacity, damit kein Layout neu berechnet wird. */
-.hero-bubbles{
-  position:absolute;
-  inset:0;
-  z-index:6;
-  overflow:hidden;
-  pointer-events:none;
-}
-.hero-bubbles i{
-  position:absolute;
-  left:var(--x);
-  bottom:-14%;
-  width:calc(44px * var(--s,1));
-  aspect-ratio:1;
-  border-radius:50%;
-  border:1px solid rgba(246,243,236,.26);
-  background:radial-gradient(circle at 34% 30%,rgba(246,243,236,.15),rgba(246,243,236,.02) 58%,transparent 72%);
-  opacity:0;
-  animation:famebubble var(--t,20s) linear var(--d,0s) infinite;
-}
-@keyframes famebubble{
-  0%{transform:translate3d(0,0,0) scale(.88);opacity:0}
-  14%{opacity:.42}
-  72%{opacity:.30}
-  100%{transform:translate3d(16px,-120svh,0) scale(1.1);opacity:0}
-}
-
-/* == 07 Intro ============================================================= */
-
-.intro{
-  padding:clamp(76px,8vw,118px) var(--gutter) clamp(70px,8vw,110px);
-  text-align:center;
-  position:relative;
-}
-.intro-line{width:1px;height:44px;background:var(--hairline);margin:0 auto 28px}
-.intro-eyebrow{font-size:.53rem;letter-spacing:.22em}
-.intro-title{
-  font-family:var(--serif);
-  font-size:clamp(3rem,5.5vw,6.2rem);
-  line-height:.92;
-  letter-spacing:-.025em;
-  font-weight:400;
-  max-width:1050px;
-  margin:20px auto 18px;
-}
-.intro-copy{
-  max-width:650px;
-  margin:0 auto;
-  font-size:clamp(.84rem,1.05vw,1rem);
-  line-height:1.7;
-  color:rgba(23,20,18,.72);
-}
-.intro-pills{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  margin:28px 0 0;
-  padding:0;
-  list-style:none;
-}
-.intro-pills li{
-  border:1px solid rgba(23,20,18,.13);
-  border-radius:999px;
-  padding:8px 13px;
-  font-size:.58rem;
-  letter-spacing:.055em;
-  background:rgba(255,255,255,.12);
-}
-
-/* == 08 Ritual (Half/Half) ================================================ */
-
-.ritual{height:400vh;background:var(--ink);position:relative}
-.ritual-sticky{
-  position:sticky;
-  top:0;
-  height:100svh;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  overflow:hidden;
-}
-.ritual-half{position:relative;overflow:hidden;color:#fff}
-
-/* --p ist der Scroll-Fortschritt durch den Ritual-Abschnitt (0 bis 1),
-   gesetzt vom Skript. Vorher hat das Skript Transform und Filter direkt
-   als Inline-Styles geschrieben; jetzt gibt es dafür nur noch eine Quelle. */
-.ritual-photo{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  transform:scale(calc(1.055 + var(--p,0) * .028));
-  will-change:transform,filter;
-}
-.ritual-coffee .ritual-photo{filter:brightness(calc(.87 + var(--p,0) * .11))}
-.ritual-matcha .ritual-photo{filter:saturate(calc(1 + var(--p,0) * .24)) brightness(calc(.90 + var(--p,0) * .08))}
-
-/* Farbflächenwechsel: Die Produktwelt zieht über den Scroll an.
-   Bisher hat sich über 400vh nur der Text geändert. */
-.ritual-half::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  z-index:3;
-  pointer-events:none;
-  opacity:calc(var(--p,0) * .62);
-}
-.ritual-coffee::after{background:radial-gradient(125% 95% at 18% 82%,rgba(122,80,55,.62),transparent 68%)}
-.ritual-matcha::after{background:radial-gradient(125% 95% at 82% 78%,rgba(137,168,107,.55),transparent 68%)}
-
-.coffee-ritual-photo{
-  background-image:var(--img-coffee),var(--fallback-coffee);
-  background-position:center 54%;
-}
-.matcha-ritual-photo{
-  background-image:var(--img-matcha),var(--fallback-matcha);
-  background-position:center 52%;
-}
-.ritual-vignette{position:absolute;inset:0}
-.ritual-vignette-coffee{background:linear-gradient(110deg,rgba(18,12,8,.78),rgba(18,12,8,.10) 72%)}
-.ritual-vignette-matcha{background:linear-gradient(250deg,rgba(18,35,22,.76),rgba(18,35,22,.08) 74%)}
-
-.ritual-copy{
-  position:absolute;
-  z-index:5;
-  bottom:clamp(38px,6.5vh,72px);
-  width:min(430px,68%);
-}
-.ritual-copy-left{left:var(--gutter)}
-.ritual-copy-right{right:var(--gutter);text-align:right}
-.ritual-label{
-  display:flex;
-  gap:12px;
-  align-items:center;
-  font-size:.47rem;
-  letter-spacing:.20em;
-  font-weight:500;
-  opacity:.82;
-}
-.ritual-copy-right .ritual-label{justify-content:flex-end}
-.ritual-number{
-  font-family:var(--sans);
-  font-size:.52rem;
-  font-weight:500;
-  letter-spacing:.12em;
-}
-/* Bewusst kein <h2>: Der Text wechselt beim Scrollen. Eine Überschrift,
-   die ihren Inhalt ändert, zerlegt die Dokumentstruktur. Die feste
-   Abschnittsüberschrift steht unsichtbar im Markup. */
-.ritual-title{
-  font-family:var(--serif);
-  font-size:clamp(3.7rem,6.3vw,7rem);
-  font-weight:400;
-  line-height:.84;
-  letter-spacing:-.018em;
-  margin:13px 0 15px;
-}
-
-/* Weicher Wechsel statt hartem Textsprung. */
-@keyframes stepIn{
-  from{opacity:0;transform:translateY(9px);filter:blur(5px)}
-  to{opacity:1;transform:none;filter:blur(0)}
-}
-.js .step-in{animation:stepIn .5s var(--ease) both}
-.ritual-copy p{
-  font-size:.72rem;
-  line-height:1.68;
-  max-width:340px;
-  opacity:.84;
-}
-.ritual-copy-right p{margin-left:auto}
-
-.ritual-mini{
-  position:absolute;
-  top:96px;
-  z-index:4;
-  font-size:.43rem;
-  letter-spacing:.18em;
-  font-weight:500;
-  opacity:.58;
-}
-.ritual-mini-left{left:var(--gutter)}
-.ritual-mini-right{right:var(--gutter);text-align:right}
-
-/* Mittelachse: genau ein Marker, keine gestapelten Bubbles. */
-.ritual-axis{
-  position:absolute;
-  z-index:9;
-  left:50%;top:0;bottom:0;
-  width:44px;
-  transform:translateX(-50%);
-  display:flex;
-  justify-content:center;
-  pointer-events:none;
-}
-.axis-track{position:absolute;top:0;bottom:0;left:50%;width:1px;background:rgba(255,255,255,.26)}
-.axis-progress{
-  position:absolute;
-  top:0;left:50%;
-  width:2px;height:0;
-  background:var(--matcha);
-  transform:translateX(-50%);
-}
-.axis-disc{
-  position:absolute;
-  left:50%;top:10%;
-  transform:translate(-50%,-50%);
-  width:30px;height:30px;
-  border-radius:50%;
-  background:rgba(246,243,236,.94);
-  color:var(--ink);
-  border:1px solid rgba(255,255,255,.9);
-  box-shadow:0 8px 24px rgba(0,0,0,.16);
-  display:grid;
-  place-items:center;
-  justify-content:center;
-  font-family:var(--sans);
-  font-size:.46rem;
-  line-height:1;
-  letter-spacing:.03em;
-  font-weight:600;
-}
-.axis-disc::before{content:attr(data-step)}
-/* Textfassung der Sequenz. Sichtbar ohne JavaScript und bei
-   prefers-reduced-motion — dort greift die Scroll-Choreografie nicht,
-   und bisher blieben fünf von sechs Schritten unerreichbar. */
 .ritual-steps{
-  display:none;
-  list-style:none;
-  margin:0;
-  padding:clamp(60px,8vw,100px) var(--gutter) clamp(66px,9vw,110px);
+  display:none;list-style:none;margin:0;
+  padding:clamp(56px,7vw,92px) var(--gutter) clamp(60px,8vw,100px);
   color:#fff;
-  counter-reset:none;
 }
 .ritual-steps li{
-  display:grid;
-  grid-template-columns:auto 1fr;
-  column-gap:clamp(18px,3vw,38px);
-  row-gap:4px;
-  padding:22px 0;
-  border-top:1px solid rgba(255,255,255,.14);
-  max-width:900px;
+  display:grid;grid-template-columns:auto 1fr;
+  column-gap:clamp(16px,3vw,36px);row-gap:4px;
+  padding:20px 0;border-top:1px solid rgba(255,255,255,.14);max-width:900px;
 }
 .ritual-steps li:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
-.ritual-steps span{
-  grid-row:1/3;
-  font-size:.5rem;
-  letter-spacing:.2em;
-  font-weight:500;
-  opacity:.5;
-  padding-top:6px;
-}
-.ritual-steps b{
-  font-family:var(--serif);
-  font-size:clamp(1.5rem,3vw,2.3rem);
-  font-weight:400;
-  letter-spacing:-.015em;
-}
-.ritual-steps p{
-  margin:0;
-  font-size:.78rem;
-  line-height:1.7;
-  opacity:.74;
-  max-width:560px;
-}
+.ritual-steps span{grid-row:1/3;font-size:.5rem;letter-spacing:.2em;font-weight:500;opacity:.5;padding-top:6px}
+.ritual-steps b{font-family:var(--serif);font-size:clamp(1.4rem,2.8vw,2.2rem);font-weight:400;letter-spacing:-.015em}
+.ritual-steps p{margin:0;font-size:.76rem;line-height:1.7;opacity:.74;max-width:560px}
+
 .no-js .ritual-steps{display:block}
+.no-js .ritual{height:auto}
+.no-js .ritual-sticky{position:relative;height:100svh}
+.no-js .ritual-rail{display:none}
 
-.axis-disc::after{
-  content:attr(data-phase);
-  position:absolute;
-  top:38px;left:50%;
-  transform:translateX(-50%);
-  color:rgba(255,255,255,.76);
-  white-space:nowrap;
-  font-size:.37rem;
-  line-height:1;
-  letter-spacing:.18em;
-  font-weight:500;
+@media(prefers-reduced-motion:reduce){
+  .ritual-steps{display:block!important}
+  .ritual-rail{display:none!important}
 }
 
-/* == 09 Signature ========================================================= */
+/* -- Sehr schmale Geräte ---------------------------------------------------
+   Auf 320px ragte die Seite 45px heraus. Ursache: Der Instagram-Handle
+   "@fame.cafe.gm" steht bei clamp-Minimum 2.8rem rund 300px breit in einem
+   292px-Kasten. Kleinere Mindestgröße und weniger Innenabstand lösen das,
+   ohne die Komposition auf größeren Schirmen anzufassen. */
 
-.signature{padding:clamp(76px,8vw,120px) var(--gutter)}
-.signature-heading{
-  display:grid;
-  grid-template-columns:1fr 1.2fr;
-  column-gap:clamp(30px,6vw,90px);
-  align-items:start;
-  margin-bottom:34px;
-}
-.signature-heading h2{
-  font-family:var(--serif);
-  font-size:clamp(2.9rem,4.7vw,5.5rem);
-  line-height:.9;
-  font-weight:400;
-  margin:14px 0 0;
-}
-.signature-heading p{
-  margin:0 0 8px;
-  max-width:520px;
-  font-size:.82rem;
-  line-height:1.7;
-  color:rgba(23,20,18,.68);
-}
-.signature-grid{
-  display:grid;
-  grid-template-columns:repeat(3,minmax(0,1fr));
-  gap:14px;
-  align-items:stretch;
-}
-.signature-card{
-  position:relative;
-  min-height:540px;
-  overflow:hidden;
-  border-radius:var(--radius);
-  isolation:isolate;
-}
-.signature-media{
-  position:absolute;
-  inset:0;
-  background-size:cover;
-  background-position:center;
-  transition:transform .8s var(--ease);
-}
-.signature-card:hover .signature-media{transform:scale(1.035)}
-.signature-media-coffee{background-image:var(--img-coffee),var(--fallback-coffee)}
-.signature-media-matcha{background-image:var(--img-matcha),var(--fallback-matcha)}
-.signature-media-acai{background-image:var(--img-acai),var(--fallback-acai)}
-.signature-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg,transparent 45%,rgba(12,10,9,.72));
-  z-index:0;
-}
-.signature-copy{position:absolute;left:24px;right:24px;bottom:22px;color:#fff;z-index:2}
-.signature-copy span{font-size:.48rem;letter-spacing:.16em}
-.signature-copy h3{
-  font-family:var(--serif);
-  font-size:clamp(2.8rem,4vw,4.7rem);
-  line-height:.85;
-  font-weight:400;
-  margin:7px 0 8px;
-}
-.signature-copy p{
-  margin:0;
-  font-size:.60rem;
-  letter-spacing:.06em;
-  text-transform:uppercase;
-  opacity:.78;
+@media(max-width:400px){
+  .social-band{padding:clamp(26px,7vw,42px)}
+  .social-band h2{font-size:clamp(1.8rem,9vw,2.8rem)}
+  .social-band p{font-size:.7rem}
+  .visit-info h2{font-size:clamp(2.6rem,12vw,4.4rem)}
 }
 
-/* == 10 Açaí ============================================================== */
-
-.acai-feature{
-  display:grid;
-  grid-template-columns:.82fr 1.18fr;
-  min-height:72vh;
-  border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);
-}
-.acai-copy{
-  padding:clamp(56px,6vw,90px) var(--gutter);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-}
-.acai-copy h2{
-  font-family:var(--serif);
-  font-size:clamp(3.8rem,6vw,6.8rem);
-  line-height:.82;
-  font-weight:400;
-  margin:18px 0 22px;
-}
-.acai-copy p{
-  max-width:520px;
-  font-size:.82rem;
-  line-height:1.7;
-  color:rgba(23,20,18,.72);
-}
-.acai-stage{position:relative;min-height:72vh;overflow:hidden}
-.acai-photo{
-  position:absolute;
-  inset:0;
-  background-image:var(--img-acai),var(--fallback-acai);
-  background-position:center;
-  background-size:cover;
-  background-repeat:no-repeat;
-}
-.acai-stamp{
-  margin:0;
-  position:absolute;
-  right:22px;top:22px;
-  width:68px;height:68px;
-  border-radius:50%;
-  background:var(--berry);
-  color:#fff;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  font-size:.38rem;
-  letter-spacing:.12em;
-}
-
-/* == 11 Café Experience =================================================== */
-
-.space{
-  position:relative;
-  min-height:88vh;
-  color:#fff;
-  display:flex;
-  align-items:flex-end;
-  overflow:hidden;
-}
-.space-photo{
-  position:absolute;
-  inset:-4%;
-  background-image:var(--img-space),var(--fallback-space);
-  background-position:center;
-  background-size:cover;
-  background-repeat:no-repeat;
-  transform:scale(1.03);
-}
-.space-overlay{
-  position:absolute;
-  inset:0;
-  background:linear-gradient(90deg,rgba(14,13,10,.8),rgba(14,13,10,.14) 64%,rgba(14,13,10,.3));
-}
-.space-copy{position:relative;z-index:3;padding:0 var(--gutter) 7vh;max-width:690px}
-.space-copy h2{
-  font-family:var(--serif);
-  font-size:clamp(4.2rem,7.4vw,8rem);
-  line-height:.80;
-  font-weight:400;
-  margin:18px 0 22px;
-}
-.space-copy p{max-width:600px;font-size:.82rem;line-height:1.7;opacity:.88}
-.space-index{
-  position:absolute;
-  z-index:3;
-  right:var(--gutter);bottom:8vh;
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-  text-align:right;
-  font-size:.47rem;
-  letter-spacing:.17em;
-  /* Stand auf opacity .72 auf einem hellen Foto und war kaum zu lesen. */
-  opacity:.9;
-  text-shadow:0 1px 10px rgba(14,13,10,.75);
-}
-
-/* == 12 Menü ============================================================== */
-
-.menu{padding:clamp(76px,8vw,120px) var(--gutter)}
-.menu-head{
-  display:grid;
-  grid-template-columns:1.15fr .85fr;
-  gap:42px;
-  align-items:end;
-  margin-bottom:34px;
-}
-.menu-head h2{
-  font-family:var(--serif);
-  font-size:clamp(3.2rem,5.4vw,6rem);
-  line-height:.85;
-  font-weight:400;
-  margin:15px 0 0;
-}
-.menu-head p{margin:0 0 6px;font-size:.80rem;line-height:1.7;color:rgba(23,20,18,.68)}
-
-.menu-row{display:grid;gap:14px;align-items:stretch}
-.menu-row.menu-categories{grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.menu-item{
-  border-top:1px solid var(--line);
-  padding-top:14px;
-  display:flex;
-  flex-direction:column;
-  height:100%;
-  min-width:0;
-}
-.menu-image{
-  height:clamp(260px,31vw,430px);
-  background-size:cover;
-  background-position:center;
-  border-radius:16px;
-  position:relative;
-  overflow:hidden;
-  isolation:isolate;
-}
-.menu-image::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg,rgba(23,20,18,.01),rgba(23,20,18,.18));
-  pointer-events:none;
-}
-.menu-image-coffee{
-  background-image:var(--img-coffee),var(--fallback-coffee);
-  background-position:center 58%;
-}
-.menu-image-matcha{background-image:var(--img-matcha),var(--fallback-matcha)}
-.menu-image-acai{background-image:var(--img-acai),var(--fallback-acai)}
-/* Für Tea und Cake & Bakery liegt noch kein Foto vor. Die Flächen standen
-   bisher mit hart abgeschnittenen Kreisen neben drei echten Fotos und lasen
-   sich wie ein Ladefehler. Jetzt ruhige Markenflächen mit demselben
-   Kreisumriss, den die Seite ohnehin führt — erkennbar als Gestaltung,
-   nicht als fehlendes Bild. */
-.menu-image-tea,
-.menu-image-bakery{position:relative}
-.menu-image-tea::before,
-.menu-image-bakery::before{
-  content:"";
-  position:absolute;
-  left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  width:44%;
-  aspect-ratio:1;
-  border:1px solid rgba(246,243,236,.5);
-  border-radius:50%;
-}
-.menu-image-tea{
-  background:
-    radial-gradient(circle at 64% 30%,rgba(246,243,236,.20),transparent 56%),
-    linear-gradient(150deg,#1B2A1D 0%,#3C5540 48%,#89A86B 100%);
-}
-.menu-image-bakery{
-  background:
-    radial-gradient(circle at 36% 32%,rgba(246,243,236,.26),transparent 58%),
-    linear-gradient(150deg,#EDE6DA 0%,#C9A98D 46%,#7A5037 100%);
-}
-.menu-image-bakery::before{border-color:rgba(23,20,18,.28)}
-.menu-meta{padding:15px 2px 0}
-.menu-meta span{font-size:.48rem;letter-spacing:.15em;font-weight:500}
-.menu-meta h3{
-  font-family:var(--serif);
-  font-size:clamp(1.2rem,1.5vw,1.7rem);
-  font-weight:400;
-  margin:6px 0 4px;
-}
-.menu-meta p{font-size:.62rem;line-height:1.55;opacity:.68;margin:0}
-
-/* Vorbereitet für die echte Karte. Wird erst befüllt, wenn bestätigte
-   Produkte und Preise vorliegen — bis dahin bleibt das Markup leer. */
-.menu-list{
-  list-style:none;
-  margin:14px 0 0;
-  padding:0;
-}
-.menu-list li{
-  display:flex;
-  align-items:baseline;
-  gap:10px;
-  padding:9px 0;
-  border-top:1px solid var(--hairline);
-  font-size:.72rem;
-  line-height:1.5;
-}
-.menu-list-name{flex:1 1 auto}
-.menu-list-price{
-  flex:0 0 auto;
-  font-variant-numeric:tabular-nums;
-  letter-spacing:.04em;
-  opacity:.72;
-}
-
-/* == 13 Coffee Craft ====================================================== */
-
-.craft{
-  display:grid;
-  grid-template-columns:1.25fr .75fr;
-  min-height:78vh;
-  background:var(--ink);
-  color:#fff;
-}
-.craft-media{
-  background-image:var(--img-craft),var(--fallback-coffee);
-  background-position:center;
-  background-size:cover;
-  background-repeat:no-repeat;
-  min-height:78vh;
-}
-.craft-copy{
-  padding:clamp(56px,6vw,90px) var(--gutter);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  background:linear-gradient(180deg,var(--ink),#211b18);
-}
-.craft-copy h2{
-  font-family:var(--serif);
-  font-size:clamp(3.8rem,5.9vw,6.5rem);
-  line-height:.82;
-  font-weight:400;
-  margin:18px 0 22px;
-}
-.craft-copy p{font-size:.80rem;line-height:1.7;opacity:.8;max-width:470px}
-
-/* == 14 Gallery =========================================================== */
-
-.gallery{
-  padding:clamp(80px,9vw,132px) var(--gutter);
-  border-top:1px solid var(--hairline);
-}
-.gallery-head{
-  display:grid;
-  grid-template-columns:1.05fr .95fr;
-  gap:clamp(30px,6vw,92px);
-  align-items:end;
-  margin-bottom:34px;
-}
-.gallery-head h2{
-  margin:16px 0 0;
-  font-family:var(--serif);
-  font-size:clamp(3.4rem,6vw,7rem);
-  line-height:.84;
-  font-weight:400;
-  letter-spacing:-.02em;
-}
-.gallery-head p{
-  max-width:520px;
-  margin:0 0 7px;
-  font-size:.82rem;
-  line-height:1.7;
-  color:rgba(23,20,18,.68);
-}
-.gallery-grid{
-  margin:0;
-  padding:0;
-  list-style:none;
-  display:grid;
-  grid-template-columns:1.25fr .75fr 1fr;
-  grid-template-rows:minmax(260px,38vw) minmax(220px,31vw);
-  gap:12px;
-}
-.gallery-tile{
-  position:relative;
-  overflow:hidden;
-  border-radius:18px;
-  background-position:center;
-  background-size:cover;
-  transform:translateZ(0);
-}
-.gallery-tile::after{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:linear-gradient(180deg,transparent 58%,rgba(23,20,18,.16));
-}
-.gallery-tile:nth-child(1){
-  grid-row:1/3;
-  background-image:var(--img-matcha),var(--fallback-matcha);
-  background-position:center 54%;
-}
-.gallery-tile:nth-child(2){
-  background-image:var(--img-coffee),var(--fallback-coffee);
-  background-position:center 52%;
-}
-.gallery-tile:nth-child(3){
-  background-image:var(--img-acai),var(--fallback-acai);
-  background-position:center 50%;
-}
-.gallery-tile:nth-child(4){
-  background-image:var(--img-space),var(--fallback-space);
-  background-position:center 55%;
-}
-.gallery-tile:nth-child(5){
-  grid-column:3;
-  background:
-    radial-gradient(circle at 56% 42%,rgba(246,243,236,.55) 0 17%,transparent 17.5%),
-    linear-gradient(145deg,#682E54 0%,#8A5875 44%,#EDE6DA 100%);
-}
-.gallery-tile-label{
-  position:absolute;
-  left:18px;bottom:16px;
-  z-index:2;
-  color:#fff;
-  font-size:.46rem;
-  letter-spacing:.18em;
-  font-weight:600;
-}
-
-/* == 15 Catering ========================================================== */
-
-.catering{
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  min-height:68vh;
-  border-top:1px solid var(--hairline);
-  border-bottom:1px solid var(--hairline);
-  background:var(--forest);
-  color:#fff;
-}
-.catering-copy{
-  padding:clamp(72px,8vw,122px) var(--gutter);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  max-width:820px;
-}
-.catering-copy h2{
-  margin:20px 0 24px;
-  font-family:var(--serif);
-  font-size:clamp(4rem,7.3vw,8rem);
-  line-height:.8;
-  font-weight:400;
-  letter-spacing:-.02em;
-}
-.catering-copy p{
-  max-width:560px;
-  margin:0;
-  font-size:.86rem;
-  line-height:1.75;
-  color:rgba(255,255,255,.78);
-}
-.catering-note{
-  margin:26px 0 0;
-  font-size:.52rem;
-  letter-spacing:.15em;
-  text-transform:uppercase;
-  opacity:.62;
-}
-.catering-visual{
-  position:relative;
-  overflow:hidden;
-  min-height:68vh;
-  /* Vorher drei hart abgeschnittene Kreise übereinander — das las sich als
-     Zielscheibe, und die Wortmarke verschwand darin. Jetzt zwei weiche
-     Flächen als Hintergrund, die Wortmarke liegt frei darüber. */
-  background:
-    radial-gradient(circle at 62% 38%,rgba(137,168,107,.34),transparent 58%),
-    radial-gradient(circle at 34% 74%,rgba(104,46,84,.30),transparent 62%),
-    linear-gradient(145deg,#171412 0%,#263829 64%,#3C5540 100%);
-}
-.catering-visual::before{
-  content:"";
-  position:absolute;
-  left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  width:min(62%,320px);
-  aspect-ratio:1;
-  border:1px solid rgba(246,243,236,.22);
-  border-radius:50%;
-}
-.catering-visual::after{
-  content:"FAME";
-  position:absolute;
-  left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  font-family:var(--serif);
-  font-size:clamp(3.4rem,7.5vw,8rem);
-  letter-spacing:-.03em;
-  line-height:1;
-  color:rgba(246,243,236,.92);
-}
-
-/* == 16 Visit ============================================================= */
-
-.visit{
-  display:grid;
-  grid-template-columns:1fr .72fr;
-  gap:52px;
-  align-items:center;
-  min-height:64vh;
-  padding:clamp(70px,8vw,110px) var(--gutter);
-  background:var(--cream);
-}
-.visit-copy h2{
-  font-family:var(--serif);
-  font-size:clamp(4rem,6.8vw,7.2rem);
-  line-height:.82;
-  font-weight:400;
-  margin:18px 0 22px;
-}
-.visit-copy p{max-width:560px;font-size:.82rem;line-height:1.7;color:rgba(23,20,18,.7)}
-.visit-address{
-  margin:26px 0 0;
-  font-style:normal;
-  font-family:var(--serif);
-  font-size:clamp(1.25rem,2vw,2rem);
-  line-height:1.25;
-}
-.visit-address span{display:block}
-.visit-note{
-  display:flex;
-  align-items:center;
-  margin:24px 0 0;
-  font-size:.52rem;
-  letter-spacing:.14em;
-  font-weight:500;
-  gap:10px;
-  line-height:1.55;
-}
-.visit-note>span{
-  flex:0 0 auto;
-  width:6px;height:6px;
-  border-radius:50%;
-  background:var(--matcha);
-}
-.visit-mark{
-  margin:0;
-  justify-self:end;
-  width:min(420px,100%);
-  max-width:330px;
-  aspect-ratio:1;
-  border:1px solid var(--hairline);
-  border-radius:50%;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  font-family:var(--serif);
-  font-size:clamp(1.9rem,3vw,3.5rem);
-  line-height:.78;
-  transform:rotate(-4deg);
-}
-.visit-mark b{font-style:italic;font-weight:400;color:var(--matcha)}
-
-/* Instagram und Route.
-   Bewusst keine Karten mit Verlauf und kein Icon bei jedem Link — beides
-   ist im Design Lock ausgeschlossen. Stattdessen Haarlinien, gesperrtes
-   Label, Serif-Wert und der Matcha-Punkt, der auch sonst als Marker dient. */
-.visit-links{
-  list-style:none;
-  margin:28px 0 0;
-  padding:0;
-  width:min(440px,100%);
-}
-.visit-links li{border-top:1px solid var(--hairline)}
-.visit-links li:last-child{border-bottom:1px solid var(--hairline)}
-.visit-links a{
-  display:grid;
-  grid-template-columns:auto 1fr auto;
-  align-items:baseline;
-  column-gap:clamp(14px,2.4vw,26px);
-  padding:14px 0;
-}
-.visit-link-label{
-  font-size:.46rem;
-  letter-spacing:.2em;
-  font-weight:500;
-  opacity:.55;
-}
-.visit-link-value{
-  font-family:var(--serif);
-  font-size:clamp(1.05rem,1.6vw,1.4rem);
-  line-height:1.1;
-}
-.visit-link-dot{
-  align-self:center;
-  width:6px;height:6px;
-  border-radius:50%;
-  background:var(--matcha);
-  transition:transform .28s var(--ease);
-}
-.visit-links a:hover .visit-link-dot,
-.visit-links a:focus-visible .visit-link-dot{transform:scale(1.9)}
-
-/* == 17 Footer ============================================================ */
-
-footer{
-  min-height:132px;
-  padding:28px var(--gutter);
-  display:grid;
-  grid-template-columns:minmax(170px,.8fr) auto minmax(280px,1fr);
-  grid-template-areas:
-    "brand nav meta"
-    "brand legal meta";
-  column-gap:clamp(22px,4vw,52px);
-  row-gap:12px;
-  align-items:center;
-  border-top:1px solid var(--line);
-}
-.footer-brand{grid-area:brand;align-self:center}
-.footer-brand .brand-main{font-size:1.35rem}
-.footer-links{
-  grid-area:nav;
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  align-self:end;
-  gap:24px;
-  font-size:.67rem;
-  font-weight:500;
-}
-.footer-meta{
-  grid-area:meta;
-  display:flex;
-  flex-direction:column;
-  gap:5px;
-  max-width:420px;
-  justify-self:end;
-  align-self:center;
-  text-align:right;
-  font-size:.48rem;
-  line-height:1.55;
-  letter-spacing:.06em;
-  opacity:.62;
-}
-.footer-legal{
-  grid-area:legal;
-  display:flex;
-  justify-content:center;
-  align-self:start;
-  gap:14px;
-  font-size:.5rem;
-  letter-spacing:.08em;
-}
-.footer-legal a{border-bottom:1px solid transparent;transition:border-color .2s ease}
-.footer-legal a:hover,
-.footer-legal a:focus-visible{border-color:currentColor}
-
-/* == 18 Rechtstexte ======================================================= */
+/* -- Rechtstexte und Fehlerseite -------------------------------------------
+   Beim Übernehmen des V4-Stands sind diese Regeln verlorengegangen; Impressum,
+   Datenschutz und 404 wären ohne Gestaltung ausgeliefert worden. */
 
 .legal-page{
   min-height:100svh;
@@ -1509,12 +339,6 @@ footer{
   font-weight:600;
 }
 
-/* == 18b 404 ==============================================================
-   Die nginx-Konfiguration hat bisher jede unbekannte Adresse auf die
-   Startseite umgeschrieben und dabei Status 200 geliefert. Für eine
-   statische Seite ist das falsch: Suchmaschinen indexieren dann
-   beliebig viele Varianten derselben Seite.
-   ========================================================================== */
 
 .notfound{
   position:relative;
@@ -1604,193 +428,9 @@ footer{
   .notfound-mark{display:none}
 }
 
-/* == 19 Breakpoints ======================================================= */
 
-@media (max-width:1100px){
-  .desktop-nav{gap:26px}
-  .hero-center h1{font-size:clamp(5.2rem,11vw,8.2rem)}
-  .hero-meta{width:min(220px,31vw)}
-  .hero::before{width:68px;height:68px;top:68%}
-  .ritual-copy{width:64%}
-  .ritual-title{font-size:clamp(3.5rem,7vw,5.6rem)}
-  .ritual-mini{top:90px}
-  .signature-card{min-height:500px}
-  .menu-row.menu-categories{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .gallery-grid{grid-template-columns:1.1fr .9fr;grid-template-rows:420px 300px 300px}
-  .gallery-tile:nth-child(1){grid-row:1/3}
-  .gallery-tile:nth-child(3){grid-column:2;grid-row:2}
-  .gallery-tile:nth-child(4){grid-column:1;grid-row:3}
-  .gallery-tile:nth-child(5){grid-column:2;grid-row:3}
-  footer{
-    grid-template-columns:1fr 1fr;
-    grid-template-areas:
-      "brand meta"
-      "nav legal";
-  }
-  .footer-links{justify-content:flex-start;align-self:start}
-  .footer-legal{justify-content:flex-end}
-}
-
-/* Über 980px gibt es nur die Desktop-Navigation — das Overlay darf dort
-   auch dann nicht auftauchen, wenn es beim Verkleinern offen war. */
-@media (min-width:981px){
-  .mobile-nav{display:none!important}
-}
-
-@media (max-width:980px){
-  .site-header{grid-template-columns:1fr auto}
-  .desktop-nav{display:none}
-  .nav-toggle{display:inline-flex}
-  .signature-heading{grid-template-columns:1fr;gap:18px}
-  .signature-grid{grid-template-columns:1fr 1fr}
-  .signature-card{min-height:500px}
-  .signature-card:nth-child(3){grid-column:1/-1;min-height:460px}
-  .menu-head{grid-template-columns:1fr}
-  .acai-feature{grid-template-columns:1fr}
-  .space-index{display:none}
-  .craft{grid-template-columns:1fr}
-  .craft-media{min-height:62vh}
-  .visit{grid-template-columns:1fr .65fr}
-  .visit-mark{justify-self:start}
-}
-
-@media (max-width:760px){
-  .menu-row.menu-categories{grid-template-columns:1fr 1fr}
-  .menu-image{height:310px}
-  .gallery-head{grid-template-columns:1fr;gap:18px}
-  .gallery-grid{grid-template-columns:1fr 1fr;grid-template-rows:55svh 250px 250px}
-  .gallery-tile:nth-child(1){grid-column:1/-1;grid-row:1}
-  .gallery-tile:nth-child(2){grid-column:1;grid-row:2}
-  .gallery-tile:nth-child(3){grid-column:2;grid-row:2}
-  .gallery-tile:nth-child(4){grid-column:1;grid-row:3}
-  .gallery-tile:nth-child(5){grid-column:2;grid-row:3}
-  .catering{grid-template-columns:1fr;min-height:auto}
-  .catering-copy{padding-top:76px;padding-bottom:76px}
-  .catering-visual{min-height:56svh}
-  footer{
-    grid-template-columns:1fr;
-    grid-template-areas:
-      "brand"
-      "nav"
-      "legal"
-      "meta";
-    align-items:start;
-    row-gap:18px;
-  }
-  .footer-links{justify-content:flex-start;gap:16px}
-  .footer-legal{justify-content:flex-start}
-  .footer-meta{justify-self:start;text-align:left;width:100%;max-width:none}
-}
-
-@media (max-width:680px){
-  :root{--gutter:20px}
-  .site-header{height:62px}
-  .site-header.scrolled{height:58px}
-  .brand-main{font-size:1.2rem}
-  .brand-sub{font-size:.35rem}
-  .header-cta{padding:8px 10px;font-size:.50rem}
-  .mobile-nav{padding-top:calc(62px + clamp(30px,7vh,60px))}
-
-  .hero{grid-template-columns:1fr;grid-template-rows:1fr 1fr;min-height:100svh}
-  .hero-half{min-height:50svh}
-  .hero-centerline{left:0;right:0;top:50%;bottom:auto;width:auto;height:1px}
-  .hero-center{justify-content:center}
-  .hero-center h1{font-size:clamp(3.8rem,18vw,5.4rem);line-height:.78}
-  .hero-kicker{font-size:.43rem;letter-spacing:.22em}
-  .hero-city{font-size:.42rem}
-  .hero-meta{display:none}
-  .hero::before{width:58px;height:58px;top:69%;font-size:.31rem}
-  .hero-scroll{font-size:.43rem;bottom:15px}
-  .coffee-image{background-position:center 55%}
-  .matcha-image{background-position:center 50%}
-
-  .intro{padding-top:62px;padding-bottom:62px}
-  .intro-line{height:34px;margin-bottom:22px}
-  .intro-title{font-size:clamp(2.8rem,14vw,4.4rem)}
-  .intro-copy{font-size:.80rem;line-height:1.65}
-
-  .ritual{height:360vh}
-  .ritual-sticky{grid-template-columns:1fr;grid-template-rows:1fr 1fr}
-  .ritual-axis{left:auto;right:6px;top:0;bottom:0;transform:none;width:30px}
-  .axis-disc{width:26px;height:26px;font-size:.42rem}
-  .axis-disc::after{font-size:.31rem;top:34px}
-  .ritual-mini{display:none}
-  .ritual-copy{bottom:4vh;width:73%}
-  .ritual-copy-left{left:20px}
-  .ritual-copy-right{right:20px}
-  .ritual-title{font-size:clamp(2.8rem,13vw,4rem);margin:9px 0 9px}
-  .ritual-copy p{font-size:.61rem;line-height:1.5}
-  .ritual-label{font-size:.39rem}
-
-  .signature{padding-left:20px;padding-right:20px}
-  .signature-heading{gap:14px}
-  .menu-head{gap:14px}
-  .signature-grid{grid-template-columns:1fr}
-  .signature-card,
-  .signature-card:nth-child(3){grid-column:auto;min-height:460px}
-
-  .acai-stage{min-height:52vh}
-
-  .space{min-height:78vh}
-
-  .menu{padding-left:20px;padding-right:20px}
-
-  .craft-media{min-height:52vh}
-
-  .gallery-tile:nth-child(1){background-image:var(--img-matcha-s),var(--fallback-matcha)}
-  .gallery-tile:nth-child(2){background-image:var(--img-coffee-s),var(--fallback-coffee)}
-  .gallery-tile:nth-child(3){background-image:var(--img-acai-s),var(--fallback-acai)}
-  .gallery-tile:nth-child(4){background-image:var(--img-space-s),var(--fallback-space)}
-
-  .visit{grid-template-columns:1fr;padding-left:20px;padding-right:20px}
-  .visit-mark{justify-self:start;max-width:230px}
-
-  footer{padding:22px 20px}
-}
-
-@media (max-width:520px){
-  /* "Datenschutz." hat bei 3.6rem die Zeile gesprengt und die Seite
-     horizontal scrollbar gemacht. */
+@media(max-width:520px){
+  /* "Datenschutz." sprengte bei 3.6rem die Zeile und machte die Seite
+     horizontal scrollbar. */
   .legal-page h1{font-size:clamp(2.4rem,11vw,3.6rem)}
-  /* Platz wird knapp — "Besuchen" ist als Punkt 05 im Overlay erreichbar. */
-  .header-cta{display:none}
-  .menu-row.menu-categories{grid-template-columns:1fr}
-  .menu-image{height:58svh;min-height:330px}
-  .gallery{padding-left:16px;padding-right:16px}
-  .gallery-grid{gap:8px;grid-template-rows:54svh 210px 210px}
-  .gallery-tile{border-radius:14px}
-  .gallery-tile-label{left:14px;bottom:13px;font-size:.4rem}
-  .catering-copy{padding-left:20px;padding-right:20px}
-}
-
-/* == 20 Reduced Motion ==================================================== */
-
-/* Ohne JavaScript greift die Scroll-Choreografie nicht: Das Ritual bliebe
-   auf Schritt 01 stehen und vier Bildschirmhöhen lang unverändert. Deshalb
-   wird der Abschnitt auf eine Bildschirmhöhe gekürzt und die vollständige
-   Sequenz als Liste ausgegeben. */
-.no-js .ritual{height:auto}
-.no-js .ritual-sticky{position:relative;height:100svh}
-.no-js .ritual-axis,
-.no-js .hero-bubbles{display:none}
-
-@media (prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto!important}
-  *,*::before,*::after{
-    animation-duration:.001ms!important;
-    animation-iteration-count:1!important;
-    transition-duration:.001ms!important;
-  }
-  .reveal{opacity:1!important;transform:none!important}
-  .hero-image,.ritual-photo,.space-photo{transform:none!important;filter:none!important}
-  .hero-bubbles{display:none!important}
-  .ritual-half::after{opacity:0!important}
-
-  /* Dieselbe Lage wie ohne JavaScript: Die verkürzte Sticky-Bühne behält
-     die Bildkomposition, die Liste liefert alle sechs Schritte. Vorher
-     waren die Schritte 02 bis 06 hier nicht erreichbar. */
-  .ritual{height:auto!important}
-  .ritual-sticky{position:relative!important;height:100svh!important}
-  .ritual-axis{display:none!important}
-  .ritual-steps{display:block!important}
 }
