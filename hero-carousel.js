@@ -110,6 +110,10 @@ function fameInstallHeroCarousel(){
     });
   });
 
+  // Erst jetzt dürfen die statischen Hero-Hälften verschwinden: Ab hier
+  // steht das Karussell wirklich im DOM.
+  fameHero.classList.add('has-carousel');
+
   fameShowHeroSlide(0);
   fameStartHeroAutoplay();
 }
