@@ -1,0 +1,18 @@
+.hero>.hero-half{opacity:0;pointer-events:none}
+.hero-carousel{position:absolute;inset:0;z-index:1;overflow:hidden;background:#111}
+.hero-carousel-slide{position:absolute;inset:0;display:grid;grid-template-columns:1fr 1fr;opacity:0;visibility:hidden;transition:opacity .72s ease,visibility .72s ease}
+.hero-carousel-slide.is-active{opacity:1;visibility:visible}
+.hero-carousel-panel{position:relative;overflow:hidden;background-size:cover;background-position:center;transform:scale(1.075);transition:transform 3.2s cubic-bezier(.2,.7,.2,1)}
+.hero-carousel-slide.is-active .hero-carousel-panel{transform:scale(1.025)}
+.hero-carousel-panel::after{content:"";position:absolute;inset:0;pointer-events:none}
+.hero-carousel-panel:first-child::after{background:linear-gradient(90deg,rgba(16,10,8,.72),rgba(16,10,8,.1))}
+.hero-carousel-panel:last-child::after{background:linear-gradient(270deg,rgba(14,32,18,.62),rgba(14,32,18,.05))}
+.hero-dots{position:absolute;z-index:12;left:50%;bottom:52px;transform:translateX(-50%);display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:999px;background:rgba(10,10,9,.16);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
+.hero-dot{appearance:none;border:0;padding:0;width:7px;height:7px;border-radius:999px;background:rgba(255,255,255,.48);cursor:pointer;transition:width .28s ease,background .28s ease,transform .28s ease}
+.hero-dot:hover{transform:scale(1.15)}
+.hero-dot.is-active{width:24px;background:#fff}
+.coffee-shot.shot-1{background-image:url('https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&fm=jpg&q=86&w=1800')!important;background-position:center!important}
+.matcha-shot.shot-1{background-image:url('https://images.unsplash.com/photo-1773753563088-e3ea21f9a992?auto=format&fit=crop&fm=jpg&q=86&w=1800')!important;background-position:center!important}
+@media(max-width:780px){.hero-dots{bottom:58px}}
+@media(max-width:560px){.hero-dots{bottom:54px;gap:7px;padding:7px 9px}.hero-dot{width:6px;height:6px}.hero-dot.is-active{width:20px}}
+@media(prefers-reduced-motion:reduce){.hero-carousel-slide,.hero-carousel-panel,.hero-dot{transition:none}}
