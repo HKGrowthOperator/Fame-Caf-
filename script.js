@@ -188,3 +188,22 @@ if(mapWrap && mapConsentButton){
     frame.focus();
   });
 }
+
+/* ---- Hero Carousel --------------------------------------------------------
+   Separate Assets halten die bestehende Seite stabil und machen den Hero
+   unabhängig vom Coffee/Matcha-Ritual darunter. */
+(function loadFameHeroCarousel(){
+  if(!document.querySelector('link[data-fame-hero-carousel]')){
+    const css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = 'hero-carousel.css?v=fame-hero-20260917';
+    css.dataset.fameHeroCarousel = 'true';
+    document.head.appendChild(css);
+  }
+  if(!document.querySelector('script[data-fame-hero-carousel]')){
+    const js = document.createElement('script');
+    js.src = 'hero-carousel.js?v=fame-hero-20260917';
+    js.dataset.fameHeroCarousel = 'true';
+    document.body.appendChild(js);
+  }
+})();
