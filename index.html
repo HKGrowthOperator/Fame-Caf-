@@ -25,6 +25,7 @@
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/dm-serif-display-latin-400.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/manrope-latin-variable.woff2" crossorigin />
   <link rel="stylesheet" href="styles.css?v=fame-v5-20260917" />
+  <link rel="stylesheet" href="experience-v6.css?v=20260927" />
 
   <script>
     /* .reveal startet auf opacity:0, sobald <html> die Klasse .js trägt —
@@ -146,6 +147,13 @@
       <div class="pill-row reveal"><span>Coffee</span><span>Matcha</span><span>Açaí</span><span>Tea</span><span>Bakery</span><span>Catering</span></div>
     </section>
 
+    <section class="fame-marquee" aria-label="FAME Sortiment">
+      <div class="fame-marquee-track">
+        <span>FAME CAFÉ</span><i></i><span>SPECIALTY COFFEE</span><i></i><span>MATCHA</span><i></i><span>AÇAÍ</span><i></i><span>BAKERY</span><i></i><span>GUMMERSBACH</span><i></i>
+        <span>FAME CAFÉ</span><i></i><span>SPECIALTY COFFEE</span><i></i><span>MATCHA</span><i></i><span>AÇAÍ</span><i></i><span>BAKERY</span><i></i><span>GUMMERSBACH</span><i></i>
+      </div>
+    </section>
+
     <section class="ritual" id="ritual" aria-label="Coffee und Matcha Scroll Experience">
       <div class="ritual-sticky">
         <div class="ritual-side ritual-coffee-side">
@@ -207,20 +215,48 @@
       </div>
     </section>
 
+    <section class="fame-picks" aria-labelledby="famePicksTitle">
+      <div class="fame-picks-head experience-reveal">
+        <div>
+          <span class="eyebrow">FAME PICKS · MENU PREVIEW</span>
+          <h2 id="famePicksTitle">Pick your<br><em>FAME moment.</em></h2>
+        </div>
+        <p>Vier Motive, vier Kernprodukte. Die Preise dienen aktuell als visuelle Menü-Vorschau und lassen sich später zentral gegen die finale Karte austauschen.</p>
+      </div>
+      <div class="fame-picks-grid">
+        <article class="pick-card pick-1 tilt-card experience-reveal">
+          <div class="pick-image"></div>
+          <div class="pick-copy"><small>01 · MATCHA</small><h3>Iced<br>Matcha</h3><span class="pick-price">5,90 €</span></div>
+        </article>
+        <article class="pick-card pick-2 tilt-card experience-reveal" data-delay="1">
+          <div class="pick-image"></div>
+          <div class="pick-copy"><small>02 · COFFEE</small><h3>Flat<br>White</h3><span class="pick-price">4,50 €</span></div>
+        </article>
+        <article class="pick-card pick-3 tilt-card experience-reveal" data-delay="2">
+          <div class="pick-image"></div>
+          <div class="pick-copy"><small>03 · AÇAÍ</small><h3>Açaí<br>Bowl</h3><span class="pick-price">9,90 €</span></div>
+        </article>
+        <article class="pick-card pick-4 tilt-card experience-reveal" data-delay="3">
+          <div class="pick-image"></div>
+          <div class="pick-copy"><small>04 · BAKERY</small><h3>Daily<br>Bakery</h3><span class="pick-price">ab 4,50 €</span></div>
+        </article>
+      </div>
+    </section>
+
     <section class="menu" id="menu" aria-labelledby="menuTitle">
       <div class="section-head reveal">
         <div><span class="eyebrow">MENU PREVIEW</span><h2 id="menuTitle">More to choose from.</h2></div>
-        <p>Die Preisfelder sind jetzt sichtbar. Konkrete Euro-Preise werden eingesetzt, sobald die finale Karte bestätigt ist.</p>
+        <p>Erste Menü- und Preisvorschau für den visuellen Stand. Die finale Karte kann anschließend ohne Layoutumbau eingepflegt werden.</p>
       </div>
       <div class="menu-grid">
-        <article class="menu-card reveal"><div class="menu-photo mp-coffee"></div><div class="menu-info"><span>COFFEE</span><h3>Espresso</h3><div class="menu-bottom"><p>short · intense</p><b>Preis folgt</b></div></div></article>
-        <article class="menu-card reveal"><div class="menu-photo mp-latte"></div><div class="menu-info"><span>COFFEE</span><h3>Cappuccino</h3><div class="menu-bottom"><p>espresso · milk</p><b>Preis folgt</b></div></div></article>
-        <article class="menu-card reveal"><div class="menu-photo mp-flat"></div><div class="menu-info"><span>COFFEE</span><h3>Flat White</h3><div class="menu-bottom"><p>double · silky</p><b>Preis folgt</b></div></div></article>
-        <article class="menu-card reveal"><div class="menu-photo mp-matcha"></div><div class="menu-info"><span>MATCHA</span><h3>Iced Matcha</h3><div class="menu-bottom"><p>cold · creamy</p><b>Preis folgt</b></div></div></article>
-        <article class="menu-card reveal"><div class="menu-photo mp-matcha2"></div><div class="menu-info"><span>MATCHA</span><h3>Matcha Latte</h3><div class="menu-bottom"><p>matcha · milk</p><b>Preis folgt</b></div></div></article>
-        <article class="menu-card reveal"><div class="menu-photo mp-acai"></div><div class="menu-info"><span>AÇAÍ</span><h3>Açaí Bowl</h3><div class="menu-bottom"><p>fruit · crunch</p><b>Preis folgt</b></div></div></article>
-        <article class="menu-card reveal"><div class="menu-photo mp-tea"></div><div class="menu-info"><span>TEA</span><h3>Tea Specials</h3><div class="menu-bottom"><p>hot · fresh</p><b>Preis folgt</b></div></div></article>
-        <article class="menu-card reveal"><div class="menu-photo mp-bakery"></div><div class="menu-info"><span>BAKERY</span><h3>Cake & Bakery</h3><div class="menu-bottom"><p>daily selection</p><b>Preis folgt</b></div></div></article>
+        <article class="menu-card reveal"><div class="menu-photo mp-coffee"></div><div class="menu-info"><span>COFFEE</span><h3>Espresso</h3><div class="menu-bottom"><p>short · intense</p><b>2,80 €</b></div></div></article>
+        <article class="menu-card reveal"><div class="menu-photo mp-latte"></div><div class="menu-info"><span>COFFEE</span><h3>Cappuccino</h3><div class="menu-bottom"><p>espresso · milk</p><b>3,90 €</b></div></div></article>
+        <article class="menu-card reveal"><div class="menu-photo mp-flat"></div><div class="menu-info"><span>COFFEE</span><h3>Flat White</h3><div class="menu-bottom"><p>double · silky</p><b>4,50 €</b></div></div></article>
+        <article class="menu-card reveal"><div class="menu-photo mp-matcha"></div><div class="menu-info"><span>MATCHA</span><h3>Iced Matcha</h3><div class="menu-bottom"><p>cold · creamy</p><b>5,90 €</b></div></div></article>
+        <article class="menu-card reveal"><div class="menu-photo mp-matcha2"></div><div class="menu-info"><span>MATCHA</span><h3>Matcha Latte</h3><div class="menu-bottom"><p>matcha · milk</p><b>5,50 €</b></div></div></article>
+        <article class="menu-card reveal"><div class="menu-photo mp-acai"></div><div class="menu-info"><span>AÇAÍ</span><h3>Açaí Bowl</h3><div class="menu-bottom"><p>fruit · crunch</p><b>9,90 €</b></div></div></article>
+        <article class="menu-card reveal"><div class="menu-photo mp-tea"></div><div class="menu-info"><span>TEA</span><h3>Tea Specials</h3><div class="menu-bottom"><p>hot · fresh</p><b>4,20 €</b></div></div></article>
+        <article class="menu-card reveal"><div class="menu-photo mp-bakery"></div><div class="menu-info"><span>BAKERY</span><h3>Cake & Bakery</h3><div class="menu-bottom"><p>daily selection</p><b>ab 4,50 €</b></div></div></article>
       </div>
     </section>
 
@@ -235,8 +271,24 @@
     <section class="gallery" aria-labelledby="galleryTitle">
       <div class="section-head reveal"><div><span class="eyebrow">FAME IN FRAME</span><h2 id="galleryTitle">More product.<br>More atmosphere.</h2></div><p>Mehr Bildwechsel statt immer derselben zwei Motive. Die finalen eigenen FAME-Fotos können später 1:1 in diese Flächen eingesetzt werden.</p></div>
       <div class="gallery-grid">
-        <div class="gallery-tile g1 reveal"><span>MATCHA</span></div><div class="gallery-tile g2 reveal"><span>COFFEE</span></div><div class="gallery-tile g3 reveal"><span>AÇAÍ</span></div><div class="gallery-tile g4 reveal"><span>CAFÉ</span></div><div class="gallery-tile g5 reveal"><span>OUTSIDE</span></div><div class="gallery-tile g6 reveal"><span>BAR</span></div>
+        <div class="gallery-tile g1 reveal" data-fame-parallax><span>MATCHA</span></div><div class="gallery-tile g2 reveal" data-fame-parallax><span>COFFEE</span></div><div class="gallery-tile g3 reveal" data-fame-parallax><span>AÇAÍ</span></div><div class="gallery-tile g4 reveal" data-fame-parallax><span>CAFÉ</span></div><div class="gallery-tile g5 reveal" data-fame-parallax><span>OUTSIDE</span></div><div class="gallery-tile g6 reveal" data-fame-parallax><span>BAR</span></div>
+        <div class="gallery-tile g7 experience-reveal" data-fame-parallax><span>BAKERY</span></div><div class="gallery-tile g8 experience-reveal" data-fame-parallax><span>SPACE</span></div><div class="gallery-tile g9 experience-reveal" data-fame-parallax><span>ESPRESSO</span></div><div class="gallery-tile g10 experience-reveal" data-fame-parallax><span>BOWL</span></div>
       </div>
+    </section>
+
+    <section class="fame-reel" aria-labelledby="fameReelTitle">
+      <div class="fame-reel-head experience-reveal">
+        <div><span class="eyebrow light">FAME IN MOTION</span><h2 id="fameReelTitle">Less brochure.<br>More café feeling.</h2></div>
+        <p>Ein editorialer Bild-Strip für Produkt, Bar, Morgenstimmung und To-go. Später können hier echte FAME-Shoots oder ausgewählte Instagram-Motive eingesetzt werden.</p>
+      </div>
+      <div class="fame-reel-track" aria-label="FAME Bildstrecke">
+        <article class="story-card story-1 experience-reveal"><div class="story-image"></div><b>01 / 05</b><span>MATCHA DETAIL</span></article>
+        <article class="story-card story-2 experience-reveal" data-delay="1"><div class="story-image"></div><b>02 / 05</b><span>COFFEE FIRST</span></article>
+        <article class="story-card story-3 experience-reveal" data-delay="2"><div class="story-image"></div><b>03 / 05</b><span>AÇAÍ COLOR</span></article>
+        <article class="story-card story-4 experience-reveal" data-delay="3"><div class="story-image"></div><b>04 / 05</b><span>MORNING AT FAME</span></article>
+        <article class="story-card story-5 experience-reveal"><div class="story-image"></div><b>05 / 05</b><span>TO GO · TO STAY</span></article>
+      </div>
+      <div class="reel-swipe"><i></i><span>DRAG / SWIPE</span></div>
     </section>
 
     <section class="social-band reveal">
@@ -260,6 +312,11 @@
             <li><span>Montag–Freitag</span><b>07:00–17:00</b></li>
             <li><span>Samstag–Sonntag</span><b>07:00–17:00</b></li>
           </ul>
+        </div>
+        <div class="fame-now" aria-label="Lokale Zeit in Gummersbach">
+          <span class="fame-now-dot" aria-hidden="true"></span>
+          <span>GUMMERSBACH · LOCAL TIME</span>
+          <time data-fame-clock>--:--:--</time>
         </div>
         <div class="visit-buttons">
           <a href="https://www.google.com/maps/search/?api=1&query=Gummersbacher+Stra%C3%9Fe+12%2C+51645+Gummersbach" target="_blank" rel="noopener noreferrer">Google Maps</a>
@@ -294,5 +351,6 @@
   </footer>
 
   <script src="script.js?v=fame-v5-20260917"></script>
+  <script src="experience-v6.js?v=20260927"></script>
 </body>
 </html>
