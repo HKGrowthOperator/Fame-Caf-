@@ -1,0 +1,18 @@
+/* FAME opening details — additive to the approved visual system. */
+.opening-announcement{background:#171412;color:#F6F3EC}
+.opening-announcement[hidden],.opening-schedule[hidden],.opening-schedule li[hidden]{display:none!important}
+.opening-announcement-inner{max-width:1600px;margin:0 auto;padding:23px var(--gutter,32px);display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:clamp(14px,2.8vw,44px)}
+.opening-announcement-kicker{font-size:.54rem;letter-spacing:.16em;color:#D4C0A1;white-space:nowrap}
+.opening-announcement-heading{font:400 clamp(1.25rem,2vw,2.1rem)/1.1 var(--serif,Georgia,serif)}
+.opening-announcement-time{font-size:.65rem;white-space:nowrap}
+.opening-announcement a{font-size:.62rem;color:inherit;text-decoration:underline;text-underline-offset:5px;white-space:nowrap}
+.opening-announcement a:focus-visible{outline:2px solid #F6F3EC;outline-offset:5px}
+.hours-card .opening-schedule,.hours-card .hours-regular{display:block}
+.hours-card .opening-schedule{padding-top:18px}
+.hours-card .opening-schedule p,.hours-card .hours-regular>span{font-size:.48rem;letter-spacing:.17em;color:rgba(23,20,18,.55);margin:0}
+.hours-card .opening-schedule ul,.hours-card .hours-regular ul{padding-top:7px}
+.hours-card .hours-regular{border-top:1px solid var(--line,rgba(23,20,18,.15));padding-top:14px;margin-top:10px}
+.hours-card li span{min-width:0}
+.hours-card li b{text-align:right;white-space:nowrap}
+@media(max-width:1060px){.opening-announcement-inner{grid-template-columns:1fr auto;gap:12px 24px}.opening-announcement-kicker{grid-column:1/-1}.opening-announcement-heading{grid-column:1}.opening-announcement-time{grid-column:2}.opening-announcement a{grid-column:1/-1}}
+@media(max-width:560px){.opening-announcement-inner{padding:21px 18px;gap:9px 12px}.opening-announcement-heading{grid-column:1/-1;font-size:1.7rem}.opening-announcement-time{grid-column:1}.opening-announcement a{grid-column:2;align-self:center}.hours-card li{font-size:.63rem}.hours-card>div:first-child strong{font-size:1.3rem}}
