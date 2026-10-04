@@ -60,7 +60,7 @@ Verifiziert und deshalb verwendbar:
   Kuchen und Backwaren, Cateringdienstleistungen
 - Offizieller Instagram-Account: `@fame.cafe.gm`
   (https://www.instagram.com/fame.cafe.gm/)
-- Öffnungszeiten: täglich (Mo–So) 07:00–17:00 Uhr
+- Eröffnung: Fr, 09.10.2026 (Grand Opening) 15:00–23:00 Uhr; Sa, 10.10. 10:00–23:00 Uhr; So, 11.10. 10:00–22:00 Uhr; ab Mo, 12.10. täglich 07:00–23:00 Uhr (Quelle: offizielles Instagram-Profil, Stand 04.10.2026).
 - Sitzplätze drinnen und draußen
 - Produkte: Espresso, Cappuccino, Flat White, Iced Matcha, Matcha Latte,
   Açaí Bowl, Tea Specials, Cake & Bakery (vom Betreiber bestätigt)
@@ -74,6 +74,8 @@ Vor Veröffentlichung noch zu bestätigen — nicht erfinden:
 - Zutaten und Rezepturen
 - Rösterei bzw. Bohnenherkunft
 - finale FAME-Produktfotos
+
+Die Startseite zeigt die Eröffnungszeiten zeitgesteuert in `opening-2026.js` (Zeitzone Europe/Berlin). Hinweise auf vergangene Eröffnungstage verschwinden automatisch; ab dem 12.10. bleibt nur der reguläre Stundenplan sichtbar. Die strukturierten Daten in `index.html` enthalten die Sonderöffnungszeiten und den Beginn der regulären Zeiten.
 
 ## Offene Punkte vor dem öffentlichen Launch
 
