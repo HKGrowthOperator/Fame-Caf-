@@ -1,4 +1,12 @@
 /* FAME opening details — additive to the approved visual system. */
+.hero,.hero-half{min-height:max(560px,calc(100svh - 80px))}
+.hero-visit-links{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 24px;margin-top:28px;pointer-events:auto}
+.hero-visit-links a,.catering-contact{font-size:.8rem;text-decoration:underline;text-underline-offset:6px;min-height:44px;display:inline-flex;align-items:center;color:inherit}
+.hero-visit-links a:focus-visible,.catering-contact:focus-visible{outline:2px solid currentColor;outline-offset:5px}
+.hero-visit-links a:hover,.catering-contact:hover{opacity:.8}
+.catering-contact{margin-top:20px}
+.pick-copy{grid-template-columns:minmax(0,1fr)}
+.menu-info h3{overflow-wrap:break-word}
 .opening-announcement{background:#171412;color:#F6F3EC}
 .opening-announcement[hidden],.opening-schedule[hidden],.opening-schedule li[hidden]{display:none!important}
 .opening-announcement-inner{max-width:1600px;margin:0 auto;padding:23px var(--gutter,32px);display:grid;grid-template-columns:auto minmax(0,1fr) auto auto;align-items:center;gap:clamp(14px,2.8vw,44px)}

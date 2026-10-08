@@ -48,6 +48,7 @@
       });
     }, {threshold:.12, rootMargin:'0px 0px -5% 0px'});
     items.forEach((item) => io.observe(item));
+    document.documentElement.classList.add('experience-ready');
   } else {
     items.forEach((item) => item.classList.add('is-visible'));
   }

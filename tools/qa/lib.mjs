@@ -5,9 +5,10 @@
 import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { execSync } from 'node:child_process';
 
-export const ROOT = new URL('../../', import.meta.url).pathname.replace(/\/$/, '');
+export const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 
 export const PAGES = ['index.html', 'impressum.html', 'datenschutz.html', '404.html'];
 

@@ -195,7 +195,7 @@ if(mapWrap && mapConsentButton){
   }
   if(!document.querySelector('script[data-fame-hero-carousel]')){
     const js = document.createElement('script');
-    js.src = 'hero-carousel.js?v=fame-hero-20260917';
+    js.src = 'hero-carousel.js?v=fame-hero-20261008';
     js.dataset.fameHeroCarousel = 'true';
     document.body.appendChild(js);
   }

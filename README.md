@@ -3,6 +3,8 @@
 Produktionsnahe Website-Grundlage für FAME CAFÉ Gummersbach.
 Statisches HTML, ein Stylesheet, ein Skript. Kein Build-Schritt, kein Framework.
 
+Der aktuelle Verbesserungsplan steht in `WEBSITE_PLAN.md`.
+
 ## Design Lock
 
 Die bestehende FAME-Designrichtung bleibt geschützt: freigegebene Farbwelt,
@@ -88,8 +90,8 @@ Die Startseite zeigt die Eröffnungszeiten zeitgesteuert in `opening-2026.js` (Z
    relative Pfade nicht auf.
 3. **Kontakt.** Geschäftliche E-Mail-Adresse in Impressum und Datenschutz
    ergänzen. Ohne elektronischen Kontaktweg ist das Impressum nicht vollständig.
-4. **Preise.** Die Karte zeigt bestätigte Produkte mit dem Platzhalter
-   „Preis folgt". Sobald die Preise vorliegen, ersetzen.
+4. **Preise.** Die Karte zeigt bestätigte Produkte ohne unbestätigte
+   Vorschaupreise. Sobald die finale Karte vorliegt, bestätigte Preise ergänzen.
 5. **Karte.** Google Maps lädt erst auf Klick — die iframe entsteht erst,
    wenn ein Besucher sie anfordert. Kommt später eine übergreifende
    Consent-Lösung dazu, wird dieser Button darin aufgehen.
