@@ -5,7 +5,7 @@ const fameHeroSlides = [
   {
     leftImage: 'https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=88&w=2200',
     rightImage: 'https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=88&w=2200',
-    leftLabel: 'SPECIALTY COFFEE', leftCopy: 'Roast · Texture · Craft',
+    leftLabel: 'COFFEE', leftCopy: 'Roast · Texture · Craft',
     rightLabel: 'MATCHA', rightCopy: 'Fresh · Iced · FAME'
   },
   {

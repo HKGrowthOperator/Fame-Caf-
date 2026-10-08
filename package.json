@@ -3,9 +3,10 @@
   "private": true,
   "description": "FAME CAFÉ Gummersbach — statische Website. Die Seite selbst hat keinen Build-Schritt; diese Datei existiert nur für die Prüfwerkzeuge unter tools/qa.",
   "scripts": {
-    "qa": "npm run sweep && npm run behaviour",
+    "qa": "npm run sweep && npm run behaviour && npm run opening",
     "sweep": "node tools/qa/sweep.mjs",
     "behaviour": "node tools/qa/behaviour.mjs",
+    "opening": "node tools/qa/opening.mjs",
     "screens": "node tools/qa/screens.mjs",
     "styles": "node tools/qa/styles.mjs",
     "scan": "npx --yes impeccable detect --fast index.html styles.css script.js 404.html impressum.html datenschutz.html"

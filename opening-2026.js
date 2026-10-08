@@ -8,6 +8,16 @@
   const banner = document.querySelector('[data-fame-opening-banner]');
   const dates = document.querySelectorAll('[data-fame-opening-date]');
   const openingSchedule = document.querySelector('[data-fame-opening-schedule]');
+  const openingHours = {
+    '2026-10-09': '15:00–23:00',
+    '2026-10-10': '10:00–23:00',
+    '2026-10-11': '10:00–22:00'
+  };
+  if (openingHours[today]) {
+    document.querySelectorAll('[data-fame-hours-summary], [data-fame-mobile-hours]').forEach(item => {
+      item.textContent = 'Heute ' + openingHours[today] + ' Uhr';
+    });
+  }
   dates.forEach(item => { if (today > item.dataset.fameOpeningDate) item.hidden = true; });
   if (openingSchedule && !Array.from(dates).some(item => !item.hidden)) openingSchedule.hidden = true;
 
@@ -25,5 +35,7 @@
     banner.querySelector('[data-fame-opening-headline]').textContent = 'FAME is open.';
     banner.querySelector('[data-fame-opening-time]').textContent =
       today === '2026-10-10' ? 'Samstag · 10:00–23:00 Uhr' : 'Sonntag · 10:00–22:00 Uhr';
+  } else if (banner && today === '2026-10-09') {
+    banner.querySelector('[data-fame-opening-time]').textContent = 'Heute · 15:00–23:00 Uhr';
   }
 })();

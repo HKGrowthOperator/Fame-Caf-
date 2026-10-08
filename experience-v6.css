@@ -335,12 +335,12 @@ html{scroll-behavior:smooth}
 .fame-now time{font-variant-numeric:tabular-nums}
 
 /* additive reveal variations */
-.experience-reveal{
+.js.experience-ready .experience-reveal{
   opacity:0;
   transform:translateY(34px) scale(.985);
   transition:opacity .9s ease,transform 1s cubic-bezier(.2,.75,.25,1);
 }
-.experience-reveal.is-visible{
+.js.experience-ready .experience-reveal.is-visible{
   opacity:1;
   transform:none;
 }
@@ -396,6 +396,6 @@ html{scroll-behavior:smooth}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .fame-marquee-track{animation:none;transform:none}
-  .experience-reveal{opacity:1;transform:none;transition:none}
+  .experience-reveal,.js.experience-ready .experience-reveal{opacity:1;transform:none;transition:none}
   .pick-image,.story-image,.pick-card,.story-card,.gallery-tile{transition:none!important;animation:none!important}
 }

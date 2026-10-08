@@ -17,9 +17,9 @@ const DEVICES = [
 
 const SPOTS = [
   ['01-hero', null], ['02-intro', '#intro'], ['03-ritual', '#ritual'],
-  ['04-signature', '.signature'], ['05-acai', '.acai-feature'], ['06-cafe', '#space'],
-  ['07-menue', '#menu'], ['08-craft', '.craft'], ['09-gallery', '#gallery'],
-  ['10-catering', '#catering'], ['11-visit', '#visit'], ['12-footer', 'footer']
+  ['04-signature', '.signature'], ['05-picks', '.fame-picks'], ['06-cafe', '#cafe'],
+  ['07-menue', '#menu'], ['08-reel', '.fame-reel'], ['09-gallery', '.gallery'],
+  ['10-catering', '.catering'], ['11-visit', '#visit'], ['12-footer', 'footer']
 ];
 
 const label = process.argv[2] || 'aktuell';
