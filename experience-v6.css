@@ -335,12 +335,17 @@ html{scroll-behavior:smooth}
 .fame-now time{font-variant-numeric:tabular-nums}
 
 /* additive reveal variations */
-.experience-reveal{
+/* Ausgeblendet wird nur, wenn JavaScript läuft UND experience-v6.js tatsächlich
+   initialisiert ist (.has-experience setzt das Skript selbst). Vorher stand
+   opacity:0 unbedingt auf den Elementen: Ohne JavaScript oder wenn die Datei
+   nicht ankam, fehlten die Picks, die Bildstrecke und vier Galerie-Kacheln
+   dauerhaft — gemessen 15 von 15. */
+.js.has-experience .experience-reveal{
   opacity:0;
   transform:translateY(34px) scale(.985);
   transition:opacity .9s ease,transform 1s cubic-bezier(.2,.75,.25,1);
 }
-.experience-reveal.is-visible{
+.js.has-experience .experience-reveal.is-visible{
   opacity:1;
   transform:none;
 }
@@ -396,6 +401,6 @@ html{scroll-behavior:smooth}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .fame-marquee-track{animation:none;transform:none}
-  .experience-reveal{opacity:1;transform:none;transition:none}
+  .js.has-experience .experience-reveal{opacity:1;transform:none;transition:none}
   .pick-image,.story-image,.pick-card,.story-card,.gallery-tile{transition:none!important;animation:none!important}
 }

@@ -38,6 +38,10 @@
 
   // Additional reveals don't interfere with the base .reveal observer.
   const items = [...document.querySelectorAll('.experience-reveal')];
+  // Erst jetzt dürfen die Elemente per CSS ausgeblendet werden: ab hier läuft
+  // der Observer, der sie wieder einblendet. Fällt diese Datei aus, fehlt die
+  // Klasse, und der Inhalt bleibt sichtbar.
+  document.documentElement.classList.add('has-experience');
   if('IntersectionObserver' in window && !reduceMotion.matches){
     const io = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
