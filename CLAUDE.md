@@ -28,8 +28,9 @@ Amtsgericht Köln, Geschäftsführer Harisch Sivasoruban, sowie die
 Produktbereiche Kaffee, Matcha-Getränke, Açaí-Bowls, Teespezialitäten,
 Kuchen und Backwaren, Catering.
 
-Vom Betreiber zusätzlich bestätigt: Instagram `@fame.cafe.gm`, Öffnungszeiten
-täglich 07:00–17:00 Uhr, Sitzplätze drinnen und draußen, sowie die Produkte
+Vom Betreiber zusätzlich bestätigt: Instagram `@fame.cafe.gm`, Grand Opening
+09.10.2026 15:00–23:00 Uhr, 10.10. 10:00–23:00 Uhr, 11.10. 10:00–22:00 Uhr,
+ab 12.10. täglich 07:00–23:00 Uhr, Sitzplätze drinnen und draußen, sowie die Produkte
 Espresso, Cappuccino, Flat White, Iced Matcha, Matcha Latte, Açaí Bowl,
 Tea Specials und Cake & Bakery. Preise fehlen weiterhin und werden nicht
 erfunden.
@@ -117,5 +118,5 @@ Code, und Ruhe schlägt ein weiteres Element.
 
 Stehen im README unter „Offene Punkte vor dem öffentlichen Launch". Kurz:
 echte FAME-Fotos, Produktionsdomain (danach Canonical, Sitemap, absolute
-`og:image`-URL), geschäftliche E-Mail-Adresse, Öffnungszeiten, Karte erst
+`og:image`-URL), geschäftliche E-Mail-Adresse, finale Bildrechte, Karte erst
 nach Consent-Entscheidung.

@@ -76,6 +76,8 @@ Registergericht: **Amtsgericht Köln**
 
 Geschäftsführer: **Harisch Sivasoruban**
 
+Offizieller Instagram-Account: **@fame.cafe.gm** (https://www.instagram.com/fame.cafe.gm/). Offiziell veröffentlicht (Stand 04.10.2026): **Grand Opening am 09.10.2026 ab 15:00 Uhr (bis 23:00 Uhr); 10.10. 10:00–23:00 Uhr; 11.10. 10:00–22:00 Uhr; ab 12.10. täglich 07:00–23:00 Uhr.** Diese Daten ersetzen alle früheren provisorischen Öffnungszeiten.
+
 Öffentlich bestätigter Unternehmensgegenstand umfasst:
 
 - Betrieb eines Cafés
@@ -89,14 +91,11 @@ Geschäftsführer: **Harisch Sivasoruban**
 
 Nicht öffentlich belastbar bestätigt:
 
-- finale Öffnungszeiten
 - Telefonnummer
 - öffentliche Café-E-Mail-Adresse
 - konkrete Preise
 - vollständige Speisekarte
-- offizieller Eröffnungstermin
 - finale öffentliche Produktionsdomain
-- verifizierte offizielle Social-Media-Accounts
 - finale FAME-Produktfotografie
 - konkrete Rösterei/Bohnenherkunft
 - Zertifikate/Allergenkennzeichnungen
@@ -317,7 +316,7 @@ Verifizierte Anschrift:
 
 **Gummersbacher Straße 12, 51645 Gummersbach**
 
-Keine erfundenen Öffnungszeiten, Telefonnummer oder E-Mail-Adresse.
+Bestätigte Eröffnungs- und Regelöffnungszeiten gemäß Abschnitt 4 anzeigen; vergangene Opening-Tage zeitgesteuert ausblenden. Keine erfundene Telefonnummer oder E-Mail-Adresse.
 
 Map erst final einbinden, wenn die produktive Daten-/Consent-Lösung entschieden ist.
 

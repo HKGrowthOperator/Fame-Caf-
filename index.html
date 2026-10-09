@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#171412" media="(prefers-color-scheme: dark)" />
   <meta name="robots" content="index,follow,max-image-preview:large" />
-  <meta name="description" content="FAME CAFÉ Gummersbach — Matcha, Açaí-Bowls, Kaffee, Tee, Kuchen und Backwaren." />
+  <meta name="description" content="FAME CAFÉ Gummersbach — Matcha, Açaí-Bowls, Kaffee und mehr. Gummersbacher Straße 12. Grand Opening am 09.10.; ab 12.10. täglich 07:00–23:00 Uhr." />
   <meta property="og:title" content="FAME CAFÉ — Gummersbach" />
   <meta property="og:description" content="Coffee. Matcha. Açaí. FAME CAFÉ in Gummersbach." />
   <meta property="og:type" content="website" />
@@ -26,6 +26,7 @@
   <link rel="preload" as="font" type="font/woff2" href="assets/fonts/manrope-latin-variable.woff2" crossorigin />
   <link rel="stylesheet" href="styles.css?v=fame-v5-20260917" />
   <link rel="stylesheet" href="experience-v6.css?v=20260927" />
+  <link rel="stylesheet" href="opening-2026.css?v=20261004" />
 
   <script>
     /* .reveal startet auf opacity:0, sobald <html> die Klasse .js trägt —
@@ -58,21 +59,63 @@
     })();
   </script>
   <script type="application/ld+json">
-  {
-    "@context":"https://schema.org",
-    "@type":"CafeOrCoffeeShop",
-    "name":"FAME CAFÉ",
-    "legalName":"Fame Cafe ACH UG (haftungsbeschränkt)",
-    "address":{"@type":"PostalAddress","streetAddress":"Gummersbacher Straße 12","postalCode":"51645","addressLocality":"Gummersbach","addressCountry":"DE"},
-    "sameAs":["https://www.instagram.com/fame.cafe.gm/"],
-    "hasMap":"https://www.google.com/maps/search/?api=1&query=Gummersbacher+Stra%C3%9Fe+12%2C+51645+Gummersbach",
-    "openingHoursSpecification":[{
-      "@type":"OpeningHoursSpecification",
-      "dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],
-      "opens":"07:00",
-      "closes":"17:00"
-    }]
-  }
+{
+  "@context": "https://schema.org",
+  "@type": "CafeOrCoffeeShop",
+  "name": "FAME CAFÉ",
+  "legalName": "Fame Cafe ACH UG (haftungsbeschränkt)",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "Gummersbacher Straße 12",
+    "postalCode": "51645",
+    "addressLocality": "Gummersbach",
+    "addressCountry": "DE"
+  },
+  "sameAs": [
+    "https://www.instagram.com/fame.cafe.gm/"
+  ],
+  "hasMap": "https://www.google.com/maps/search/?api=1&query=Gummersbacher+Stra%C3%9Fe+12%2C+51645+Gummersbach",
+  "openingHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "dayOfWeek": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ],
+      "opens": "07:00",
+      "closes": "23:00",
+      "validFrom": "2026-10-12"
+    }
+  ],
+  "specialOpeningHoursSpecification": [
+    {
+      "@type": "OpeningHoursSpecification",
+      "validFrom": "2026-10-09",
+      "validThrough": "2026-10-09",
+      "opens": "15:00",
+      "closes": "23:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "validFrom": "2026-10-10",
+      "validThrough": "2026-10-10",
+      "opens": "10:00",
+      "closes": "23:00"
+    },
+    {
+      "@type": "OpeningHoursSpecification",
+      "validFrom": "2026-10-11",
+      "validThrough": "2026-10-11",
+      "opens": "10:00",
+      "closes": "22:00"
+    }
+  ]
+}
   </script>
 </head>
 <body>
@@ -116,7 +159,7 @@
       <address>
         <span>Gummersbacher Straße 12</span>
         <span>51645 Gummersbach</span>
-        <span>Täglich 07:00–17:00 Uhr</span>
+        <span data-fame-mobile-hours>Ab 12.10.: täglich 07:00–23:00 Uhr</span>
       </address>
       <div class="mobile-nav-legal">
         <a href="impressum.html">Impressum</a>
@@ -139,6 +182,16 @@
         <a class="hero-scroll" href="#intro"><span>SCROLL TO TASTE</span><i aria-hidden="true"></i></a>
       </div>
     </section>
+
+    <!-- Zeitlich begrenzter Eröffnungshinweis; nach dem 11.10. per lokaler Café-Zeit ausgeblendet. -->
+    <aside class="opening-announcement" data-fame-opening-banner aria-label="Eröffnung FAME CAFÉ">
+      <div class="opening-announcement-inner">
+        <span class="opening-announcement-kicker" data-fame-opening-label>09.10.2026 · GRAND OPENING</span>
+        <strong class="opening-announcement-heading" data-fame-opening-headline>FAME opens its doors.</strong>
+        <span class="opening-announcement-time" data-fame-opening-time>Freitag · 15:00–23:00 Uhr</span>
+        <a href="#visit">Zeiten &amp; Anfahrt</a>
+      </div>
+    </aside>
 
     <section class="intro" id="intro">
       <span class="eyebrow reveal">FAME CAFÉ · GUMMERSBACH</span>
@@ -292,7 +345,7 @@
     </section>
 
     <section class="social-band reveal">
-      <div><span class="eyebrow">FOLLOW FAME</span><h2>@fame.cafe.gm</h2><p>Neue Drinks, Opening-Updates und Eindrücke direkt auf Instagram.</p></div>
+      <div><span class="eyebrow">FOLLOW FAME</span><h2>@fame.cafe.gm</h2><p>Neue Drinks, Einblicke und Eindrücke direkt auf Instagram.</p></div>
       <a class="social-button" href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer"><span class="social-dot"></span>Instagram öffnen</a>
     </section>
 
@@ -307,11 +360,19 @@
         <h2 id="visitTitle">See you<br>in Gummersbach.</h2>
         <div class="visit-block"><span>ADRESSE</span><strong>Gummersbacher Straße 12<br>51645 Gummersbach</strong></div>
         <div class="hours-card">
-          <div><span>ÖFFNUNGSZEITEN</span><strong>Täglich 07:00–17:00 Uhr</strong></div>
-          <ul>
-            <li><span>Montag–Freitag</span><b>07:00–17:00</b></li>
-            <li><span>Samstag–Sonntag</span><b>07:00–17:00</b></li>
-          </ul>
+          <div><span>ÖFFNUNGSZEITEN</span><strong data-fame-hours-summary>Ab 12.10.: täglich 07:00–23:00 Uhr</strong></div>
+          <div class="opening-schedule" data-fame-opening-schedule>
+            <p>ERÖFFNUNGSTAGE · OKTOBER 2026</p>
+            <ul>
+              <li data-fame-opening-date="2026-10-09"><span>Fr, 09.10. · Grand Opening</span><b>15:00–23:00</b></li>
+              <li data-fame-opening-date="2026-10-10"><span>Sa, 10.10.</span><b>10:00–23:00</b></li>
+              <li data-fame-opening-date="2026-10-11"><span>So, 11.10.</span><b>10:00–22:00</b></li>
+            </ul>
+          </div>
+          <div class="hours-regular">
+            <span data-fame-regular-label>AB 12.10.2026</span>
+            <ul><li><span>Täglich · Montag–Sonntag</span><b>07:00–23:00</b></li></ul>
+          </div>
         </div>
         <div class="fame-now" aria-label="Lokale Zeit in Gummersbach">
           <span class="fame-now-dot" aria-hidden="true"></span>
@@ -352,5 +413,6 @@
 
   <script src="script.js?v=fame-v5-20260917"></script>
   <script src="experience-v6.js?v=20260927"></script>
+  <script src="opening-2026.js?v=20261004"></script>
 </body>
 </html>
