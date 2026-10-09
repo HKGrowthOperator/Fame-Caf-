@@ -88,8 +88,12 @@ Die Startseite zeigt die Eröffnungszeiten zeitgesteuert in `opening-2026.js` (Z
    relative Pfade nicht auf.
 3. **Kontakt.** Geschäftliche E-Mail-Adresse in Impressum und Datenschutz
    ergänzen. Ohne elektronischen Kontaktweg ist das Impressum nicht vollständig.
-4. **Preise.** Die Karte zeigt bestätigte Produkte mit dem Platzhalter
-   „Preis folgt". Sobald die Preise vorliegen, ersetzen.
+4. **Preise.** Die Karte zeigt aktuell **Vorschau-Preise**, keine
+   bestätigten (Fame Picks und Menü, jeweils dieselben Beträge doppelt in
+   `index.html`). Die Seite kennzeichnet sie im Fließtext als „visuelle
+   Menü-Vorschau". Vor dem Launch entweder durch die echte Karte ersetzen
+   oder wieder auf „Preis folgt" stellen — sie stehen nicht in den
+   strukturierten Daten, Google zeigt sie also nicht an.
 5. **Karte.** Google Maps lädt erst auf Klick — die iframe entsteht erst,
    wenn ein Besucher sie anfordert. Kommt später eine übergreifende
    Consent-Lösung dazu, wird dieser Button darin aufgehen.
