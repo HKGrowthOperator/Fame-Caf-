@@ -173,6 +173,45 @@ for (const [label, pattern] of [
   await ctx.close();
 }
 
+/* --- Jede Einblend-Klasse, nicht nur .reveal --------------------------------
+   Dreimal ist derselbe Fehler aufgetreten: Eine Klasse setzt opacity:0, und
+   nur ein Skript blendet wieder ein. Zuerst .reveal, dann das Hero-Karussell,
+   dann .experience-reveal (15 Elemente, ohne JavaScript dauerhaft weg).
+   Deshalb prüft dieser Test nicht eine bestimmte Klasse, sondern jedes
+   Element, das im Ausgangszustand unsichtbar ist: Es muss sichtbar werden,
+   sobald es im Bild liegt — auch wenn die zuständige Datei fehlt. */
+for (const [label, ctxOpts, setup] of [
+  ['normal', {}, null],
+  ['ohne JavaScript', { javaScriptEnabled: false }, null],
+  ['experience-v6.js bricht ab', {}, p => p.route('**/experience-v6.js*', r => r.abort())],
+  ['experience-v6.js kaputt', {}, p => p.route('**/experience-v6.js*', r => r.fulfill({
+    status: 200, contentType: 'text/javascript', body: 'kein gueltiges javascript {{{' }))],
+  ['script.js bricht ab', {}, p => p.route('**/script.js*', r => r.abort())]
+]) {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, ...ctxOpts });
+  const page = await ctx.newPage();
+  if (setup) await setup(page);
+  await page.goto(`${site.base}/index.html`, { waitUntil: 'load' });
+  await page.waitForTimeout(label === 'script.js bricht ab' ? 3600 : 900);
+
+  const total = await page.evaluate(() => document.querySelectorAll('[class*="reveal"]').length);
+  let hidden = 0;
+  const hiddenClasses = new Set();
+  for (let i = 0; i < total; i++) {
+    await page.evaluate(k => document.querySelectorAll('[class*="reveal"]')[k]
+      .scrollIntoView({ block: 'center', behavior: 'instant' }), i).catch(() => {});
+    await page.waitForTimeout(ctxOpts.javaScriptEnabled === false ? 20 : 700);
+    const r = await page.evaluate(k => {
+      const e = document.querySelectorAll('[class*="reveal"]')[k];
+      return { o: parseFloat(getComputedStyle(e).opacity), c: (e.className || '').toString().split(' ')[0] };
+    }, i);
+    if (r.o < 0.9) { hidden++; hiddenClasses.add(r.c); }
+  }
+  check(total > 0, `Einblendung (${label}): keine Einblend-Elemente gefunden — Test wäre wirkungslos`);
+  check(hidden === 0, `Einblendung (${label}): ${hidden} von ${total} Elementen bleiben unsichtbar (${[...hiddenClasses].slice(0, 4).join(', ')})`);
+  await ctx.close();
+}
+
 /* --- Reduced Motion ------------------------------------------------------ */
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
