@@ -182,9 +182,15 @@ brauchen danach einmal `npm run images`.
 
 ## Offene Punkte vor dem öffentlichen Launch
 
-1. **Bilder.** Die eingebundenen Unsplash-Fotos sind Entwicklungsassets.
+1. **Bilder.** Die meisten eingebundenen Unsplash-Fotos sind Entwicklungsassets.
    Vor dem Launch durch echte FAME-Fotografie ersetzen, lokal ausliefern
-   und in modernen Formaten (AVIF/WebP) anbieten.
+   und in modernen Formaten (AVIF/WebP) anbieten. Zwei echte Innenraum-Fotos
+   sind schon drin (`assets/photos/`: Tische und Stühle in „Drinnen“, Decke und
+   Lampen in der Galerie-Kachel „SPACE“). Sie sind **bewusst ohne Personen
+   zugeschnitten** und ohne EXIF-/GPS-Daten gespeichert; das Original zeigt
+   Gäste mit erkennbaren Gesichtern und gehört so nicht auf die Seite. Neue eigene
+   Fotos: `NAME.jpg` plus kleinere Handy-Variante `NAME-m.jpg` ablegen, danach
+   `npm run images`.
 2. **Domain.** Erst wenn die Produktionsdomain feststeht: `canonical` setzen,
    `sitemap.xml` anlegen, in `robots.txt` verlinken und `og:image` von einem
    relativen Pfad auf eine absolute URL umstellen. Social-Crawler lösen
