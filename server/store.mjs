@@ -10,7 +10,9 @@
 
 import { mkdirSync, readFileSync, writeFileSync, renameSync, openSync, fsyncSync, closeSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { randomBytes } from 'node:crypto';
 import { DEFAULT_SETTINGS } from './booking.mjs';
+import { DEFAULT_ORDERING, DEFAULT_MENU } from './ordering.mjs';
 
 const clone = v => JSON.parse(JSON.stringify(v));
 
@@ -18,6 +20,7 @@ export function mergeSettings(saved = {}) {
   const base = clone(DEFAULT_SETTINGS);
   const out = { ...base, ...saved };
   out.seats = { ...base.seats, ...(saved.seats || {}) };
+  out.ordering = { ...clone(DEFAULT_ORDERING), ...(saved.ordering || {}) };
   out.hours = {
     regular: { ...base.hours.regular, ...(saved.hours?.regular || {}) },
     special: saved.hours?.special ? clone(saved.hours.special) : base.hours.special
@@ -29,12 +32,19 @@ export function openStore(dataDir) {
   mkdirSync(dataDir, { recursive: true });
   const file = join(dataDir, 'state.json');
   let state;
-  if (existsSync(file)) {
-    const raw = JSON.parse(readFileSync(file, 'utf8'));
-    state = { version: 1, settings: mergeSettings(raw.settings), bookings: raw.bookings || {}, blocks: raw.blocks || {} };
-  } else {
-    state = { version: 1, settings: mergeSettings(), bookings: {}, blocks: {} };
-  }
+  const raw = existsSync(file) ? JSON.parse(readFileSync(file, 'utf8')) : {};
+  // Ältere Dateien (nur Reservierungen) werden beim Laden um die Felder fürs Bestellen ergänzt,
+  // ohne etwas Bestehendes zu verändern.
+  state = {
+    version: 2,
+    settings: mergeSettings(raw.settings),
+    bookings: raw.bookings || {},
+    blocks: raw.blocks || {},
+    menu: raw.menu || clone(DEFAULT_MENU),
+    orders: raw.orders || {},
+    orderCounter: raw.orderCounter || { date: '', n: 0 },
+    tableSecret: raw.tableSecret || randomBytes(24).toString('hex')
+  };
 
   function save() {
     const tmp = `${file}.${process.pid}.tmp`;
@@ -44,12 +54,17 @@ export function openStore(dataDir) {
     renameSync(tmp, file);
   }
 
+  // Das Tisch-Geheimnis steckt in den gedruckten QR-Codes. Es muss auf der Platte stehen,
+  // bevor jemand Codes druckt — sonst würden sie nach dem nächsten Neustart ungültig.
+  if (raw.tableSecret === undefined || raw.menu === undefined || raw.version !== 2) save();
+
   return {
     state,
     save,
     get settings() { return state.settings; },
     set settings(v) { state.settings = v; },
     bookingList: () => Object.values(state.bookings),
-    blockList: () => Object.values(state.blocks)
+    blockList: () => Object.values(state.blocks),
+    orderList: () => Object.values(state.orders)
   };
 }
