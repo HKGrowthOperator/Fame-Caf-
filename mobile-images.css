@@ -1,0 +1,46 @@
+/* GENERIERT von tools/gen-mobile-images.mjs — nicht von Hand ändern.
+   Kleinere Bildvarianten für Bildschirme bis 780 px (43 Regeln).
+   Geladen über <link media="(max-width:780px)">. */
+html .coffee-image{background-image:url("https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .matcha-image{background-image:url("https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .coffee-shot.shot-1{background-image:url("https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .coffee-shot.shot-2{background-image:url("https://images.unsplash.com/photo-1783936296983-17a6e99fb862?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .coffee-shot.shot-3{background-image:url("https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .coffee-shot.shot-4{background-image:url("https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .matcha-shot.shot-1{background-image:url("https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .matcha-shot.shot-2{background-image:url("https://images.unsplash.com/photo-1773753563088-e3ea21f9a992?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .matcha-shot.shot-3{background-image:url("https://images.unsplash.com/photo-1771252399544-bc5e34ebdcd7?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .matcha-shot.shot-4{background-image:url("https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .card-coffee .card-image{background-image:url("https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .card-matcha .card-image{background-image:url("https://images.unsplash.com/photo-1773753563088-e3ea21f9a992?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .card-acai .card-image{background-image:url("https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .mp-coffee{background-image:url("https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .mp-latte{background-image:url("https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .mp-flat{background-image:url("https://images.unsplash.com/photo-1783936296983-17a6e99fb862?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .mp-matcha{background-image:url("https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .mp-matcha2{background-image:url("https://images.unsplash.com/photo-1773753563088-e3ea21f9a992?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .mp-acai{background-image:url("https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .choice-inside .choice-image{background-image:url("https://images.unsplash.com/photo-1761023717444-88fb2f7973eb?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .choice-outside .choice-image{background-image:url("https://images.unsplash.com/photo-1773092984066-69ee15920b94?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .g1{background-image:url("https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .g2{background-image:url("https://images.unsplash.com/photo-1783936296983-17a6e99fb862?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .g3{background-image:url("https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .g4{background-image:url("https://images.unsplash.com/photo-1761023717444-88fb2f7973eb?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .g5{background-image:url("https://images.unsplash.com/photo-1773092984066-69ee15920b94?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .g6{background-image:url("https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .catering-image{background-image:url("https://images.unsplash.com/photo-1764002317088-e4c05d3bfb2b?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .pick-1 .pick-image{background-image:url("https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .pick-2 .pick-image{background-image:url("https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .pick-3 .pick-image{background-image:url("https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .pick-4 .pick-image{background-image:url("https://images.unsplash.com/photo-1761023717444-88fb2f7973eb?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .gallery-tile.g7{background-image:url("https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .gallery-tile.g8{background-image:url("https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .gallery-tile.g9{background-image:url("https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .gallery-tile.g10{background-image:url("https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .story-1 .story-image{background-image:url("https://images.unsplash.com/photo-1523906630133-f6934a1ab2b9?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .story-2 .story-image{background-image:url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .story-3 .story-image{background-image:url("https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .story-4 .story-image{background-image:url("https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .story-5 .story-image{background-image:url("https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&fm=jpg&q=74&w=1100")}
+html .coffee-shot.shot-1{background-image:url("https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&fm=jpg&q=74&w=1100") !important}
+html .matcha-shot.shot-1{background-image:url("https://images.unsplash.com/photo-1773753563088-e3ea21f9a992?auto=format&fit=crop&fm=jpg&q=74&w=1100") !important}

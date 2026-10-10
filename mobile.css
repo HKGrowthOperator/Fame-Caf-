@@ -1,0 +1,71 @@
+/* ==========================================================================
+   FAME CAFÉ — Mobil: lesbare Schriften und echte Tippflächen
+   MUSS als letztes Stylesheet geladen werden: experience-v6.css und
+   opening-2026.css setzen eigene kleine Schriftgrößen und gewinnen sonst bei
+   gleicher Spezifität gegen styles.css.
+   Die meisten Besucher kommen über das Handy. Gemessen auf 390 px (Stand vor
+   diesem Block): 293 Textstellen, davon 85 unter 12 px, die kleinste 5,4 px.
+   Preise standen mit 9 px da, Öffnungszeiten mit 10 px. Tippflächen: Menü-Knopf
+   31 px hoch, Fußzeilen-Links 12 px, Slide-Punkte 6 × 6 px.
+
+   Untergrenzen: Beschriftungen in Großbuchstaben 11 px (sie sind gesperrt
+   gesetzt und bleiben so lesbar), Fließtext und Angaben 12–13 px, Tippflächen
+   44 px. Wirkt nur bis 780 px; Desktop bleibt unverändert.
+   ========================================================================== */
+
+/* Kontrast der kleinen Beschriftungen: .55 Deckkraft ergab etwa 3,9 : 1 auf Papier. */
+.visit-block span,.hours-card>div span,.menu-info>span{color:rgba(23,20,18,.72)}
+.menu-bottom p,.menu-bottom b{color:rgba(23,20,18,.78)}
+
+@media(max-width:780px){
+  /* Beschriftungen */
+  .eyebrow,.hero-kicker,.hero-city,.hero-scroll,.hero-scroll span,.menu-info>span,.card-copy span,.choice-copy span,
+  .gallery-tile span,.visit-block span,.hours-card>div span,.hours-regular>span,.hours-card .opening-schedule p,.hours-card .hours-regular>span,
+  .opening-announcement-kicker,.story-card span,.story-card b,.pick-copy small,.reel-swipe span,
+  .fame-now span,.ritual-label b,.ritual-topline,.card-copy p,footer>p,footer .footer-legal+p,.nav-toggle-label{font-size:11px}
+  .hours-card .opening-schedule p,.hours-card .hours-regular>span{color:rgba(23,20,18,.72)}
+  .skip-link{font-size:13px;min-height:44px}
+  .brand-sub{font-size:8.6px}
+  .ritual-marker span{font-size:8px}
+  .ritual-label span{font-size:.95rem}
+  .fame-marquee-track span{font-size:11px}
+
+  /* Angaben, die man lesen muss: Preise, Zeiten, Hinweise */
+  .menu-bottom b{font-size:14px;font-weight:600}
+  .menu-bottom p{font-size:12.5px}
+  .hours-card li,.hours-card li b,.hours-card li span{font-size:13px}
+  .fame-now time{font-size:12px}
+  .opening-announcement-time{font-size:12.5px}
+  .choice-copy p,.social-band p{font-size:13.5px}
+  .pill-row span{font-size:12px;padding:10px 14px}
+  .map-consent-text{font-size:12.5px}
+  .story-card span{font-size:11px}
+
+  /* Tippflächen */
+  .brand{min-height:44px;justify-content:center}
+  .nav-toggle{min-height:44px}
+  .hero-scroll{min-height:44px;padding:0 6px}
+  .hero-dot{position:relative}
+  .hero-dot::after{content:"";position:absolute;inset:-19px -5px}
+  .social-button,.visit-buttons a,.map-consent-button,.opening-announcement-inner a{
+    display:inline-flex;align-items:center;justify-content:center;min-height:48px;font-size:13px;padding-left:18px;padding-right:18px
+  }
+  .map-consent-alt{display:inline-flex;align-items:center;min-height:44px;font-size:12.5px}
+  .footer-links,.footer-legal{gap:2px 6px}
+  .footer-links a,.footer-legal a{display:inline-flex;align-items:center;min-height:44px;padding:0 8px;font-size:13px}
+  footer{gap:6px 24px}
+
+  /* Reservieren ist der wichtigste Einstieg der Handy-Besucher und muss schon im Hero stehen.
+     styles.css blendet den Header-Knopf unter 430 px aus („Platz wird knapp“); ab 361 px passt
+     er neben Logo und Menü-Knopf. Darunter bleibt der Sticky-Button und der erste Menüpunkt. */
+  @media(min-width:361px){
+    .header-cta{display:inline-flex;align-items:center;min-height:44px;padding:0 14px;font-size:12px}
+  }
+
+  /* Zeitenliste: die gesperrte Schrift aus dem Desktop-Stil macht 13-px-Zeilen unruhig */
+  .hours-card li span{letter-spacing:.02em}
+  .fame-now{margin-bottom:18px;flex-wrap:wrap}
+
+  /* Sticky-Button: so schmal wie sein Inhalt, damit er weniger Fläche verdeckt */
+  .reserve-fab{left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100% - 32px);padding:0 28px;min-height:52px}
+}
