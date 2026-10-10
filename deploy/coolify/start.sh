@@ -14,6 +14,8 @@ if [ -z "${FAME_ADMIN_TOKEN:-}" ]; then
   echo "[fame] Hinweis: FAME_ADMIN_TOKEN ist nicht gesetzt. Der Verwaltungsbereich bleibt gesperrt." >&2
 fi
 
+# Fester interner Port, unabhängig vom PORT, das Coolify setzt (das ist der Port von nginx).
+export FAME_API_PORT=3001
 su-exec node node /app/server/index.mjs &
 NODE_PID=$!
 nginx -g 'daemon off;' &

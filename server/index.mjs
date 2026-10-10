@@ -10,7 +10,11 @@
      FAME_NOTIFY_URL      optional: Webhook für neue Anfragen (ntfy, n8n, …)
      FAME_NOTIFY_FORMAT   json (Standard) oder ntfy
      FAME_PROXY_HOPS      Zahl der Proxys vor dem nginx (Coolify/Traefik: 1)
-     PORT                 Standard 3001 */
+     FAME_API_PORT        interner Port, Standard 3001
+
+   Absichtlich NICHT `PORT`: Coolify setzt PORT auf den nach außen freigegebenen
+   Port (3000), auf dem nginx lauscht. Der Dienst griff deshalb live nach 3000,
+   scheiterte mit EADDRINUSE und der Container wurde als „unhealthy“ verworfen. */
 
 import { createServer } from 'node:http';
 import { createApp } from './app.mjs';
@@ -38,7 +42,7 @@ const server = createServer(async (req, res) => {
 server.requestTimeout = 15_000;
 server.headersTimeout = 10_000;
 
-const port = Number(process.env.PORT || 3001);
+const port = Number(process.env.FAME_API_PORT || 3001);
 server.listen(port, '127.0.0.1', () => {
   console.log(`[fame] Reservierungs-API auf 127.0.0.1:${port}, Admin ${token.length >= 16 ? 'aktiv' : 'GESPERRT'}`);
 });
