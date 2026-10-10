@@ -189,13 +189,13 @@ if(mapWrap && mapConsentButton){
   if(!document.querySelector('link[data-fame-hero-carousel]')){
     const css = document.createElement('link');
     css.rel = 'stylesheet';
-    css.href = 'hero-carousel.css?v=fame-hero-20260917';
+    css.href = 'hero-carousel.css?v=fame-hero-20261010';
     css.dataset.fameHeroCarousel = 'true';
     document.head.appendChild(css);
   }
   if(!document.querySelector('script[data-fame-hero-carousel]')){
     const js = document.createElement('script');
-    js.src = 'hero-carousel.js?v=fame-hero-20260917';
+    js.src = 'hero-carousel.js?v=fame-hero-20261010';
     js.dataset.fameHeroCarousel = 'true';
     document.body.appendChild(js);
   }

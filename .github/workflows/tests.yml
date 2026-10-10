@@ -1,0 +1,26 @@
+name: Tests
+
+# Schnelle Prüfungen ohne Browser: Reservierungs- und Bestelldienst sowie die
+# erzeugte mobile-images.css. Die Browser-Prüfungen (npm run qa) laufen lokal.
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  server:
+    name: Dienst und Bildvarianten
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Server-Tests
+        run: npm run test:server
+      - name: mobile-images.css aktuell
+        run: node tools/gen-mobile-images.mjs --check

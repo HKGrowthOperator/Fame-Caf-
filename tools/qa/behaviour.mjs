@@ -140,13 +140,13 @@ for (const [label, pattern] of [
 }
 
 /* --- Bildausfall ---------------------------------------------------------
-   Die Seite hängt an rund fünfzehn externen Fotos. Lädt eines nicht, darf
+   Die Seite zeigt rund zwanzig Fotos. Lädt eines nicht, darf
    keine schwarze oder leere Fläche stehen bleiben, sondern eine Markenfläche.
    Genau dieser Zustand war in einem Livetest zu sehen. */
 {
   const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } });
   const page = await ctx.newPage();
-  await page.route('**://images.unsplash.com/**', r => r.abort());
+  await page.route('**/assets/photos/**', r => r.abort());
   await page.goto(`${site.base}/index.html`, { waitUntil: 'load' });
   await page.waitForTimeout(2000);
   await page.evaluate(async () => {

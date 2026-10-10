@@ -84,7 +84,7 @@ muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
 - **Nur `transform` und `opacity` animieren.** Ausnahme ist die Header-Höhe;
   gemessen 0,22 ms pro Umschaltung bei einem Element außerhalb des
   Dokumentflusses, also unkritisch.
-- **Keine externen Ressourcen ohne Zustimmung.** Schriften liegen lokal.
+- **Keine externen Ressourcen ohne Zustimmung.** Schriften und Fotos liegen lokal.
   Google Maps lädt erst, wenn ein Besucher den Button drückt — eine direkt
   eingebettete iframe überträgt die IP-Adresse vor jeder Zustimmung.
   Kommt etwas Neues dazu, gilt dieselbe Regel.
