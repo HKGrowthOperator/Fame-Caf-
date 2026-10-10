@@ -161,10 +161,10 @@ html{scroll-behavior:smooth}
   font-weight:700;
   letter-spacing:.03em;
 }
-.pick-1 .pick-image{background-image:url("https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=86&w=1700")}
-.pick-2 .pick-image{background-image:url("https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&fm=jpg&q=86&w=1300")}
-.pick-3 .pick-image{background-image:url("https://images.unsplash.com/photo-1643973315594-1c367425097b?auto=format&fit=crop&fm=jpg&q=86&w=1300")}
-.pick-4 .pick-image{background-image:url("https://images.unsplash.com/photo-1761023717444-88fb2f7973eb?auto=format&fit=crop&fm=jpg&q=86&w=1700")}
+.pick-1 .pick-image{background-image:url("assets/photos/u-1775846933630-3c1531299e5a.jpg")}
+.pick-2 .pick-image{background-image:url("assets/photos/u-1509042239860-f550ce710b93.jpg")}
+.pick-3 .pick-image{background-image:url("assets/photos/u-1643973315594-1c367425097b.jpg")}
+.pick-4 .pick-image{background-image:url("assets/photos/u-1761023717444-88fb2f7973eb.jpg")}
 
 /* menu feels more tactile without changing its architecture */
 .menu-card{
@@ -202,10 +202,10 @@ html{scroll-behavior:smooth}
   pointer-events:none;
 }
 .gallery-tile span{z-index:3}
-.gallery-tile.g7{background-image:url("https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&fm=jpg&q=84&w=1400")}
+.gallery-tile.g7{background-image:url("assets/photos/u-1555507036-ab1f4038808a.jpg")}
 .gallery-tile.g8{background-image:url("assets/photos/fame-innen-lampen.jpg")}
-.gallery-tile.g9{background-image:url("https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&fm=jpg&q=84&w=1400")}
-.gallery-tile.g10{background-image:url("https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&fm=jpg&q=84&w=1400")}
+.gallery-tile.g9{background-image:url("assets/photos/u-1514432324607-a09d9b4aefdd.jpg")}
+.gallery-tile.g10{background-image:url("assets/photos/u-1511690743698-d9d85f2fbf38.jpg")}
 .gallery-tile.g7,.gallery-tile.g10{min-height:38vw}
 .gallery-tile.g8{min-height:28vw}
 .gallery-tile.g9{min-height:28vw}
@@ -297,11 +297,11 @@ html{scroll-behavior:smooth}
   letter-spacing:.16em;
   font-weight:600;
 }
-.story-1 .story-image{background-image:url("https://images.unsplash.com/photo-1523906630133-f6934a1ab2b9?auto=format&fit=crop&fm=jpg&q=84&w=1200")}
-.story-2 .story-image{background-image:url("https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&fm=jpg&q=84&w=1200")}
-.story-3 .story-image{background-image:url("https://images.unsplash.com/photo-1511690743698-d9d85f2fbf38?auto=format&fit=crop&fm=jpg&q=84&w=1200")}
-.story-4 .story-image{background-image:url("https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&fm=jpg&q=84&w=1200")}
-.story-5 .story-image{background-image:url("https://images.unsplash.com/photo-1521017432531-fbd92d768814?auto=format&fit=crop&fm=jpg&q=84&w=1200")}
+.story-1 .story-image{background-image:url("assets/photos/u-1523906630133-f6934a1ab2b9.jpg")}
+.story-2 .story-image{background-image:url("assets/photos/u-1495474472287-4d71bcdd2085.jpg")}
+.story-3 .story-image{background-image:url("assets/photos/u-1511690743698-d9d85f2fbf38.jpg")}
+.story-4 .story-image{background-image:url("assets/photos/u-1445116572660-236099ec97a0.jpg")}
+.story-5 .story-image{background-image:url("assets/photos/u-1521017432531-fbd92d768814.jpg")}
 
 .reel-swipe{
   display:flex;

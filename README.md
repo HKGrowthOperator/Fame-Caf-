@@ -223,9 +223,12 @@ brauchen danach einmal `npm run images`.
 
 ## Offene Punkte vor dem öffentlichen Launch
 
-1. **Bilder.** Die meisten eingebundenen Unsplash-Fotos sind Entwicklungsassets.
-   Vor dem Launch durch echte FAME-Fotografie ersetzen, lokal ausliefern
-   und in modernen Formaten (AVIF/WebP) anbieten. Zwei echte Innenraum-Fotos
+1. **Bilder.** Alle Fotos liegen unter `assets/photos/` und werden vom eigenen
+   Server ausgeliefert; beim Seitenaufruf geht keine Anfrage an einen fremden
+   Bilddienst (`npm run mobile` prüft das). Die Dateien `u-<id>.jpg` stammen von
+   Unsplash (Unsplash-Lizenz, `<id>` ist die Foto-ID dort) und sind
+   Stimmungsbilder, keine FAME-Fotos — nach und nach durch echte FAME-Fotografie
+   ersetzen. Zwei echte Innenraum-Fotos
    sind schon drin (`assets/photos/`: Tische und Stühle in „Drinnen“, Decke und
    Lampen in der Galerie-Kachel „SPACE“). Sie sind **bewusst ohne Personen
    zugeschnitten** und ohne EXIF-/GPS-Daten gespeichert; das Original zeigt
@@ -238,17 +241,17 @@ brauchen danach einmal `npm run images`.
    relative Pfade nicht auf.
 3. **Kontakt.** Geschäftliche E-Mail-Adresse in Impressum und Datenschutz
    ergänzen. Ohne elektronischen Kontaktweg ist das Impressum nicht vollständig.
-4. **Preise.** Die Karte zeigt aktuell **Vorschau-Preise**, keine
-   bestätigten (Fame Picks und Menü, jeweils dieselben Beträge doppelt in
-   `index.html`). Die Seite kennzeichnet sie im Fließtext als „visuelle
-   Menü-Vorschau". Vor dem Launch entweder durch die echte Karte ersetzen
-   oder wieder auf „Preis folgt" stellen — sie stehen nicht in den
-   strukturierten Daten, Google zeigt sie also nicht an.
-6. **Reservierung.** Plätze drinnen/draußen eintragen, Betriebsmodus wählen,
+4. **Preise.** Die Karte zeigt die Preise aus dem Entwurf (Fame Picks und Menü,
+   jeweils dieselben Beträge doppelt in `index.html`). Sie sind vom Betreiber
+   noch nicht bestätigt. Die Seite sagt dazu: „Maßgeblich sind die Preise auf
+   der Karte im Café.“ Sobald die echte Karte da ist, beide Stellen und die
+   Bestellkarte unter `/admin/bestellungen.html` angleichen. Die Preise stehen
+   nicht in den strukturierten Daten, Google zeigt sie also nicht an.
+5. **Reservierung.** Plätze drinnen/draußen eintragen, Betriebsmodus wählen,
    `FAME_ADMIN_TOKEN` und das `/data`-Volume in Coolify einrichten (siehe oben),
    Datenschutzabschnitt rechtlich prüfen lassen, geschäftliche E-Mail für
    automatische Gästebestätigung festlegen.
-5. **Karte.** Google Maps lädt erst auf Klick — die iframe entsteht erst,
+6. **Karte.** Google Maps lädt erst auf Klick — die iframe entsteht erst,
    wenn ein Besucher sie anfordert. Kommt später eine übergreifende
    Consent-Lösung dazu, wird dieser Button darin aufgehen.
 

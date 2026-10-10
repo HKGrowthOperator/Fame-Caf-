@@ -3,20 +3,20 @@ const fameReduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
 const fameHeroSlides = [
   {
-    leftImage: 'https://images.unsplash.com/photo-1762657440624-d0b5cfae5bac?auto=format&fit=crop&fm=jpg&q=88&w=2200',
-    rightImage: 'https://images.unsplash.com/photo-1775846933630-3c1531299e5a?auto=format&fit=crop&fm=jpg&q=88&w=2200',
+    leftImage: 'assets/photos/u-1762657440624-d0b5cfae5bac.jpg',
+    rightImage: 'assets/photos/u-1775846933630-3c1531299e5a.jpg',
     leftLabel: 'SPECIALTY COFFEE', leftCopy: 'Roast · Texture · Craft',
     rightLabel: 'MATCHA', rightCopy: 'Fresh · Iced · FAME'
   },
   {
-    leftImage: 'https://images.unsplash.com/photo-1490324028530-3df5a9af0637?auto=format&fit=crop&fm=jpg&q=88&w=2200',
-    rightImage: 'https://images.unsplash.com/photo-1770494347810-5aa9e689f13e?auto=format&fit=crop&fm=jpg&q=88&w=2200',
+    leftImage: 'assets/photos/u-1490324028530-3df5a9af0637.jpg',
+    rightImage: 'assets/photos/u-1770494347810-5aa9e689f13e.jpg',
     leftLabel: 'AÇAÍ', leftCopy: 'Fruit · Bowl · Crunch',
     rightLabel: 'COFFEE', rightCopy: 'Barista · Craft · FAME'
   },
   {
-    leftImage: 'https://images.unsplash.com/photo-1751563721808-3b81940b88f7?auto=format&fit=crop&fm=jpg&q=88&w=2200',
-    rightImage: 'https://images.unsplash.com/photo-1520251715762-b726a31d6149?auto=format&fit=crop&fm=jpg&q=88&w=2200',
+    leftImage: 'assets/photos/u-1751563721808-3b81940b88f7.jpg',
+    rightImage: 'assets/photos/u-1520251715762-b726a31d6149.jpg',
     leftLabel: 'MATCHA', leftCopy: 'Cold · Green · Smooth',
     rightLabel: 'AÇAÍ', rightCopy: 'Berry · Fresh · FAME'
   }
@@ -65,7 +65,7 @@ function fameStartHeroAutoplay(){
    (2200 px, q=88) sind für große Bildschirme und kosten mobil das Mehrfache an
    Daten. 12 solcher Bilder laden beim Start gleichzeitig. */
 const fameSmallScreen = window.matchMedia('(max-width: 780px)');
-const fameHeroImage = url => fameSmallScreen.matches ? url.replace(/&q=\d+&w=\d+/, '&q=76&w=1400') : url;
+const fameHeroImage = url => fameSmallScreen.matches ? url.replace(/\.jpg$/, '-m.jpg') : url;
 
 function fameInstallHeroCarousel(){
   if(!fameHero || fameHero.querySelector('.hero-carousel')) return;

@@ -20,7 +20,7 @@ const TAP_ALLOW = ['.skip-link', '.hero-dot'];            // nur bei Fokus sicht
 for (const width of [360, 390, 430]) {
   const ctx = await browser.newContext({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true });
   const page = await ctx.newPage();
-  await page.route(/images\.unsplash\.com/, r => r.abort());
+  await page.route(/\/assets\/photos\//, r => r.abort());
   await page.goto(`${site.base}/index.html`, { waitUntil: 'load' });
   await page.waitForSelector('.rf');
   await page.waitForTimeout(500);
@@ -51,17 +51,25 @@ for (const width of [360, 390, 430]) {
   await ctx.close();
 }
 
-// Bildgewicht: mobile Bildvarianten sind eingebunden und kleiner als die Originale
+// Bildgewicht: auf dem Handy werden nur die kleinen Varianten (NAME-m.jpg) geladen,
+// und kein Foto kommt von einem fremden Server.
 {
   const ctx = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true });
   const page = await ctx.newPage();
-  const urls = [];
-  page.on('request', q => { if (/images\.unsplash\.com/.test(q.url())) urls.push(q.url()); });
-  await page.route(/images\.unsplash\.com/, rt => rt.abort());
+  const photos = [], foreign = [];
+  page.on('request', q => {
+    const u = new URL(q.url());
+    if (u.origin !== new URL(site.base).origin && !u.protocol.startsWith('data')) foreign.push(q.url());
+    else if (u.pathname.startsWith('/assets/photos/')) photos.push(u.pathname);
+  });
   await page.goto(`${site.base}/index.html`, { waitUntil: 'load' });
-  await page.waitForTimeout(1200);
-  const widths = urls.map(u => Number(/[?&]w=(\d+)/.exec(u)?.[1] || 0));
-  check(urls.length > 0 && Math.max(...widths) <= 1400, `Bildgewicht: mobil werden Bilder mit Breite ${Math.max(...widths)}px geladen (erwartet ≤ 1400)`);
+  await page.evaluate(async () => {
+    for (let y = 0; y < document.documentElement.scrollHeight; y += 600) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 40)); }
+  });
+  await page.waitForTimeout(800);
+  const large = photos.filter(p => !p.endsWith('-m.jpg'));
+  check(photos.length > 0 && large.length === 0, `Bildgewicht: mobil werden große Varianten geladen: ${large.join(', ')}`);
+  check(foreign.length === 0, `Fremde Server beim Seitenaufruf: ${foreign.slice(0, 3).join(', ')}`);
   await ctx.close();
 }
 

@@ -2,8 +2,9 @@
    Bildschirme bis 780 px. Die Datei wird per media="(max-width:780px)" geladen —
    Desktop-Besucher laden sie nie.
 
-   Warum nicht von Hand: styles.css und experience-v6.css enthalten zusammen 41
-   Bild-Adressen. Eine neue Adresse würde sonst mobil stillschweigend in voller
+   Alle Fotos liegen unter assets/photos/NAME.jpg, die Handy-Variante daneben als
+   NAME-m.jpg. Warum nicht von Hand: styles.css und experience-v6.css enthalten
+   zusammen gut 40 Bild-Adressen. Eine neue Adresse würde sonst mobil stillschweigend in voller
    Größe ausgeliefert. `--check` (Teil von npm run qa) schlägt an, wenn die
    erzeugte Datei nicht zum Stand der Quellen passt.
 
@@ -19,21 +20,18 @@ import { ROOT } from './qa/lib.mjs';
 // und `!important` aus dem Original wird übernommen.
 const SOURCES = ['styles.css', 'experience-v6.css', 'hero-carousel.css'];
 const OUT = `${ROOT}/mobile-images.css`;
-// Karten sind auf dem Handy bis zu 65 % der Bildschirmhöhe hoch; bei cover wird das Bild
-// nach der Höhe skaliert. 1100 px Breite reicht dafür gerade noch scharf bei geringerer Qualität.
-const WIDTH = 1100, QUALITY = 74;
+// Die Handy-Varianten (NAME-m.jpg) sind höchstens 1650 px an der langen Kante: Karten sind
+// auf dem Handy bis zu 65 % der Bildschirmhöhe hoch, bei cover wird nach der Höhe skaliert.
 
 const rules = [];
 const missing = [];
 for (const file of SOURCES) {
   const css = readFileSync(`${ROOT}/${file}`, 'utf8').replace(/\/\*[\s\S]*?\*\//g, '');
-  for (const m of css.matchAll(/([^{}]+)\{([^{}]*(?:images\.unsplash\.com|assets\/photos\/)[^{}]*)\}/g)) {
-    const remote = /url\((['"]?)(https:\/\/images\.unsplash\.com[^'")]+)\1\)/.exec(m[2]);
+  for (const m of css.matchAll(/([^{}]+)\{([^{}]*assets\/photos\/[^{}]*)\}/g)) {
     // Eigene Fotos (assets/photos/NAME.jpg) haben eine kleinere Handy-Variante NAME-m.jpg daneben.
     const local = /url\((['"]?)(assets\/photos\/([^'")]+?)\.jpg)\1\)/.exec(m[2]);
     let small;
-    if (remote) small = remote[2].replace(/&q=\d+/, `&q=${QUALITY}`).replace(/&w=\d+/, `&w=${WIDTH}`);
-    else if (local && !local[3].endsWith('-m')) {
+    if (local && !local[3].endsWith('-m')) {
       small = `assets/photos/${local[3]}-m.jpg`;
       if (!existsSync(join(ROOT, small))) missing.push(small);
     } else continue;

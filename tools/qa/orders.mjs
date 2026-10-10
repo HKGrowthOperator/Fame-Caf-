@@ -26,7 +26,7 @@ async function scenario(name, fn, { width = 390, height = 844, mobile = true, js
   const started = Date.now();
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
-  await page.route(/images\.unsplash\.com/, r => r.abort());
+  await page.route(/\/assets\/photos\//, r => r.abort());
   const adm = async (method, path, body) => {
     const res = await fetch(`${site.base}/api/admin${path}`, { method, headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, ...(body ? { 'Content-Type': 'application/json' } : {}) }, body: body ? JSON.stringify(body) : undefined });
     return { status: res.status, json: await res.json().catch(() => null) };

@@ -25,7 +25,7 @@ async function scenario(name, fn, { width = 390, height = 844, mobile = true, js
   const started = Date.now();
   const errors = [];
   page.on('pageerror', e => errors.push(e.message));
-  await page.route(/images\.unsplash\.com/, r => r.abort());
+  await page.route(/\/assets\/photos\//, r => r.abort());
   const adm = async (method, path, body) => {
     const res = await fetch(`${site.base}/api/admin${path}`, {
       method, headers: { Authorization: `Bearer ${ADMIN_TOKEN}`, ...(body ? { 'Content-Type': 'application/json' } : {}) },
@@ -141,7 +141,7 @@ await scenario('Verwaltung', async ({ page, ctx, site, adm }) => {
 
   // Gast öffnet seinen Link
   const guest = await ctx.newPage();
-  await guest.route(/images\.unsplash\.com/, r => r.abort());
+  await guest.route(/\/assets\/photos\//, r => r.abort());
   await guest.goto(`${site.base}/index.html${created.statusPath}`, { waitUntil: 'load' });
   await guest.waitForSelector('.rr');
   check(/Dein Tisch ist reserviert/.test(await guest.locator('.rr-title').textContent()), 'Gast-Link: Bestätigung nicht sichtbar');
