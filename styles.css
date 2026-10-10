@@ -498,3 +498,10 @@ body.nav-open{overflow:hidden}
 }
 .menu-photo,.gallery-tile{position:relative}
 .gallery-tile span{position:relative;z-index:2}
+
+/* Instagram-Symbol an den Instagram-Links. Die Glyphe steht einmal im <body> (symbol#ig-glyph) und
+   übernimmt die Textfarbe, passt also auf hellem Papier genauso wie auf Beere und Wald. */
+.ig{display:inline-block;width:1.2em;height:1.2em;flex:none;margin-right:.5em;vertical-align:-.25em}
+@media(min-width:1081px){.header-social{display:inline-flex;align-items:center}}
+.social-button .ig{margin-right:0;width:1.35em;height:1.35em}
+.mobile-nav-list a .ig{width:.62em;height:.62em;margin:0 -.1em 0 0;align-self:center;opacity:.9}
