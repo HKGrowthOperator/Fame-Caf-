@@ -2,11 +2,13 @@
    Jede Seite wird komplett durchgescrollt, damit auch sticky- und
    scrollgesteuerte Zustände geprüft werden. */
 
-import { loadChromium, serve, PAGES, VIEWPORTS, report } from './lib.mjs';
+import { loadChromium, serve, bookingApp, PAGES, VIEWPORTS, report } from './lib.mjs';
 
 const EXTERN = /unsplash|ERR_TUNNEL|ERR_CERT|ERR_NAME|net::ERR_(INTERNET|CONNECTION|PROXY)/i;
 
-const site = await serve();
+// Mit API, damit auch das Reservierungsformular (nicht nur der Ersatztext) gemessen wird.
+const { app } = bookingApp();
+const site = await serve(0, { app });
 const browser = await loadChromium();
 const failures = [];
 let checks = 0;
@@ -47,4 +49,5 @@ for (const file of PAGES) {
 
 await browser.close();
 await site.close();
+app.close();
 report('Sweep', failures, checks);

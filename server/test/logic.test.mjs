@@ -54,6 +54,10 @@ test('Heute: Vorlaufzeit wird berücksichtigt (12:00 + 60 min → ab 13:00)', ()
   const av = availability(make(), '2026-10-10', 2);
   assert.equal(times(av)[0], '13:00');
   assert.equal(av.slots.find(s => s.time === '12:30').available, false);
+  assert.equal(av.slots.find(s => s.time === '12:30').late, true, 'zu spät ≠ ausgebucht');
+  assert.equal(av.slots.find(s => s.time === '13:00').late, undefined);
+  const full = make({ seats: { indoor: 2, outdoor: 2 } }, [bk({ date: '2026-10-12', time: '19:00', party: 2 }), bk({ date: '2026-10-12', time: '19:00', party: 2, assignedArea: 'outdoor' })]);
+  assert.equal(availability(full, '2026-10-12', 2).slots.find(s => s.time === '19:00').late, undefined, 'ausgebucht ist nicht „late“');
 });
 
 test('Vergangenheit, zu weit voraus und geschlossene Tage', () => {

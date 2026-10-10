@@ -133,7 +133,8 @@ function areaFits(settings, load, area, s, e, party) {
 
 /**
  * Zeitfenster eines Tages mit Verfügbarkeit je Bereich.
- * @returns {{ open:boolean, reason?:string, slots:Array<{time:string, available:boolean, areas:{indoor:boolean,outdoor:boolean}}> }}
+ * `late` markiert Zeiten, die nur wegen Vorlaufzeit/Uhrzeit nicht gehen — nicht wegen Belegung.
+ * @returns {{ open:boolean, reason?:string, slots:Array<{time:string, available:boolean, late?:boolean, areas:{indoor:boolean,outdoor:boolean}}> }}
  */
 export function availability(ctx, date, party, opts = {}) {
   const { settings, bookings, blocks } = ctx;
@@ -152,7 +153,7 @@ export function availability(ctx, date, party, opts = {}) {
     const tooSoon = !opts.ignoreLead && date === now.date && s < now.minute + settings.minLeadMin;
     const areas = {};
     for (const a of AREAS) areas[a] = !tooSoon && areaFits(settings, load, a, s, e, party);
-    slots.push({ time: toTime(s), available: areas.indoor || areas.outdoor, areas });
+    slots.push({ time: toTime(s), available: areas.indoor || areas.outdoor, areas, ...(tooSoon ? { late: true } : {}) });
   }
   return { open: true, slots };
 }
@@ -164,7 +165,8 @@ export function daysOverview(ctx, party, count = 21) {
   for (let i = 0; i < count && i <= ctx.settings.maxDaysAhead; i++) {
     const date = addDays(today, i);
     const av = availability(ctx, date, party);
-    out.push({ date, open: av.open, available: av.slots.some(s => s.available) });
+    const late = av.slots.length > 0 && av.slots.every(s => s.late);
+    out.push({ date, open: av.open, available: av.slots.some(s => s.available), ...(late ? { late: true } : {}) });
   }
   return out;
 }

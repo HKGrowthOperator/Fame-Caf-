@@ -6,6 +6,9 @@ import { createServer } from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { extname, join, normalize } from 'node:path';
 import { execSync } from 'node:child_process';
+import { mkdtempSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { createApp } from '../../server/app.mjs';
 
 export const ROOT = new URL('../../', import.meta.url).pathname.replace(/\/$/, '');
 
@@ -51,10 +54,27 @@ const TYPES = {
   '.woff2': 'font/woff2', '.txt': 'text/plain; charset=utf-8'
 };
 
+export const ADMIN_TOKEN = 'qa-admin-code-0123456789';
+
+/** Reservierungs-API mit festem Datum (Sa 10.10.2026, 12:00 in Gummersbach) und
+ *  leerem Speicher. So hängt kein Test davon ab, an welchem Tag er läuft. */
+export function bookingApp(options = {}) {
+  const clock = { now: new Date('2026-10-10T10:00:00Z') };
+  const app = createApp({
+    dataDir: mkdtempSync(join(tmpdir(), 'fame-qa-')),
+    adminToken: ADMIN_TOKEN,
+    clock: () => clock.now,
+    ...options
+  });
+  return { app, clock };
+}
+
 /** Statischer Server über dem Projektverzeichnis. Liefert 404.html bei 404 —
- *  wie die nginx-Konfiguration im Betrieb. */
-export function serve(port = 8099) {
+ *  wie die nginx-Konfiguration im Betrieb. Mit `app` wird zusätzlich /api/
+ *  bedient, wie es der nginx per Proxy tut. */
+export function serve(port = 8099, { app } = {}) {
   const server = createServer(async (req, res) => {
+    if (app && await app.handle(req, res)) return;
     let rel = decodeURIComponent(req.url.split('?')[0]);
     if (rel.endsWith('/')) rel += 'index.html';
     const file = join(ROOT, normalize(rel).replace(/^(\.\.[/\\])+/, ''));
@@ -74,7 +94,7 @@ export function serve(port = 8099) {
     }
   });
   return new Promise(resolve => server.listen(port, '127.0.0.1', () => resolve({
-    base: `http://127.0.0.1:${port}`,
+    base: `http://127.0.0.1:${server.address().port}`,
     close: () => new Promise(r => server.close(r))
   })));
 }
