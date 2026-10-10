@@ -3,7 +3,7 @@
   "private": true,
   "description": "FAME CAFÉ Gummersbach — statische Website mit kleinem Reservierungsdienst (server/). Die Seite selbst hat keinen Build-Schritt; diese Datei existiert für Prüfwerkzeuge und Tests.",
   "scripts": {
-    "qa": "npm run test:server && npm run sweep && npm run behaviour && npm run booking",
+    "qa": "npm run test:server && node tools/gen-mobile-images.mjs --check && npm run sweep && npm run behaviour && npm run booking && npm run mobile",
     "test:server": "node --test server/test/*.test.mjs",
     "sweep": "node tools/qa/sweep.mjs",
     "behaviour": "node tools/qa/behaviour.mjs",
@@ -11,7 +11,9 @@
     "screens": "node tools/qa/screens.mjs",
     "styles": "node tools/qa/styles.mjs",
     "start": "node server/index.mjs",
-    "scan": "npx --yes impeccable detect --fast index.html styles.css script.js 404.html impressum.html datenschutz.html"
+    "scan": "npx --yes impeccable detect --fast index.html styles.css script.js 404.html impressum.html datenschutz.html",
+    "mobile": "node tools/qa/mobile.mjs",
+    "images": "node tools/gen-mobile-images.mjs"
   },
   "devDependencies": {
     "playwright": "^1.56.1"
