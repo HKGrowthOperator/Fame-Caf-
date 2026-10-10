@@ -45,7 +45,7 @@ async function scenario(name, fn, { width = 390, height = 844, mobile = true, js
   }
 }
 
-const open = async (page, site, path = '/index.html', { js = true } = {}) => {
+const open = async (page, site, path = '/reservieren/', { js = true } = {}) => {
   await page.goto(`${site}${path}`, { waitUntil: 'load' });
   // Ohne JavaScript kann Playwright nichts in die Seite einschleusen (der Aufruf hängt dann).
   if (js) await page.addStyleTag({ content: 'html{scroll-behavior:auto!important}' });
@@ -142,7 +142,7 @@ await scenario('Verwaltung', async ({ page, ctx, site, adm }) => {
   // Gast öffnet seinen Link
   const guest = await ctx.newPage();
   await guest.route(/\/assets\/photos\//, r => r.abort());
-  await guest.goto(`${site.base}/index.html${created.statusPath}`, { waitUntil: 'load' });
+  await guest.goto(`${site.base}/reservieren/${created.statusPath}`, { waitUntil: 'load' });
   await guest.waitForSelector('.rr');
   check(/Dein Tisch ist reserviert/.test(await guest.locator('.rr-title').textContent()), 'Gast-Link: Bestätigung nicht sichtbar');
   check(await guest.locator('a[href*="/ics?t="]').count() === 1, 'Gast-Link: Kalender-Download fehlt');
@@ -150,9 +150,14 @@ await scenario('Verwaltung', async ({ page, ctx, site, adm }) => {
   await guest.locator('button', { hasText: 'Ja, stornieren' }).click();
   await guest.waitForFunction(() => /storniert/.test(document.querySelector('.rr-title')?.textContent || ''));
   check((await adm('GET', '/bookings')).json.bookings[0].status === 'cancelled', 'Gast-Link: Storno kommt nicht an');
-  await guest.goto(`${site.base}/index.html?b=${created.id}.falscherschluessel1234#reservieren`, { waitUntil: 'load' });
+  await guest.goto(`${site.base}/reservieren/?b=${created.id}.falscherschluessel1234#reservieren`, { waitUntil: 'load' });
   await guest.waitForSelector('.rr');
   check(/nicht gefunden/.test(await guest.locator('.rr-title').textContent()), 'Gast-Link: falscher Schlüssel verrät mehr als „nicht gefunden“');
+  // Ältere Links zeigten auf die Startseite (/?b=…). Sie müssen auf der Reservierungsseite landen.
+  await guest.goto(`${site.base}/${created.statusPath}`, { waitUntil: 'load' });
+  await guest.waitForSelector('.rr');
+  check(new URL(guest.url()).pathname === '/reservieren/', `Alter Gast-Link: landet auf ${new URL(guest.url()).pathname} statt /reservieren/`);
+  check(/storniert/.test(await guest.locator('.rr-title').textContent()), 'Alter Gast-Link: Stand der Reservierung nicht sichtbar');
 });
 
 /* --- 2b. Alle Ansichten der Verwaltung bedienen ---------------------------
@@ -261,7 +266,7 @@ const FALLBACK = async (page, label) => {
   check(await page.locator('#reservieren a[href*="instagram.com/fame.cafe.gm"]').isVisible(), `${label}: kein Instagram-Ausweg sichtbar`);
   check(/Instagram/.test(await page.locator('#reserveRoot').textContent()), `${label}: Ersatztext fehlt`);
 };
-await scenario('Ausfall: ohne JavaScript', async ({ page, site }) => { await open(page, site.base, '/index.html', { js: false }); await FALLBACK(page, 'ohne JS'); }, { js: false });
+await scenario('Ausfall: ohne JavaScript', async ({ page, site }) => { await open(page, site.base, '/reservieren/', { js: false }); await FALLBACK(page, 'ohne JS'); }, { js: false });
 await scenario('Ausfall: API nicht vorhanden (HTML statt JSON)', async ({ page, site }) => { await open(page, site.base); await page.waitForTimeout(800); await FALLBACK(page, 'API fehlt'); }, { api: false });
 await scenario('Ausfall: API verweigert Verbindung', async ({ page, site }) => {
   await page.route('**/api/**', r => r.abort());
@@ -286,23 +291,28 @@ await scenario('Ausfall: API fällt nach dem Laden aus', async ({ page, site }) 
 
 /* --- 6. Sticky-Button nur mobil, nie im Weg ----------------------------- */
 await scenario('Sticky-Button', async ({ page, site }) => {
-  await open(page, site.base);
-  await page.waitForSelector('.rf');
+  await open(page, site.base, '/index.html');
   const fab = page.locator('#reserveFab');
+  // Der Knopf reagiert per IntersectionObserver, also asynchron. Unter Last (ganzer Prüflauf)
+  // reichten feste 500 ms nicht; deshalb auf den Zustand warten, nicht auf eine Zeit.
+  const hiddenIs = want => page.waitForFunction(w => document.getElementById('reserveFab').classList.contains('is-hidden') === w, want, { timeout: 4000 }).catch(() => {});
   await page.evaluate(() => document.getElementById('menu').scrollIntoView());
-  await page.waitForTimeout(500);
+  await hiddenIs(false);
   check(await fab.isVisible() && !(await fab.evaluate(e => e.classList.contains('is-hidden'))), 'Sticky-Button fehlt im Menü-Abschnitt');
   const box = await fab.boundingBox();
   check(box && box.height >= 52, `Sticky-Button zu klein (${box?.height})`);
+  check(new URL(await fab.getAttribute('href'), page.url()).pathname === '/reservieren/', 'Sticky-Button führt nicht zur Reservierungsseite');
+  const wrong = await page.evaluate(() => [...document.querySelectorAll('a')].filter(a => /reserv/i.test(a.textContent) && new URL(a.href).pathname !== '/reservieren/').map(a => a.textContent.trim()));
+  check(wrong.length === 0, `Startseite: Reservieren-Links führen nicht zur Unterseite: ${wrong.join(', ')}`);
   await page.evaluate(() => document.getElementById('reservieren').scrollIntoView());
-  await page.waitForTimeout(500);
-  check(await fab.evaluate(e => e.classList.contains('is-hidden')), 'Sticky-Button verdeckt das Formular');
+  await hiddenIs(true);
+  check(await fab.evaluate(e => e.classList.contains('is-hidden')), 'Sticky-Button steht neben dem Reservieren-Abschnitt');
   await page.evaluate(() => window.scrollTo(0, 0));
-  await page.waitForTimeout(500);
+  await hiddenIs(true);
   check(await fab.evaluate(e => e.classList.contains('is-hidden')), 'Sticky-Button liegt über dem Hero');
 });
 await scenario('Kein Sticky-Button am Desktop', async ({ page, site }) => {
-  await open(page, site.base);
+  await open(page, site.base, '/index.html');
   check(!(await page.locator('#reserveFab').isVisible()), 'Sticky-Button erscheint am Desktop');
 }, { width: 1440, height: 900, mobile: false });
 

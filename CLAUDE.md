@@ -70,7 +70,8 @@ muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
 | `impressum.html`, `datenschutz.html`, `404.html` | Rechtstexte und Fehlerseite |
 | `styles.css` | vollständiges Stylesheet |
 | `script.js` | Scroll, Ritual-Sequenz, Navigation |
-| `reservierung.js/.css` | Gäste-Formular, Abschnitt `#reservieren` |
+| `reservieren/index.html` | Eigene Reservierungsseite; alle „Reservieren“-Links der Startseite führen hierher, alte `/?b=…`-Links leitet `index.html` weiter |
+| `reservierung.js/.css` | Gäste-Formular auf `/reservieren/` (Abschnitt `#reservieren`); auf der Startseite nur der Einstieg |
 | `admin/` | Verwaltung für das Personal (noindex, Zugangscode) |
 | `server/` | Reservierungs- und Bestelldienst + Tests; liegt im Image unter `/app`, nie im Webroot |
 | `bestellen/` | Eigenständige Bestellseite (Tisch per QR, Mitnehmen); lädt nichts von der Hauptseite, nicht von ihr verlinkt |

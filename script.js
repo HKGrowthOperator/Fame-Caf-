@@ -50,6 +50,7 @@ window.addEventListener('pageshow', function(){
    geladen wird — und genau das ist der Fall, der abgesichert werden muss. */
 
 function setStep(index){
+  if(!coffeeNo) return;   // Unterseiten (z. B. /reservieren/) haben kein Ritual
   const i = Math.max(0, Math.min(3, index));
   if(i === currentStep) return;
   currentStep = i;
@@ -73,7 +74,7 @@ function ritualProgress(){
 function update(){
   ticking = false;
   const y = window.scrollY;
-  if(header) header.classList.toggle('scrolled', y > 30);
+  if(header) header.classList.toggle('scrolled', y > 30 || header.hasAttribute('data-solid'));
 
   if(!reduceMotion.matches){
     const hp = Math.min(1, y / Math.max(1, window.innerHeight));
@@ -186,6 +187,7 @@ if(mapWrap && mapConsentButton){
    Separate Assets halten die bestehende Seite stabil und machen den Hero
    unabhängig vom Coffee/Matcha-Ritual darunter. */
 (function loadFameHeroCarousel(){
+  if(!document.querySelector('.hero')) return;   // nur die Startseite hat einen Hero
   if(!document.querySelector('link[data-fame-hero-carousel]')){
     const css = document.createElement('link');
     css.rel = 'stylesheet';
@@ -199,4 +201,22 @@ if(mapWrap && mapConsentButton){
     js.dataset.fameHeroCarousel = 'true';
     document.body.appendChild(js);
   }
+})();
+
+/* ---- Mobiler Reservieren-Knopf --------------------------------------------
+   Führt auf die Unterseite /reservieren/. Ausgeblendet, solange Hero, Ritual,
+   der Reservieren-Abschnitt oder der Footer im Bild sind — dort verdeckt er
+   Texte oder steht neben einem gleichwertigen Link. */
+(function(){
+  const fab = document.getElementById('reserveFab');
+  if(!fab || !('IntersectionObserver' in window)) return;
+  const hide = new Set();
+  const io = new IntersectionObserver(entries => {
+    for(const e of entries) (e.isIntersecting ? hide.add(e.target) : hide.delete(e.target));
+    fab.classList.toggle('is-hidden', hide.size > 0);
+  }, {threshold:.12});
+  ['.hero', '.ritual', '#reservieren', 'footer'].forEach(sel => {
+    const el = document.querySelector(sel);
+    if(el) io.observe(el);
+  });
 })();
