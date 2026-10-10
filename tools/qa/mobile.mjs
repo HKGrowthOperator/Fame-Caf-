@@ -17,12 +17,14 @@ const MIN_TEXT = 11;                                   // px; darunter nur die A
 const TEXT_ALLOW = ['.brand-sub', '.ritual-marker span']; // Logo-Zusatz und Zierzahl im Ritual
 const TAP_ALLOW = ['.skip-link', '.hero-dot'];            // nur bei Fokus sichtbar / Trefferfläche per ::after
 
+// Beide Seiten mit Gästen: die Startseite und die Reservierungsseite mit dem Formular.
+for (const [path, label] of [['/index.html', 'Start'], ['/reservieren/', 'Reservieren']])
 for (const width of [360, 390, 430]) {
   const ctx = await browser.newContext({ viewport: { width, height: 844 }, isMobile: true, hasTouch: true });
   const page = await ctx.newPage();
   await page.route(/\/assets\/photos\//, r => r.abort());
-  await page.goto(`${site.base}/index.html`, { waitUntil: 'load' });
-  await page.waitForSelector('.rf');
+  await page.goto(`${site.base}${path}`, { waitUntil: 'load' });
+  if (label === 'Reservieren') await page.waitForSelector('.rf');
   await page.waitForTimeout(500);
 
   const r = await page.evaluate(({ textAllow, tapAllow }) => {
@@ -44,18 +46,20 @@ for (const width of [360, 390, 430]) {
     return { small, taps, ctaVisible: (() => { const c = document.querySelector('.header-cta'); return !!c && vis(c); })() };
   }, { textAllow: TEXT_ALLOW, tapAllow: TAP_ALLOW });
 
-  check(r.small.length === 0, `@${width}px: ${r.small.length} Textstellen unter ${MIN_TEXT}px: ${r.small.slice(0, 5).join(', ')}`);
-  check(r.taps.length === 0, `@${width}px: ${r.taps.length} Tippflächen unter 44px: ${r.taps.slice(0, 6).join(', ')}`);
-  check(r.ctaVisible === (width > 360), `@${width}px: „Reservieren“ im Header ${r.ctaVisible ? 'sichtbar' : 'fehlt'} (erwartet ab 361px)`);
-  check(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth) <= 0, `@${width}px: horizontaler Overflow`);
+  check(r.small.length === 0, `${label} @${width}px: ${r.small.length} Textstellen unter ${MIN_TEXT}px: ${r.small.slice(0, 5).join(', ')}`);
+  check(r.taps.length === 0, `${label} @${width}px: ${r.taps.length} Tippflächen unter 44px: ${r.taps.slice(0, 6).join(', ')}`);
+  check(r.ctaVisible === (width > 360), `${label} @${width}px: „Reservieren“ im Header ${r.ctaVisible ? 'sichtbar' : 'fehlt'} (erwartet ab 361px)`);
+  check(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth) <= 0, `${label} @${width}px: horizontaler Overflow`);
   // Galerie-Beschriftungen stehen unten in der Kachel. Eine Regel mit position:relative hatte sie
   // einmal an die Oberkante geschoben, wo sie halb abgeschnitten waren.
+  if (label === 'Start') {
   const labels = await page.evaluate(() => [...document.querySelectorAll('.gallery-tile')].map(t => {
     const b = t.getBoundingClientRect(), l = t.querySelector('span').getBoundingClientRect();
     return { text: t.textContent.trim(), inside: l.top >= b.top && l.bottom <= b.bottom && l.left >= b.left, lower: l.top > b.top + b.height / 2 };
   }));
   const bad = labels.filter(l => !l.inside || !l.lower).map(l => l.text);
   check(labels.length > 0 && bad.length === 0, `@${width}px: Galerie-Beschriftung nicht unten in der Kachel: ${bad.join(', ')}`);
+  }
   await ctx.close();
 }
 

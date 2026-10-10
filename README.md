@@ -15,6 +15,7 @@ Freigabe ersetzt. Verbindlich ist `FAME_MASTER_EXECUTION_PROMPT.md`.
 | Datei | Zweck |
 |---|---|
 | `index.html` | Startseite |
+| `reservieren/index.html` | Tischreservierung (eigene Seite, Formular aus `reservierung.js`) |
 | `impressum.html`, `datenschutz.html` | Rechtstexte |
 | `404.html` | Fehlerseite |
 | `styles.css` | vollständiges Stylesheet, in 20 nummerierte Abschnitte gegliedert |
@@ -232,7 +233,10 @@ brauchen danach einmal `npm run images`.
    sind schon drin (`assets/photos/`: Tische und Stühle in „Drinnen“, Decke und
    Lampen in der Galerie-Kachel „SPACE“). Sie sind **bewusst ohne Personen
    zugeschnitten** und ohne EXIF-/GPS-Daten gespeichert; das Original zeigt
-   Gäste mit erkennbaren Gesichtern und gehört so nicht auf die Seite. Neue eigene
+   Gäste mit erkennbaren Gesichtern und gehört so nicht auf die Seite. Außerdem
+   echt: `fame-terrasse-nacht.jpg` (Karte „Draußen“, Instagram-Text entfernt) und
+   `fame-matcha-acai.jpg` (Fame Pick „Açaí Bowl“, Person im Hintergrund entfernt).
+   Neue eigene
    Fotos: `NAME.jpg` plus kleinere Handy-Variante `NAME-m.jpg` ablegen, danach
    `npm run images`.
 2. **Domain.** Erst wenn die Produktionsdomain feststeht: `canonical` setzen,

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="de" class="no-js">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#F6F3EC" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#171412" media="(prefers-color-scheme: dark)" />
+  <meta name="robots" content="index,follow" />
+  <meta name="description" content="Tisch im FAME CAFÉ Gummersbach online reservieren, ohne Anruf. Jede Reservierung gilt für 90 Minuten, drinnen oder draußen." />
+  <meta property="og:title" content="Tisch reservieren — FAME CAFÉ Gummersbach" />
+  <meta property="og:description" content="Dein Tisch ohne Anruf. Drinnen oder draußen." />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="de_DE" />
+  <meta property="og:site_name" content="FAME CAFÉ" />
+  <meta property="og:image" content="../assets/fame-og.png" />
+  <title>Tisch reservieren — FAME CAFÉ Gummersbach</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+  <link rel="manifest" href="../site.webmanifest" />
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/dm-serif-display-latin-400.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/manrope-latin-variable.woff2" crossorigin />
+  <link rel="stylesheet" href="../styles.css?v=fame-v5-20261013" />
+  <link rel="stylesheet" href="../reservierung.css?v=20261013" />
+  <link rel="stylesheet" href="../mobile.css?v=20261010" media="(max-width: 780px)" />
+  <!-- Diese Seite hat keine .reveal-Elemente: Alles ist sofort sichtbar, auch ohne
+       JavaScript. Die Klasse js steuert nur die Animation des Handy-Menüs. -->
+  <script>document.documentElement.classList.replace('no-js', 'js');</script>
+</head>
+<body class="reserve-page">
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="ig-glyph" viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="4.2" fill="none" stroke="currentColor" stroke-width="1.8"/><circle cx="17.3" cy="6.7" r="1.25" fill="currentColor"/></symbol></svg>
+  <a class="skip-link" href="#reservieren">Zum Inhalt springen</a>
+
+  <!-- data-solid: Hier liegt kein dunkles Hero-Bild unter dem Header. Er bleibt
+       deshalb von Anfang an hell (script.js setzt sonst erst ab 30 px Scroll). -->
+  <header class="site-header scrolled" id="siteHeader" data-solid>
+    <a class="brand" href="../" aria-label="FAME CAFÉ Startseite">
+      <span class="brand-main">FAME CAFÉ</span>
+      <span class="brand-sub">GUMMERSBACH</span>
+    </a>
+    <nav class="desktop-nav" aria-label="Hauptnavigation">
+      <a href="../#ritual">Ritual</a>
+      <a href="../#menu">Menü</a>
+      <a href="../#cafe">Café</a>
+      <a href="./" aria-current="page">Reservieren</a>
+      <a href="../#visit">Besuchen</a>
+    </nav>
+    <div class="header-actions">
+      <a class="header-social" href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer"><svg class="ig" aria-hidden="true" focusable="false"><use href="#ig-glyph"/></svg>Instagram</a>
+      <a class="header-cta" href="../"><span class="nav-dot" aria-hidden="true"></span>Startseite</a>
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav">
+        <span class="nav-toggle-lines" aria-hidden="true"><i></i><i></i></span>
+        <span class="nav-toggle-label">Menü</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobileNav" hidden>
+    <nav aria-label="Navigation">
+      <ul class="mobile-nav-list">
+        <li><a href="./" aria-current="page"><span>01</span>Tisch reservieren</a></li>
+        <li><a href="../#ritual"><span>02</span>Ritual</a></li>
+        <li><a href="../#menu"><span>03</span>Menü</a></li>
+        <li><a href="../#cafe"><span>04</span>Café</a></li>
+        <li><a href="../#visit"><span>05</span>Besuchen</a></li>
+        <li><a href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer"><span>06</span><svg class="ig" aria-hidden="true" focusable="false"><use href="#ig-glyph"/></svg>Instagram</a></li>
+      </ul>
+    </nav>
+    <div class="mobile-nav-foot">
+      <address>
+        <span>Gummersbacher Straße 12</span>
+        <span>51645 Gummersbach</span>
+        <span>Ab 12.10.: täglich 07:00–23:00 Uhr</span>
+      </address>
+      <div class="mobile-nav-legal">
+        <a href="../impressum.html">Impressum</a>
+        <a href="../datenschutz.html">Datenschutz</a>
+      </div>
+    </div>
+  </div>
+
+  <main id="top">
+    <!-- Der Abschnitt ist von Anfang an sichtbar und trägt einen ehrlichen
+         Ersatztext: Ohne JavaScript oder ohne erreichbare API verspricht er
+         nichts, was nicht funktioniert. reservierung.js ersetzt den Ersatztext
+         erst, wenn /api/config antwortet. -->
+    <section class="reserve" id="reservieren" aria-labelledby="reserveTitle">
+      <div class="section-head">
+        <div><span class="eyebrow">TABLE RESERVATION</span><h1 id="reserveTitle">Reserve<br>your <em>table.</em></h1></div>
+        <p>Dein Tisch ohne Anruf. Jede Reservierung gilt für <span data-reserve-duration>90 Minuten</span>, drinnen oder draußen.</p>
+      </div>
+      <div class="reserve-body" id="reserveRoot" aria-live="polite">
+        <div class="reserve-fallback" id="reserveFallback">
+          <p class="reserve-fallback-title">Reservieren per Instagram</p>
+          <p>Die Online-Reservierung braucht JavaScript und eine Verbindung zu unserem Reservierungssystem. Schreib uns bis dahin eine Nachricht auf Instagram, wir kümmern uns darum.</p>
+          <a class="reserve-fallback-link" href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer"><svg class="ig" aria-hidden="true" focusable="false"><use href="#ig-glyph"/></svg>@fame.cafe.gm auf Instagram</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <a class="brand footer-brand" href="../"><span class="brand-main">FAME CAFÉ</span><span class="brand-sub">GUMMERSBACH</span></a>
+    <div class="footer-links"><a href="../#ritual">Ritual</a><a href="../#menu">Menü</a><a href="../#cafe">Café</a><a href="./" aria-current="page">Reservieren</a><a href="../#visit">Besuchen</a><a href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer"><svg class="ig" aria-hidden="true" focusable="false"><use href="#ig-glyph"/></svg>Instagram</a></div>
+    <div class="footer-legal"><a href="../impressum.html">Impressum</a><a href="../datenschutz.html">Datenschutz</a></div>
+    <p>GOOD DRINKS. BRIGHTER DAYS.</p>
+  </footer>
+
+  <script src="../script.js?v=fame-v5-20261013"></script>
+  <script src="../reservierung.js?v=20261013"></script>
+</body>
+</html>

@@ -14,7 +14,6 @@
   const root = document.getElementById('reserveRoot');
   if (!root) return;
   const fallback = document.getElementById('reserveFallback');
-  const fab = document.getElementById('reserveFab');
   const INSTAGRAM = 'https://www.instagram.com/fame.cafe.gm/';
 
   const WD = ['So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'];
@@ -165,7 +164,7 @@
       h('div', { class: 'rf-field rf-consent', 'data-field': 'privacy' },
         h('label', { class: 'rf-check' },
           h('input', { id: 'privacy', name: 'privacy', type: 'checkbox' }),
-          h('span', {}, 'Ich habe die ', h('a', { href: 'datenschutz.html', target: '_blank', rel: 'noopener' }, 'Datenschutzhinweise'), ' gelesen. Meine Angaben werden zur Bearbeitung der Reservierung gespeichert.')
+          h('span', {}, 'Ich habe die ', h('a', { href: '/datenschutz.html', target: '_blank', rel: 'noopener' }, 'Datenschutzhinweise'), ' gelesen. Meine Angaben werden zur Bearbeitung der Reservierung gespeichert.')
         ),
         h('p', { class: 'rf-error', id: 'privacy-error', role: 'alert' }))
     ));
@@ -526,24 +525,6 @@
     if (param && /^[0-9a-f]{8,}\.[\w-]{10,}$/.test(param)) { await showStatus(param); return; }
     buildForm();
     await loadDays();
-  }
-
-  /* -- Sticky-Button (nur Mobil sichtbar, per CSS) --------------------------- */
-
-  if (fab && 'IntersectionObserver' in window) {
-    const hide = new Set();
-    const io = new IntersectionObserver(entries => {
-      for (const e of entries) (e.isIntersecting ? hide.add(e.target) : hide.delete(e.target));
-      fab.classList.toggle('is-hidden', hide.size > 0);
-    }, { threshold: 0.12 });
-    const hero = document.querySelector('.hero');
-    if (hero) io.observe(hero);
-    // Das Ritual füllt den Bildschirm; der Button würde dort die Texte unten verdecken.
-    const ritual = document.querySelector('.ritual');
-    if (ritual) io.observe(ritual);
-    io.observe(document.getElementById('reservieren'));
-    const footer = document.querySelector('footer');
-    if (footer) io.observe(footer);
   }
 
   start().then(() => {

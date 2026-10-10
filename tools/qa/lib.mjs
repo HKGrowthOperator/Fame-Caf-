@@ -12,7 +12,7 @@ import { createApp } from '../../server/app.mjs';
 
 export const ROOT = new URL('../../', import.meta.url).pathname.replace(/\/$/, '');
 
-export const PAGES = ['index.html', 'impressum.html', 'datenschutz.html', '404.html'];
+export const PAGES = ['index.html', 'reservieren/index.html', 'impressum.html', 'datenschutz.html', '404.html'];
 
 export const VIEWPORTS = [
   { name: 'w320', width: 320, height: 700 },
