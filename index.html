@@ -27,6 +27,10 @@
   <link rel="stylesheet" href="styles.css?v=fame-v5-20260917" />
   <link rel="stylesheet" href="experience-v6.css?v=20260927" />
   <link rel="stylesheet" href="opening-2026.css?v=20261004" />
+  <!-- Kleinere Bildvarianten, nur bis 780 px geladen. Muss nach styles.css und experience-v6.css stehen. Erzeugt von tools/gen-mobile-images.mjs. -->
+  <link rel="stylesheet" href="mobile-images.css?v=20261010" media="(max-width: 780px)" />
+  <link rel="stylesheet" href="reservierung.css?v=20261010" />
+  <link rel="stylesheet" href="mobile.css?v=20261010" media="(max-width: 780px)" />
 
   <script>
     /* .reveal startet auf opacity:0, sobald <html> die Klasse .js trägt —
@@ -130,11 +134,12 @@
       <a href="#ritual">Ritual</a>
       <a href="#menu">Menü</a>
       <a href="#cafe">Café</a>
+      <a href="#reservieren">Reservieren</a>
       <a href="#visit">Besuchen</a>
     </nav>
     <div class="header-actions">
       <a class="header-social" href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer">Instagram</a>
-      <a class="header-cta" href="#visit"><span class="nav-dot" aria-hidden="true"></span>Besuchen</a>
+      <a class="header-cta" href="#reservieren"><span class="nav-dot" aria-hidden="true"></span>Reservieren</a>
       <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="mobileNav">
         <span class="nav-toggle-lines" aria-hidden="true"><i></i><i></i></span>
         <span class="nav-toggle-label">Menü</span>
@@ -148,11 +153,12 @@
   <div class="mobile-nav" id="mobileNav" hidden>
     <nav aria-label="Navigation">
       <ul class="mobile-nav-list">
-        <li><a href="#ritual"><span>01</span>Ritual</a></li>
-        <li><a href="#menu"><span>02</span>Menü</a></li>
-        <li><a href="#cafe"><span>03</span>Café</a></li>
-        <li><a href="#visit"><span>04</span>Besuchen</a></li>
-        <li><a href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer"><span>05</span>Instagram</a></li>
+        <li><a href="#reservieren"><span>01</span>Tisch reservieren</a></li>
+        <li><a href="#ritual"><span>02</span>Ritual</a></li>
+        <li><a href="#menu"><span>03</span>Menü</a></li>
+        <li><a href="#cafe"><span>04</span>Café</a></li>
+        <li><a href="#visit"><span>05</span>Besuchen</a></li>
+        <li><a href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer"><span>06</span>Instagram</a></li>
       </ul>
     </nav>
     <div class="mobile-nav-foot">
@@ -354,6 +360,24 @@
       <div class="catering-copy reveal"><span class="eyebrow light">FAME CATERING</span><h2 id="cateringTitle">FAME beyond<br>the café.</h2><p>Catering gehört zum Angebot von FAME. Konkrete Pakete und Konditionen werden ergänzt, sobald sie final bestätigt sind.</p></div>
     </section>
 
+    <!-- Reservierung. Der Abschnitt ist von Anfang an sichtbar und trägt einen
+         ehrlichen Ersatztext: Ohne JavaScript oder ohne erreichbare API wird er
+         nicht ausgeblendet und verspricht nichts, was nicht funktioniert.
+         reservierung.js ersetzt den Ersatztext erst, wenn /api/config antwortet. -->
+    <section class="reserve" id="reservieren" aria-labelledby="reserveTitle">
+      <div class="section-head reveal">
+        <div><span class="eyebrow">TABLE RESERVATION</span><h2 id="reserveTitle">Reserve<br>your <em>table.</em></h2></div>
+        <p>Dein Tisch ohne Anruf. Jede Reservierung gilt für <span data-reserve-duration>90 Minuten</span>, drinnen oder draußen.</p>
+      </div>
+      <div class="reserve-body" id="reserveRoot" aria-live="polite">
+        <div class="reserve-fallback" id="reserveFallback">
+          <p class="reserve-fallback-title">Reservieren per Instagram</p>
+          <p>Die Online-Reservierung braucht JavaScript und eine Verbindung zu unserem Reservierungssystem. Schreib uns bis dahin eine Nachricht auf Instagram, wir kümmern uns darum.</p>
+          <a class="reserve-fallback-link" href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer">@fame.cafe.gm auf Instagram</a>
+        </div>
+      </div>
+    </section>
+
     <section class="visit" id="visit" aria-labelledby="visitTitle">
       <div class="visit-info reveal">
         <span class="eyebrow">VISIT FAME</span>
@@ -406,13 +430,19 @@
 
   <footer>
     <a class="brand footer-brand" href="#top"><span class="brand-main">FAME CAFÉ</span><span class="brand-sub">GUMMERSBACH</span></a>
-    <div class="footer-links"><a href="#ritual">Ritual</a><a href="#menu">Menü</a><a href="#cafe">Café</a><a href="#visit">Besuchen</a><a href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer">Instagram</a></div>
+    <div class="footer-links"><a href="#ritual">Ritual</a><a href="#menu">Menü</a><a href="#cafe">Café</a><a href="#reservieren">Reservieren</a><a href="#visit">Besuchen</a><a href="https://www.instagram.com/fame.cafe.gm/" target="_blank" rel="noopener noreferrer">Instagram</a></div>
     <div class="footer-legal"><a href="impressum.html">Impressum</a><a href="datenschutz.html">Datenschutz</a></div>
     <p>GOOD DRINKS. BRIGHTER DAYS.</p>
   </footer>
 
+  <!-- Mobiler Direktzugang. Ist ein normaler Link: ohne JavaScript bleibt er
+       stehen, mit JavaScript blendet reservierung.js ihn aus, solange der
+       Abschnitt selbst im Bild ist oder der Besucher noch im Hero steht. -->
+  <a class="reserve-fab" id="reserveFab" href="#reservieren">Tisch reservieren</a>
+
   <script src="script.js?v=fame-v5-20260917"></script>
   <script src="experience-v6.js?v=20260927"></script>
   <script src="opening-2026.js?v=20261004"></script>
+  <script src="reservierung.js?v=20261010"></script>
 </body>
 </html>

@@ -61,6 +61,12 @@ function fameStartHeroAutoplay(){
   fameHeroTimer = window.setInterval(() => fameShowHeroSlide(fameHeroIndex + 1), 2500);
 }
 
+/* Auf dem Handy reichen 1400 px Breite bei geringerer Qualität; die Originale
+   (2200 px, q=88) sind für große Bildschirme und kosten mobil das Mehrfache an
+   Daten. 12 solcher Bilder laden beim Start gleichzeitig. */
+const fameSmallScreen = window.matchMedia('(max-width: 780px)');
+const fameHeroImage = url => fameSmallScreen.matches ? url.replace(/&q=\d+&w=\d+/, '&q=76&w=1400') : url;
+
 function fameInstallHeroCarousel(){
   if(!fameHero || fameHero.querySelector('.hero-carousel')) return;
 
@@ -74,11 +80,11 @@ function fameInstallHeroCarousel(){
 
     const left = document.createElement('div');
     left.className = 'hero-carousel-panel';
-    left.style.backgroundImage = `url("${slide.leftImage}")`;
+    left.style.backgroundImage = `url("${fameHeroImage(slide.leftImage)}")`;
 
     const right = document.createElement('div');
     right.className = 'hero-carousel-panel';
-    right.style.backgroundImage = `url("${slide.rightImage}")`;
+    right.style.backgroundImage = `url("${fameHeroImage(slide.rightImage)}")`;
 
     item.append(left, right);
     carousel.appendChild(item);
@@ -106,7 +112,7 @@ function fameInstallHeroCarousel(){
     [slide.leftImage, slide.rightImage].forEach(src => {
       const image = new Image();
       image.decoding = 'async';
-      image.src = src;
+      image.src = fameHeroImage(src);   // dieselbe Größe wie der Hintergrund, sonst lädt jedes Bild zweimal
     });
   });
 

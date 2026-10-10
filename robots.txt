@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /admin/
+Disallow: /api/
 
 # sitemap.xml is intentionally added only after the final production domain is confirmed.

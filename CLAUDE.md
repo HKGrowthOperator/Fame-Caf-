@@ -2,9 +2,10 @@
 
 ## Projekt
 
-Statische Website für FAME CAFÉ Gummersbach. HTML, ein Stylesheet, ein Skript.
-Kein Framework, kein Build-Schritt für die Seite selbst. Deploy über Coolify
-mit nginx im Container.
+Website für FAME CAFÉ Gummersbach. HTML, Stylesheets, Skripte — kein Framework,
+kein Build-Schritt für die Seite selbst. Dazu ein kleiner Reservierungsdienst
+(`server/`, Node ohne Abhängigkeiten). Deploy über Coolify, nginx und Dienst in
+einem Container; Details im README unter „Reservierungssystem“.
 
 Verbindlich ist `FAME_MASTER_EXECUTION_PROMPT.md`. Bei Widersprüchen gewinnt
 dieses Dokument.
@@ -28,7 +29,8 @@ Amtsgericht Köln, Geschäftsführer Harisch Sivasoruban, sowie die
 Produktbereiche Kaffee, Matcha-Getränke, Açaí-Bowls, Teespezialitäten,
 Kuchen und Backwaren, Catering.
 
-Vom Betreiber zusätzlich bestätigt: Instagram `@fame.cafe.gm`, Grand Opening
+Vom Betreiber zusätzlich bestätigt: Online-Tischreservierung ohne Anruf mit 90 Minuten
+pro Reservierung (System unter `server/`, Verwaltung unter `/admin/`), Instagram `@fame.cafe.gm`, Grand Opening
 09.10.2026 15:00–23:00 Uhr, 10.10. 10:00–23:00 Uhr, 11.10. 10:00–22:00 Uhr,
 ab 12.10. täglich 07:00–23:00 Uhr, Sitzplätze drinnen und draußen, sowie die Produkte
 Espresso, Cappuccino, Flat White, Iced Matcha, Matcha Latte, Açaí Bowl,
@@ -39,7 +41,7 @@ erfunden.
 
 ```bash
 npm install && npx playwright install chromium   # einmalig
-npm run qa          # Sweep + Verhaltensprüfungen — vor jedem Commit
+npm run qa          # Serverlogik, Sweep, Verhalten, Buchung, Mobil — vor jedem Commit
 npm run sweep       # Overflow und Skriptfehler, 4 Seiten x 11 Breiten
 npm run behaviour   # Navigation, Tastatur, ohne JS, reduced motion, 404
 npm run screens     # Screenshots aller Abschnitte nach tools/qa/.screens/
@@ -67,6 +69,10 @@ muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
 | `impressum.html`, `datenschutz.html`, `404.html` | Rechtstexte und Fehlerseite |
 | `styles.css` | vollständiges Stylesheet |
 | `script.js` | Scroll, Ritual-Sequenz, Navigation |
+| `reservierung.js/.css` | Gäste-Formular, Abschnitt `#reservieren` |
+| `admin/` | Verwaltung für das Personal (noindex, Zugangscode) |
+| `server/` | Reservierungsdienst + Tests; liegt im Image unter `/app`, nie im Webroot |
+| `mobile.css`, `mobile-images.css` | Handy-Mindestgrößen; kleinere Bilder (`mobile-images.css` ist erzeugt) |
 | `tools/qa/` | Prüfwerkzeuge (nicht Teil der ausgelieferten Seite) |
 | `deploy/coolify/nginx.conf` | Routing, Caching, Header |
 
@@ -97,6 +103,20 @@ muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
   eine Stunde gecacht.
 - **Commits auf Deutsch**, Format `typ(bereich): beschreibung`. Beschreiben,
   was vorher falsch war, nicht nur was jetzt da ist.
+
+## Reservierung — was nicht kaputtgehen darf
+
+- **Das Formular erscheint nur, wenn die API antwortet.** Ohne JS/API steht ein
+  Instagram-Hinweis im Abschnitt. Nie ein Formular zeigen, das nicht sendet.
+- **Sitzplatzzahlen werden nicht erfunden.** Leer = keine Kapazitätsprüfung,
+  keine Sofortbuchung. Der Betreiber trägt sie in der Verwaltung ein.
+- **Der Server prüft alles selbst** (Raster, Öffnungszeiten, Kapazität); dem
+  Client wird nichts geglaubt.
+- **Keine Gästedaten in Benachrichtigungen**, keine IP-Speicherung, keine Cookies
+  oder localStorage auf der öffentlichen Seite (Datenschutzerklärung sagt das).
+- **Namen und Texte aus der API nur per `textContent`**, nie als HTML.
+- **`mobile.css` muss als letztes Stylesheet laden** (die anderen setzen eigene
+  kleine Schriften). Neue CSS-Bilder: danach `npm run images`.
 
 ## Skills
 
