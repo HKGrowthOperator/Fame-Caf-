@@ -318,6 +318,8 @@ for (const width of [320, 360, 390, 768, 1024, 1440]) {
     await page.fill('#name', 'Dagmar Sehr-Langer-Nachname-Mustermann-Beispiel'); await page.fill('#email', 'dagmar.sehr.lange.adresse@beispiel-domain-mit-langem-namen.example');
     await page.locator('#privacy').check();
     await page.locator('.rf-time:has(input[value="19:30"])').click();
+    // Mit gewählter Zeit ist die Zusammenfassung in der Absenden-Leiste am längsten.
+    check(await overflow(page) <= 0, `@${width}px: Overflow mit gewählter Zeit (${await overflow(page)}px)`);
     await page.locator('#rfSubmit').click();
     await page.waitForSelector('.rr');
     check(await overflow(page) <= 0, `@${width}px: Overflow im Ergebnis`);

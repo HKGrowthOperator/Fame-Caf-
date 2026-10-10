@@ -117,28 +117,29 @@
   function buildForm() {
     const cfg = state.cfg;
     const form = h('form', { class: 'rf', novalidate: true, autocomplete: 'on' });
+    const left = [], right = [];   // zwei Spalten auf dem Desktop, untereinander auf dem Handy
 
     /* Personen */
     const partyOut = h('output', { class: 'rf-party-num', id: 'rfPartyNum', 'aria-live': 'polite', text: String(state.party) });
     const minus = h('button', { type: 'button', class: 'rf-step', 'aria-label': 'Eine Person weniger', onclick: () => setParty(state.party - 1) }, h('span', { 'aria-hidden': 'true', text: '−' }));
     const plus = h('button', { type: 'button', class: 'rf-step', 'aria-label': 'Eine Person mehr', onclick: () => setParty(state.party + 1) }, h('span', { 'aria-hidden': 'true', text: '+' }));
-    form.append(h('fieldset', { class: 'rf-set' },
-      h('legend', { text: '1 · Personen' }),
+    left.push(h('fieldset', { class: 'rf-set' },
+      h('legend', { text: '01 · PERSONEN' }),
       h('div', { class: 'rf-party' }, minus, h('div', { class: 'rf-party-val' }, partyOut, h('span', { id: 'rfPartyWord', text: 'Personen' })), plus),
       h('p', { class: 'rf-hint', text: `Online bis ${cfg.maxParty} Personen. Für größere Gruppen schreib uns bitte auf Instagram.` })
     ));
 
     /* Tag */
     const dateInput = h('input', { type: 'date', id: 'rfDate', min: cfg.today, max: addDays(cfg.today, cfg.maxDaysAhead), onchange: e => pickDate(e.target.value, 'input') });
-    form.append(h('fieldset', { class: 'rf-set' },
-      h('legend', { text: '2 · Tag' }),
+    left.push(h('fieldset', { class: 'rf-set' },
+      h('legend', { text: '02 · TAG' }),
       h('div', { class: 'rf-days', id: 'rfDays', role: 'radiogroup', 'aria-label': 'Tag wählen' }),
       h('div', { class: 'rf-other-date' }, h('label', { for: 'rfDate', text: 'Anderes Datum' }), dateInput)
     ));
 
     /* Uhrzeit */
-    form.append(h('fieldset', { class: 'rf-set', id: 'rfTimeSet' },
-      h('legend', { text: '3 · Uhrzeit' }),
+    left.push(h('fieldset', { class: 'rf-set', id: 'rfTimeSet' },
+      h('legend', { text: '03 · UHRZEIT' }),
       h('p', { class: 'rf-status', id: 'rfSlotStatus', role: 'status' }),
       h('div', { class: 'rf-times', id: 'rfTimes' }),
       h('p', { class: 'rf-error', id: 'time-error', role: 'alert' })
@@ -148,14 +149,14 @@
     const seg = (value, label) => h('label', { class: 'rf-seg' },
       h('input', { type: 'radio', name: 'area', value, checked: value === state.area, onchange: () => { state.area = value; renderTimes(); updateSummary(); } }),
       h('span', { text: label }));
-    form.append(h('fieldset', { class: 'rf-set' },
-      h('legend', { text: '4 · Wo möchtest du sitzen?' }),
+    right.push(h('fieldset', { class: 'rf-set' },
+      h('legend', { text: '04 · PLATZ' }),
       h('div', { class: 'rf-segs' }, seg('any', 'Egal'), seg('indoor', 'Drinnen'), seg('outdoor', 'Draußen'))
     ));
 
     /* Kontakt */
-    form.append(h('fieldset', { class: 'rf-set' },
-      h('legend', { text: '5 · Deine Angaben' }),
+    right.push(h('fieldset', { class: 'rf-set' },
+      h('legend', { text: '05 · DEINE ANGABEN' }),
       field('name', 'Name', h('input', { id: 'name', name: 'name', type: 'text', autocomplete: 'name', maxlength: '60', required: true, enterkeyhint: 'next' })),
       field('phone', 'Telefon', h('input', { id: 'phone', name: 'phone', type: 'tel', inputmode: 'tel', autocomplete: 'tel', maxlength: '30', enterkeyhint: 'next' }), 'Telefon oder E-Mail genügt. So können wir dich erreichen, falls sich etwas ändert.'),
       field('email', 'E-Mail', h('input', { id: 'email', name: 'email', type: 'email', inputmode: 'email', autocomplete: 'email', autocapitalize: 'off', maxlength: '120', enterkeyhint: 'next' })),
@@ -168,6 +169,8 @@
         ),
         h('p', { class: 'rf-error', id: 'privacy-error', role: 'alert' }))
     ));
+
+    form.append(h('div', { class: 'rf-cols' }, h('div', { class: 'rf-col' }, left), h('div', { class: 'rf-col' }, right)));
 
     /* Abschluss: Hinweis steht vor dem angeklebten Bereich, damit dieser nur
        Zusammenfassung und Button trägt und das Formular nicht verdeckt. */
@@ -314,7 +317,7 @@
       status.textContent = `${free.length} freie Zeiten am ${WD_LONG[dow(state.date)]}, ${short(state.date)}`;
     }
 
-    const bands = [['Vormittag', 0, 720], ['Nachmittag', 720, 1020], ['Abend', 1020, 1440]];
+    const bands = [['VORMITTAG', 0, 720], ['NACHMITTAG', 720, 1020], ['ABEND', 1020, 1440]];
     const out = [];
     for (const [name, from, to] of bands) {
       const inBand = state.slots.filter(s => timeToMin(s.time) >= from && timeToMin(s.time) < to);

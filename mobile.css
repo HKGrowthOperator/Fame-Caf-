@@ -65,7 +65,4 @@
   /* Zeitenliste: die gesperrte Schrift aus dem Desktop-Stil macht 13-px-Zeilen unruhig */
   .hours-card li span{letter-spacing:.02em}
   .fame-now{margin-bottom:18px;flex-wrap:wrap}
-
-  /* Sticky-Button: so schmal wie sein Inhalt, damit er weniger Fläche verdeckt */
-  .reserve-fab{left:0;right:0;margin:0 auto;width:max-content;max-width:calc(100% - 32px);padding:0 28px;min-height:52px}
 }
