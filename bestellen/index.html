@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="theme-color" content="#F6F3EC" />
+  <title>Bestellen — FAME CAFÉ</title>
+  <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../assets/apple-touch-icon.png" />
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/dm-serif-display-latin-400.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="../assets/fonts/manrope-latin-variable.woff2" crossorigin />
+  <link rel="stylesheet" href="bestellen.css?v=20261010" />
+</head>
+<body>
+  <header class="o-top">
+    <div class="o-brand" aria-label="FAME CAFÉ Gummersbach">
+      <span class="o-brand-main">FAME CAFÉ</span>
+      <span class="o-brand-sub">GUMMERSBACH</span>
+    </div>
+    <span class="o-chip" id="oChip" hidden></span>
+  </header>
+
+  <main class="o-main" id="oMain">
+    <div class="o-head">
+      <span class="o-eyebrow" id="oEyebrow">ORDER</span>
+      <h1 class="o-title" id="oTitle">Order<br><em>here.</em></h1>
+      <p class="o-lead" id="oLead">Bestellen ohne Anstehen. Bezahlt wird vor Ort.</p>
+    </div>
+
+    <!-- Ersatztext: steht da, bis bestellen.js die Karte geladen hat. Ohne JavaScript oder ohne
+         erreichbaren Dienst bleibt er stehen und verspricht nichts, was nicht geht. -->
+    <div id="oRoot" aria-live="polite">
+      <div class="o-card o-notice" id="oFallback">
+        <p class="o-notice-title">Online bestellen ist gerade nicht möglich</p>
+        <p>Bitte bestelle direkt bei uns im Café.</p>
+        <noscript><p>Diese Seite braucht JavaScript.</p></noscript>
+      </div>
+    </div>
+  </main>
+
+  <footer class="o-foot">
+    <a href="../impressum.html">Impressum</a>
+    <a href="../datenschutz.html">Datenschutz</a>
+  </footer>
+
+  <div class="o-cartbar" id="oCartbar" hidden>
+    <div class="o-cartbar-info"><strong id="oCartCount">0 Artikel</strong><span id="oCartSum">0,00 €</span></div>
+    <button type="button" class="o-btn" id="oCartGo">Bestellung prüfen</button>
+  </div>
+
+  <script src="bestellen.js?v=20261010"></script>
+</body>
+</html>
