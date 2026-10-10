@@ -12,6 +12,7 @@
 
 import { randomBytes, createHash, timingSafeEqual } from 'node:crypto';
 import { openStore } from './store.mjs';
+import { createOrderApi } from './orders-api.mjs';
 import {
   AREAS, ACTIVE, STATUSES, availability, daysOverview, assignArea, hoursFor, localNow,
   parseBookingInput, ValidationError, isDate, isTime, toMin, toTime, addDays, daysBetween,
@@ -138,6 +139,8 @@ export function createApp(options = {}) {
     }
   }
 
+  const orderApi = createOrderApi({ store, clock, random, send, fail, readBody, limited, notify, newId, newToken, sameSecret });
+
   /* -- Pflege: abgelaufene Anfragen, Datenlöschung ------------------------ */
   function tick() {
     const now = localNow(clock());
@@ -154,6 +157,7 @@ export function createApp(options = {}) {
     for (const bl of store.blockList()) {
       if (daysBetween(bl.date, now.date) > 90) { delete store.state.blocks[bl.id]; changed = true; }
     }
+    if (orderApi.tick()) changed = true;
     if (changed) store.save();
     pruneBuckets();
   }
@@ -225,6 +229,8 @@ export function createApp(options = {}) {
   async function handlePublic(req, res, url, parts) {
     const method = req.method;
     const ip = clientIp(req);
+
+    if (await orderApi.handlePublic(req, res, url, parts, ip)) return;
 
     if (method === 'GET' && parts[0] === 'config') return send(res, 200, publicConfig());
 
@@ -357,6 +363,7 @@ export function createApp(options = {}) {
         next.hours.special = sp;
       }
     }
+    orderApi.applySettings(input, next);
     return next;
   }
 
@@ -388,13 +395,15 @@ export function createApp(options = {}) {
     const method = req.method;
     const sub = parts[1];
 
+    if (await orderApi.handleAdmin(req, res, url, parts)) return;
+
     if (method === 'GET' && sub === 'summary') {
       tick();
       const now = localNow(clock());
       const all = store.bookingList();
       const today = all.filter(b => b.date === now.date && ACTIVE.has(b.status));
       return send(res, 200, {
-        now, pending: all.filter(b => b.status === 'pending').length,
+        now, pending: all.filter(b => b.status === 'pending').length, newOrders: orderApi.openCount(),
         today: { bookings: today.length, covers: today.reduce((n, b) => n + b.party, 0) },
         settings: store.settings, instantAvailable: AREAS.some(a => store.settings.seats[a] != null)
       });

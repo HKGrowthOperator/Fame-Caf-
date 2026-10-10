@@ -158,11 +158,52 @@ Vorgaben, **keine Aussagen über das Café**:
 - Die Datenschutzerklärung enthält einen neuen Abschnitt zur Reservierung; er
   sollte vor dem Launch rechtlich geprüft werden.
 
+### Bestellen (QR am Tisch, Mitnehmen)
+
+Eigene Unterseite unter `/bestellen/`, unabhängig von der Hauptseite (nicht dort verlinkt,
+`noindex`). Zwei Wege:
+
+- **Am Tisch:** Jeder Tisch hat einen QR-Code mit Tisch und geheimem Schlüssel
+  (`/bestellen/?t=12&k=…`). Der Gast bestellt vom Platz, ohne sich anzustellen.
+- **Mitnehmen/Abholen:** `/bestellen/` ohne Parameter. Name (Pflicht), Telefon (freiwillig),
+  Abholzeit im Raster oder „so schnell wie möglich“. Vorbestellen vor der Öffnung geht,
+  „sofort“ nur bei geöffnetem Café.
+
+Das Personal arbeitet unter `/admin/bestellungen.html` (derselbe Zugangscode wie die
+Reservierung): **Tafel** (Neu → In Arbeit → Fertig → Erledigt, Ton bei neuer Bestellung, Pause),
+**Karte** (Preise, Beschreibung, „Verfügbar“-Haken wirkt sofort, wenn etwas ausverkauft ist),
+**Tische** (anlegen, gebrandete QR-Karten drucken, 6 pro A4-Seite) und **Einstellungen**.
+
+**Einrichtung, in dieser Reihenfolge:**
+
+1. **Karte prüfen.** Die Startkarte übernimmt die Produkte und die *Vorschau-Preise*, die die
+   Website schon zeigt. Bagel hat noch keinen Preis; „Cake & Bakery“ steht auf der Seite nur als
+   „ab 4,50 €“ und ist deshalb nicht bestellbar, bis echte Artikel mit Preisen angelegt sind.
+   **Artikel ohne Preis sehen Gäste nicht.**
+2. **Tische anlegen** (z. B. „1 bis 12“) und die QR-Karten drucken.
+3. **Freischalten** unter *Einstellungen*. Bis dahin sehen Gäste „noch nicht freigeschaltet“.
+
+**Grenzen (bewusst, nicht vergessen):**
+
+- **Keine Online-Zahlung.** Bezahlt wird vor Ort; die Seite sagt das so.
+- **Keine Varianten oder Extras** (Milchsorte, Größe, Toppings). Wünsche gehen als Freitext in
+  die Anmerkung. Echte Optionen brauchen die Angaben des Betreibers und werden nicht erfunden.
+- **Keine Allergen- und Zusatzstoffangaben.** Für Speisen und Getränke im Verkauf sind sie
+  rechtlich erforderlich (Lebensmittelinformationsverordnung); sie sind hier nicht hinterlegt und
+  müssen vor dem Echtbetrieb ergänzt und geprüft werden.
+- Der Ton auf der Tafel funktioniert nur, solange die Seite im Browser geöffnet ist.
+  Optional meldet `FAME_NOTIFY_URL` neue Bestellungen aufs Handy (ohne Namen).
+- Ändert sich eine Tischbezeichnung, muss der Code neu gedruckt werden. Geht `/data` verloren,
+  entsteht ein neues Geheimnis — alle gedruckten Codes sind dann ungültig.
+- Bestellungen am Tisch brauchen keine personenbezogenen Daten. Abholung speichert Name und
+  Telefon 30 Tage (siehe Datenschutzerklärung).
+
 ### Tests
 
 ```bash
 npm run test:server   # Logik und API (node:test, ohne Browser)
 npm run booking       # Gast, Verwaltung, Ausfälle, 6 Breiten (Browser)
+npm run orders        # Bestellen: Tisch, Mitnehmen, Tafel, Karte, QR-Codes dekodiert (Browser)
 npm run mobile        # Schriftgrößen, Tippflächen, Bildgewicht auf dem Handy
 npm run qa            # alles zusammen
 npm start             # Dienst lokal: FAME_ADMIN_TOKEN=… DATA_DIR=./data npm start

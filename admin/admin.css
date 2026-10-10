@@ -18,10 +18,10 @@ a{color:inherit}
 [hidden]{display:none!important}
 
 /* Kopf */
-.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:var(--forest);color:#fff}
+.top{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 12px;padding:calc(10px + env(safe-area-inset-top)) 16px 10px;background:var(--forest);color:#fff}
 .top h1{margin:0;font-family:var(--serif);font-weight:400;font-size:1.35rem;line-height:1}
 .top small{display:block;margin-top:3px;font-size:.7rem;letter-spacing:.06em;opacity:.85}
-.top-actions{display:flex;gap:8px;align-items:center}
+.top-actions{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-left:auto}
 .pulse{width:10px;height:10px;border-radius:50%;background:var(--matcha)}
 .pulse.off{background:#e0a458}
 .btn-ghost{min-height:44px;padding:0 14px;border:1px solid rgba(255,255,255,.35);border-radius:999px;background:transparent;color:#fff;cursor:pointer;font-size:.85rem}
@@ -122,3 +122,26 @@ dialog::backdrop{background:rgba(23,20,18,.55)}
 }
 @media(max-width:380px){.row3{grid-template-columns:repeat(2,minmax(0,1fr))}.card-head{grid-template-columns:auto 1fr}.card-head .status{grid-column:1/-1;justify-self:start}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* -- Bestellungen --------------------------------------------------------------- */
+.ord[data-status="new"]{border-color:var(--warn);box-shadow:0 0 0 2px rgba(154,91,0,.18)}
+.ord[data-status="cancelled"],.ord[data-status="done"]{opacity:.7}
+.ord-items{list-style:none;margin:0;padding:4px 16px 8px;display:grid;gap:4px}
+.ord-items li{display:flex;gap:10px;font-size:1.05rem}
+.ord-items b{min-width:2.2em;font-family:var(--serif);font-weight:400;font-size:1.2rem}
+.check{display:flex;gap:12px;align-items:center;min-height:44px}
+
+/* QR-Karten: auf dem Bildschirm als Raster, im Druck 2 × 3 je A4-Seite */
+.qr-sheet{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-top:16px}
+.qr-card{margin:0;display:grid;gap:8px}
+.qr-card svg{width:100%;height:auto;display:block;border-radius:18px}
+.qr-card figcaption{display:flex;gap:8px;flex-wrap:wrap}
+@media print{
+  @page{size:A4;margin:10mm}
+  body{padding:0;background:#fff}
+  .top,.tabs,.fab,#view>h2,#view>p,#view>.panel,#view>.daytools,.no-print,.noscript{display:none!important}
+  main{max-width:none;padding:0}
+  .qr-sheet{display:grid;grid-template-columns:1fr 1fr;gap:8mm;margin:0}
+  .qr-card{break-inside:avoid}
+  .qr-card svg{border-radius:0}
+}

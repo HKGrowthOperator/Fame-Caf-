@@ -34,14 +34,15 @@ pro Reservierung (System unter `server/`, Verwaltung unter `/admin/`), Instagram
 09.10.2026 15:00–23:00 Uhr, 10.10. 10:00–23:00 Uhr, 11.10. 10:00–22:00 Uhr,
 ab 12.10. täglich 07:00–23:00 Uhr, Sitzplätze drinnen und draußen, sowie die Produkte
 Espresso, Cappuccino, Flat White, Iced Matcha, Matcha Latte, Açaí Bowl,
-Tea Specials und Cake & Bakery. Preise fehlen weiterhin und werden nicht
-erfunden.
+Tea Specials und Cake & Bakery, sowie Bagel. Online-Bestellung am Tisch per QR-Code
+und zum Mitnehmen/Abholen (eigene Unterseite `/bestellen/`). Preise fehlen weiterhin
+und werden nicht erfunden.
 
 ## Befehle
 
 ```bash
 npm install && npx playwright install chromium   # einmalig
-npm run qa          # Serverlogik, Sweep, Verhalten, Buchung, Mobil — vor jedem Commit
+npm run qa          # Serverlogik, Sweep, Verhalten, Buchung, Bestellen, Mobil — vor jedem Commit
 npm run sweep       # Overflow und Skriptfehler, 4 Seiten x 11 Breiten
 npm run behaviour   # Navigation, Tastatur, ohne JS, reduced motion, 404
 npm run screens     # Screenshots aller Abschnitte nach tools/qa/.screens/
@@ -71,7 +72,9 @@ muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
 | `script.js` | Scroll, Ritual-Sequenz, Navigation |
 | `reservierung.js/.css` | Gäste-Formular, Abschnitt `#reservieren` |
 | `admin/` | Verwaltung für das Personal (noindex, Zugangscode) |
-| `server/` | Reservierungsdienst + Tests; liegt im Image unter `/app`, nie im Webroot |
+| `server/` | Reservierungs- und Bestelldienst + Tests; liegt im Image unter `/app`, nie im Webroot |
+| `bestellen/` | Eigenständige Bestellseite (Tisch per QR, Mitnehmen); lädt nichts von der Hauptseite, nicht von ihr verlinkt |
+| `admin/bestellungen.html` | Tafel, Karte, Tische und QR-Druck für das Personal; `admin/vendor/qrcode.js` ist unverändert übernommen (MIT) |
 | `mobile.css`, `mobile-images.css` | Handy-Mindestgrößen; kleinere Bilder (`mobile-images.css` ist erzeugt) |
 | `tools/qa/` | Prüfwerkzeuge (nicht Teil der ausgelieferten Seite) |
 | `deploy/coolify/nginx.conf` | Routing, Caching, Header |
@@ -117,6 +120,22 @@ muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
 - **Namen und Texte aus der API nur per `textContent`**, nie als HTML.
 - **`mobile.css` muss als letztes Stylesheet laden** (die anderen setzen eigene
   kleine Schriften). Neue CSS-Bilder: danach `npm run images`.
+
+## Bestellung — was nicht kaputtgehen darf
+
+- **Preise gibt es nur auf dem Server.** Der Browser schickt Artikelnummern und Mengen;
+  jeder mitgeschickte Betrag wird ignoriert (Test mit gefälschtem Preis).
+- **Jeder QR-Code trägt Tisch und Schlüssel** (HMAC). Ohne Schlüssel könnte jeder aus der
+  Ferne an jeden Tisch bestellen. Das Tisch-Geheimnis steht in `state.json` und muss nach dem
+  Anlegen sofort auf der Platte sein, sonst werden gedruckte Codes ungültig.
+- **Bestellen ist aus, bis das Personal es freigibt.** Artikel ohne Preis sind nicht
+  bestellbar und erscheinen nicht — keine erfundenen Preise, kein „Preis folgt“ im Warenkorb.
+- **QR-Codes sind ein einziger Pfad mit scharfen Kanten.** Einzelne Rechtecke, Lücken oder
+  Rundungen an den Modulen ließen einen strengen Dekoder scheitern. `npm run orders` dekodiert
+  jeden gezeichneten Code mit jsQR und prüft, dass er zu einem bestellbaren Tisch führt.
+- **Es gibt keine Online-Zahlung.** Nichts auf der Seite darf etwas anderes behaupten.
+- Die Bestellseite bleibt eigenständig: kein Stylesheet und kein Skript der Hauptseite, kein Link
+  aus der Hauptnavigation. Sie ist `noindex`.
 
 ## Skills
 
