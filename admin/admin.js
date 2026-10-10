@@ -144,7 +144,7 @@
     app.replaceChildren(
       h('header', { class: 'top' },
         h('div', {}, h('h1', { text: 'FAME Reservierungen' }), h('small', { id: 'sub', text: '' })),
-        h('div', { class: 'top-actions' }, h('span', { class: 'pulse', id: 'dot', 'aria-hidden': 'true' }), h('button', { class: 'btn-ghost', type: 'button', onclick: () => logout() }, 'Abmelden'))),
+        h('div', { class: 'top-actions' }, h('span', { class: 'pulse', id: 'dot', 'aria-hidden': 'true' }), h('a', { class: 'btn-ghost', id: 'toOrders', href: 'bestellungen.html', style: 'display:inline-flex;align-items:center;text-decoration:none' }, 'Bestellungen'), h('button', { class: 'btn-ghost', type: 'button', onclick: () => logout() }, 'Abmelden'))),
       h('nav', { class: 'tabs', role: 'tablist', 'aria-label': 'Bereiche' }, tab('day', '▦', 'Tag'), tab('pending', '✉', 'Anfragen'), tab('blocks', '⛔', 'Sperren'), tab('settings', '⚙', 'Einstellungen')),
       h('main', { id: 'view', tabindex: '-1' }),
       h('button', { class: 'fab', id: 'fab', type: 'button', onclick: () => openBookingDialog(), text: '+ Buchung' })
@@ -163,6 +163,8 @@
     const n = S.summary?.pending || 0;
     const badge = document.getElementById('badge');
     if (badge) { badge.hidden = !n; badge.textContent = String(n); }
+    const toOrders = document.getElementById('toOrders');
+    if (toOrders) toOrders.textContent = S.summary?.newOrders ? `Bestellungen (${S.summary.newOrders})` : 'Bestellungen';
     const t = S.summary?.today;
     const sub = document.getElementById('sub');
     if (sub && t) sub.textContent = `HEUTE · ${t.bookings} Reservierungen · ${t.covers} Gäste`;
