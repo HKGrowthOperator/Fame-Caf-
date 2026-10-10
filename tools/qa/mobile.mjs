@@ -48,6 +48,14 @@ for (const width of [360, 390, 430]) {
   check(r.taps.length === 0, `@${width}px: ${r.taps.length} Tippflächen unter 44px: ${r.taps.slice(0, 6).join(', ')}`);
   check(r.ctaVisible === (width > 360), `@${width}px: „Reservieren“ im Header ${r.ctaVisible ? 'sichtbar' : 'fehlt'} (erwartet ab 361px)`);
   check(await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth) <= 0, `@${width}px: horizontaler Overflow`);
+  // Galerie-Beschriftungen stehen unten in der Kachel. Eine Regel mit position:relative hatte sie
+  // einmal an die Oberkante geschoben, wo sie halb abgeschnitten waren.
+  const labels = await page.evaluate(() => [...document.querySelectorAll('.gallery-tile')].map(t => {
+    const b = t.getBoundingClientRect(), l = t.querySelector('span').getBoundingClientRect();
+    return { text: t.textContent.trim(), inside: l.top >= b.top && l.bottom <= b.bottom && l.left >= b.left, lower: l.top > b.top + b.height / 2 };
+  }));
+  const bad = labels.filter(l => !l.inside || !l.lower).map(l => l.text);
+  check(labels.length > 0 && bad.length === 0, `@${width}px: Galerie-Beschriftung nicht unten in der Kachel: ${bad.join(', ')}`);
   await ctx.close();
 }
 

@@ -481,23 +481,7 @@ body.nav-open{overflow:hidden}
 
 .catering-image{background-color:#2A1D15}
 
-/* Ein ruhiger Kreis auf jeder Fläche, damit ein fehlendes Foto wie eine
-   gestaltete Fläche wirkt und nicht wie ein Ladefehler. Liegt unter dem
-   Foto und ist unsichtbar, sobald das Bild da ist. */
-.menu-photo::before,
-.gallery-tile::before{
-  content:"";
-  position:absolute;
-  left:50%;top:50%;
-  transform:translate(-50%,-50%);
-  width:38%;
-  aspect-ratio:1;
-  border:1px solid rgba(246,243,236,.28);
-  border-radius:50%;
-  z-index:0;
-}
 .menu-photo,.gallery-tile{position:relative}
-.gallery-tile span{position:relative;z-index:2}
 
 /* Instagram-Symbol an den Instagram-Links. Die Glyphe steht einmal im <body> (symbol#ig-glyph) und
    übernimmt die Textfarbe, passt also auf hellem Papier genauso wie auf Beere und Wald. */
