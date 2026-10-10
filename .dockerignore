@@ -9,3 +9,4 @@ package-lock.json
 node_modules
 CLAUDE.md
 .claude
+server/test
