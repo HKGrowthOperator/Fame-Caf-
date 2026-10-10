@@ -18,21 +18,25 @@ jobs:
     name: Deploy Fame Café to Coolify
     runs-on: ubuntu-latest
     steps:
-      - name: Validate Coolify deployment secrets
+      # Coolify baut main bereits selbst, sobald GitHub den Push meldet (GitHub-App
+      # in Coolify). Dieser Workflow ist nur ein zusätzlicher Auslöser für den Fall,
+      # dass die Secrets gesetzt sind. Fehlen sie, ist das kein Fehler — vorher
+      # war jeder Push nach main rot, obwohl das Deployment lief.
+      - name: Check Coolify deployment secrets
+        id: secrets
         env:
           COOLIFY_DEPLOY_WEBHOOK: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}
           COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
         run: |
-          if [ -z "$COOLIFY_DEPLOY_WEBHOOK" ]; then
-            echo "::error::Missing repository secret COOLIFY_DEPLOY_WEBHOOK"
-            exit 1
-          fi
-          if [ -z "$COOLIFY_TOKEN" ]; then
-            echo "::error::Missing repository secret COOLIFY_TOKEN"
-            exit 1
+          if [ -n "$COOLIFY_DEPLOY_WEBHOOK" ] && [ -n "$COOLIFY_TOKEN" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::COOLIFY_DEPLOY_WEBHOOK/COOLIFY_TOKEN nicht gesetzt — Auslösen übersprungen. Coolify deployt main selbst."
           fi
 
       - name: Trigger current main deployment in Coolify
+        if: steps.secrets.outputs.configured == 'true'
         env:
           COOLIFY_DEPLOY_WEBHOOK: ${{ secrets.COOLIFY_DEPLOY_WEBHOOK }}
           COOLIFY_TOKEN: ${{ secrets.COOLIFY_TOKEN }}
