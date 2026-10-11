@@ -230,6 +230,10 @@ export function createApp(options = {}) {
     const method = req.method;
     const ip = clientIp(req);
 
+    // Für den Container-Healthcheck. Eigene Adresse, damit er nicht an einer Funktion hängt,
+    // die sich abschalten lässt (die Reservierung ist per nginx gesperrt, /api/config liefert dort 410).
+    if (method === 'GET' && parts[0] === 'health' && parts.length === 1) return send(res, 200, { ok: true });
+
     if (await orderApi.handlePublic(req, res, url, parts, ip)) return;
 
     if (method === 'GET' && parts[0] === 'config') return send(res, 200, publicConfig());
