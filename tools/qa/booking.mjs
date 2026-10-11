@@ -153,11 +153,6 @@ await scenario('Verwaltung', async ({ page, ctx, site, adm }) => {
   await guest.goto(`${site.base}/reservieren/?b=${created.id}.falscherschluessel1234#reservieren`, { waitUntil: 'load' });
   await guest.waitForSelector('.rr');
   check(/nicht gefunden/.test(await guest.locator('.rr-title').textContent()), 'Gast-Link: falscher Schlüssel verrät mehr als „nicht gefunden“');
-  // Ältere Links zeigten auf die Startseite (/?b=…). Sie müssen auf der Reservierungsseite landen.
-  await guest.goto(`${site.base}/${created.statusPath}`, { waitUntil: 'load' });
-  await guest.waitForSelector('.rr');
-  check(new URL(guest.url()).pathname === '/reservieren/', `Alter Gast-Link: landet auf ${new URL(guest.url()).pathname} statt /reservieren/`);
-  check(/storniert/.test(await guest.locator('.rr-title').textContent()), 'Alter Gast-Link: Stand der Reservierung nicht sichtbar');
 });
 
 /* --- 2b. Alle Ansichten der Verwaltung bedienen ---------------------------
@@ -289,32 +284,21 @@ await scenario('Ausfall: API fällt nach dem Laden aus', async ({ page, site }) 
   check(await page.locator('#reservieren a[href*="instagram.com"]').isVisible(), 'API fällt aus: kein Instagram-Ausweg');
 });
 
-/* --- 6. Sticky-Button nur mobil, nie im Weg ----------------------------- */
-await scenario('Sticky-Button', async ({ page, site }) => {
-  await open(page, site.base, '/index.html');
-  const fab = page.locator('#reserveFab');
-  // Der Knopf reagiert per IntersectionObserver, also asynchron. Unter Last (ganzer Prüflauf)
-  // reichten feste 500 ms nicht; deshalb auf den Zustand warten, nicht auf eine Zeit.
-  const hiddenIs = want => page.waitForFunction(w => document.getElementById('reserveFab').classList.contains('is-hidden') === w, want, { timeout: 4000 }).catch(() => {});
-  await page.evaluate(() => document.getElementById('menu').scrollIntoView());
-  await hiddenIs(false);
-  check(await fab.isVisible() && !(await fab.evaluate(e => e.classList.contains('is-hidden'))), 'Sticky-Button fehlt im Menü-Abschnitt');
-  const box = await fab.boundingBox();
-  check(box && box.height >= 52, `Sticky-Button zu klein (${box?.height})`);
-  check(new URL(await fab.getAttribute('href'), page.url()).pathname === '/reservieren/', 'Sticky-Button führt nicht zur Reservierungsseite');
-  const wrong = await page.evaluate(() => [...document.querySelectorAll('a')].filter(a => /reserv/i.test(a.textContent) && new URL(a.href).pathname !== '/reservieren/').map(a => a.textContent.trim()));
-  check(wrong.length === 0, `Startseite: Reservieren-Links führen nicht zur Unterseite: ${wrong.join(', ')}`);
-  await page.evaluate(() => document.getElementById('reservieren').scrollIntoView());
-  await hiddenIs(true);
-  check(await fab.evaluate(e => e.classList.contains('is-hidden')), 'Sticky-Button steht neben dem Reservieren-Abschnitt');
-  await page.evaluate(() => window.scrollTo(0, 0));
-  await hiddenIs(true);
-  check(await fab.evaluate(e => e.classList.contains('is-hidden')), 'Sticky-Button liegt über dem Hero');
-});
-await scenario('Kein Sticky-Button am Desktop', async ({ page, site }) => {
-  await open(page, site.base, '/index.html');
-  check(!(await page.locator('#reserveFab').isVisible()), 'Sticky-Button erscheint am Desktop');
-}, { width: 1440, height: 900, mobile: false });
+/* --- 6. Startseite: Reservierung ist abgeschaltet -----------------------
+   Der Betreiber hat die Online-Reservierung am 11.10.2026 wieder abgeschaltet.
+   Die Seite /reservieren/ bleibt im Repository (und wird oben weiter geprüft),
+   im Betrieb leitet nginx sie auf die Startseite um. Die Startseite darf sie
+   weder verlinken noch einen Reservieren-Knopf zeigen. */
+for (const [w, mobile] of [[390, true], [1440, false]]) {
+  await scenario(`Startseite ohne Reservierung @${w}`, async ({ page, site }) => {
+    await open(page, site.base, '/index.html');
+    const links = await page.evaluate(() => [...document.querySelectorAll('a')].filter(a => /reserv/i.test(a.textContent + a.getAttribute('href'))).map(a => a.textContent.trim() || a.getAttribute('href')));
+    check(links.length === 0, `@${w}px: Startseite verweist noch auf die Reservierung: ${links.join(', ')}`);
+    check(await page.locator('#reserveFab, #reservieren, .reserve').count() === 0, `@${w}px: Reservieren-Knopf oder -Abschnitt noch vorhanden`);
+    const cta = page.locator('.header-cta');
+    check(new URL(await cta.getAttribute('href'), page.url()).hash === '#visit', `@${w}px: Header-Knopf führt nicht zu „Besuchen“`);
+  }, { width: w, height: mobile ? 844 : 900, mobile });
+}
 
 /* --- 7. Breiten: Formular und Ergebnis laufen nie über ------------------- */
 for (const width of [320, 360, 390, 768, 1024, 1440]) {
