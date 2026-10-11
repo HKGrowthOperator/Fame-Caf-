@@ -33,6 +33,8 @@ test('Dienst ignoriert PORT (gehört nginx) und lauscht auf FAME_API_PORT', asyn
     }
     assert.ok(res, `Dienst antwortet nicht auf FAME_API_PORT. Ausgabe:\n${out}`);
     assert.equal(res.status, 200);
+    const health = await fetch(`http://127.0.0.1:${apiPort}/api/health`);
+    assert.equal(health.status, 200, 'Healthcheck-Adresse /api/health antwortet nicht');
     assert.doesNotMatch(out, /EADDRINUSE/);
   } finally {
     child.kill('SIGTERM');
