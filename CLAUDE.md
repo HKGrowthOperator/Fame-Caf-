@@ -30,7 +30,8 @@ Produktbereiche Kaffee, Matcha-Getränke, Açaí-Bowls, Teespezialitäten,
 Kuchen und Backwaren, Catering.
 
 Vom Betreiber zusätzlich bestätigt: Online-Tischreservierung ohne Anruf mit 90 Minuten
-pro Reservierung (System unter `server/`, Verwaltung unter `/admin/`), Instagram `@fame.cafe.gm`, Grand Opening
+pro Reservierung (System unter `server/`, Verwaltung unter `/admin/`; **am 11.10.2026 vom Betreiber
+wieder abgeschaltet**, siehe README „Reservierungssystem“), Instagram `@fame.cafe.gm`, Grand Opening
 09.10.2026 15:00–23:00 Uhr, 10.10. 10:00–23:00 Uhr, 11.10. 10:00–22:00 Uhr,
 ab 12.10. täglich 07:00–23:00 Uhr, Sitzplätze drinnen und draußen, sowie die Produkte
 Espresso, Cappuccino, Flat White, Iced Matcha, Matcha Latte, Açaí Bowl,
@@ -70,8 +71,7 @@ muss hier leer ausgehen. Screenshots allein zeigen solche Abweichungen nicht.
 | `impressum.html`, `datenschutz.html`, `404.html` | Rechtstexte und Fehlerseite |
 | `styles.css` | vollständiges Stylesheet |
 | `script.js` | Scroll, Ritual-Sequenz, Navigation |
-| `reservieren/index.html` | Eigene Reservierungsseite; alle „Reservieren“-Links der Startseite führen hierher, alte `/?b=…`-Links leitet `index.html` weiter |
-| `reservierung.js/.css` | Gäste-Formular auf `/reservieren/` (Abschnitt `#reservieren`); auf der Startseite nur der Einstieg |
+| `reservieren/index.html`, `reservierung.js/.css` | Reservierungsseite mit Formular — **abgeschaltet**: nicht verlinkt, nginx leitet `/reservieren/` auf `/` um und sperrt die öffentliche Buchungs-API (410). Code bleibt zum Wiedereinschalten |
 | `admin/` | Verwaltung für das Personal (noindex, Zugangscode) |
 | `server/` | Reservierungs- und Bestelldienst + Tests; liegt im Image unter `/app`, nie im Webroot |
 | `bestellen/` | Eigenständige Bestellseite (Tisch per QR, Mitnehmen); lädt nichts von der Hauptseite, nicht von ihr verlinkt |

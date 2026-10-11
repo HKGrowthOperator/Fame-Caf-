@@ -202,21 +202,3 @@ if(mapWrap && mapConsentButton){
     document.body.appendChild(js);
   }
 })();
-
-/* ---- Mobiler Reservieren-Knopf --------------------------------------------
-   Führt auf die Unterseite /reservieren/. Ausgeblendet, solange Hero, Ritual,
-   der Reservieren-Abschnitt oder der Footer im Bild sind — dort verdeckt er
-   Texte oder steht neben einem gleichwertigen Link. */
-(function(){
-  const fab = document.getElementById('reserveFab');
-  if(!fab || !('IntersectionObserver' in window)) return;
-  const hide = new Set();
-  const io = new IntersectionObserver(entries => {
-    for(const e of entries) (e.isIntersecting ? hide.add(e.target) : hide.delete(e.target));
-    fab.classList.toggle('is-hidden', hide.size > 0);
-  }, {threshold:.12});
-  ['.hero', '.ritual', '#reservieren', 'footer'].forEach(sel => {
-    const el = document.querySelector(sel);
-    if(el) io.observe(el);
-  });
-})();

@@ -15,7 +15,7 @@ Freigabe ersetzt. Verbindlich ist `FAME_MASTER_EXECUTION_PROMPT.md`.
 | Datei | Zweck |
 |---|---|
 | `index.html` | Startseite |
-| `reservieren/index.html` | Tischreservierung (eigene Seite, Formular aus `reservierung.js`) |
+| `reservieren/index.html` | Tischreservierung (eigene Seite, Formular aus `reservierung.js`) — derzeit abgeschaltet, siehe „Reservierungssystem“ |
 | `impressum.html`, `datenschutz.html` | Rechtstexte |
 | `404.html` | Fehlerseite |
 | `styles.css` | vollständiges Stylesheet, in 20 nummerierte Abschnitte gegliedert |
@@ -79,6 +79,16 @@ Vor Veröffentlichung noch zu bestätigen — nicht erfinden:
 Die Startseite zeigt die Eröffnungszeiten zeitgesteuert in `opening-2026.js` (Zeitzone Europe/Berlin). Hinweise auf vergangene Eröffnungstage verschwinden automatisch; ab dem 12.10. bleibt nur der reguläre Stundenplan sichtbar. Die strukturierten Daten in `index.html` enthalten die Sonderöffnungszeiten und den Beginn der regulären Zeiten.
 
 ## Reservierungssystem
+
+> **Derzeit abgeschaltet** (Wunsch des Betreibers, 11.10.2026). Die Startseite
+> verlinkt keine Reservierung mehr; nginx leitet `/reservieren/` auf die
+> Startseite um und beantwortet `/api/config`, `/api/days`, `/api/availability`
+> und `POST /api/bookings` mit 410. Bereits eingegangene Reservierungen bleiben in
+> der Verwaltung `/admin/` sichtbar. Code und Tests bleiben unverändert im
+> Repository. **Wieder einschalten:** die beiden markierten Blöcke in
+> `deploy/coolify/nginx.conf` entfernen und auf der Startseite die Links
+> (Navigation, Header-Knopf, Handy-Menü, Footer), den Einstieg-Abschnitt und den
+> mobilen Knopf aus dem Commit vor der Abschaltung zurückholen.
 
 Gäste reservieren online ohne Anruf; das Personal bearbeitet alles in einer
 Verwaltung am Handy. Jede Reservierung belegt **90 Minuten**.
