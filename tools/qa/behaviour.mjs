@@ -200,7 +200,11 @@ for (const [label, ctxOpts, setup] of [
   for (let i = 0; i < total; i++) {
     await page.evaluate(k => document.querySelectorAll('[class*="reveal"]')[k]
       .scrollIntoView({ block: 'center', behavior: 'instant' }), i).catch(() => {});
-    await page.waitForTimeout(ctxOpts.javaScriptEnabled === false ? 20 : 700);
+    // Warten, bis das Element eingeblendet ist — nicht eine feste Zeit. Die Einblendung dauert
+    // bis zu 0,9 s plus Verzögerung; feste 700 ms maßen ein Element mitten in der Animation,
+    // sobald es nicht schon beim Scrollen über das vorige Element sichtbar geworden war.
+    if (ctxOpts.javaScriptEnabled === false) await page.waitForTimeout(20);
+    else await page.waitForFunction(k => parseFloat(getComputedStyle(document.querySelectorAll('[class*="reveal"]')[k]).opacity) >= 0.9, i, { timeout: 2500 }).catch(() => {});
     const r = await page.evaluate(k => {
       const e = document.querySelectorAll('[class*="reveal"]')[k];
       return { o: parseFloat(getComputedStyle(e).opacity), c: (e.className || '').toString().split(' ')[0] };

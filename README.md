@@ -235,7 +235,8 @@ brauchen danach einmal `npm run images`.
    zugeschnitten** und ohne EXIF-/GPS-Daten gespeichert; das Original zeigt
    Gäste mit erkennbaren Gesichtern und gehört so nicht auf die Seite. Außerdem
    echt: `fame-terrasse-nacht.jpg` (Karte „Draußen“, Instagram-Text entfernt) und
-   `fame-matcha-acai.jpg` (Fame Pick „Açaí Bowl“, Person im Hintergrund entfernt).
+   `fame-matcha-acai.jpg` (Fame Pick „Açaí Bowl“, Person im Hintergrund entfernt),
+   `fame-bowl-bagel.jpg` (Galerie-Kachel „BOWL“, Ärmel eines Gastes am Rand entfernt).
    Neue eigene
    Fotos: `NAME.jpg` plus kleinere Handy-Variante `NAME-m.jpg` ablegen, danach
    `npm run images`.

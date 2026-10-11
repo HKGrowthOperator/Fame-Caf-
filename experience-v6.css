@@ -205,7 +205,7 @@ html{scroll-behavior:smooth}
 .gallery-tile.g7{background-image:url("assets/photos/u-1555507036-ab1f4038808a.jpg")}
 .gallery-tile.g8{background-image:url("assets/photos/fame-innen-lampen.jpg")}
 .gallery-tile.g9{background-image:url("assets/photos/u-1514432324607-a09d9b4aefdd.jpg")}
-.gallery-tile.g10{background-image:url("assets/photos/u-1511690743698-d9d85f2fbf38.jpg")}
+.gallery-tile.g10{background-image:url("assets/photos/fame-bowl-bagel.jpg");background-position:center calc(62% + var(--fame-parallax,0px))}
 .gallery-tile.g7,.gallery-tile.g10{min-height:38vw}
 .gallery-tile.g8{min-height:28vw}
 .gallery-tile.g9{min-height:28vw}
