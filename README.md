@@ -239,15 +239,14 @@ brauchen danach einmal `npm run images`.
    Bilddienst (`npm run mobile` prüft das). Die Dateien `u-<id>.jpg` stammen von
    Unsplash (Unsplash-Lizenz, `<id>` ist die Foto-ID dort) und sind
    Stimmungsbilder, keine FAME-Fotos — nach und nach durch echte FAME-Fotografie
-   ersetzen. Zwei echte Innenraum-Fotos
-   sind schon drin (`assets/photos/`: Tische und Stühle in „Drinnen“, Decke und
-   Lampen in der Galerie-Kachel „SPACE“). Sie sind **bewusst ohne Personen
-   zugeschnitten** und ohne EXIF-/GPS-Daten gespeichert; das Original zeigt
-   Gäste mit erkennbaren Gesichtern und gehört so nicht auf die Seite. Außerdem
-   echt: `fame-terrasse-nacht.jpg` (Karte „Draußen“, Instagram-Text entfernt) und
-   `fame-matcha-acai.jpg` (Fame Pick „Açaí Bowl“, Person im Hintergrund entfernt),
-   `fame-bowl-bagel.jpg` (Galerie-Kachel „BOWL“, Ärmel eines Gastes am Rand entfernt).
-   Neue eigene
+   ersetzen. Echte FAME-Fotos (Instagram-Texte, Rahmen und Personen entfernt,
+   ohne EXIF-/GPS-Daten):
+   `fame-terrasse-nacht.jpg` (Karte „Draußen“, Galerie „OUTSIDE“),
+   `fame-matcha-acai.jpg` (Fame Pick „Açaí Bowl“, Bild-Strip „To go · To stay“),
+   `fame-bowl-bagel.jpg` (Galerie „BOWL“, Bild-Strip „Morning at FAME“),
+   `fame-acai-matcha.jpg` (Karte „Drinnen“), `fame-bowls-matcha.jpg` (Galerie
+   „BOWLS“), `fame-tisch-von-oben.jpg` (Galerie „CAFÉ“). Bilder, die nur leere
+   Tische oder die Decke zeigten, sind auf Wunsch des Betreibers entfernt. Neue eigene
    Fotos: `NAME.jpg` plus kleinere Handy-Variante `NAME-m.jpg` ablegen, danach
    `npm run images`.
 2. **Domain.** Erst wenn die Produktionsdomain feststeht: `canonical` setzen,
